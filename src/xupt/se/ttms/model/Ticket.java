@@ -1,49 +1,110 @@
 ﻿package xupt.se.ttms.model;
 
+import java.util.Date;
+
 public class Ticket {
+
+	private int id;
+	private int seatId;
+	private int scheduleId;
+	private float price;
+	private int status;  //0：待销售  1：锁定    9：卖出
+	private Date locked_time;
 	
-	private int ticket_id;
-	private int movie_id;
-	private int seat_id;
-	private String ticket_date;
-	private int ticket_times;
-	private int ticket_sold;
+	private String playName;
+	private Schedule schedule;
+	private Seat seat;
+	private Date current_locked_time;
 	
-	public int getTicket_id() {
-		return ticket_id;
+	public Ticket() {}
+	
+	public Ticket(int id, int seatId, int scheduleId, float price, int status) {
+		super();
+		this.id = id;
+		this.seatId = seatId;
+		this.scheduleId = scheduleId;
+		this.price = price;
+		this.status = status;
 	}
-	public void setTicket_id(int ticket_id) {
-		this.ticket_id = ticket_id;
+
+	public int getId() {
+		return id;
 	}
-	public int getMovie_id() {
-		return movie_id;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public void setMovie_id(int movie_id) {
-		this.movie_id = movie_id;
+
+	public int getSeatId() {
+		return seatId;
 	}
-	public int getSeat_id() {
-		return seat_id;
+
+	public void setSeatId(int seatId) {
+		this.seatId = seatId;
 	}
-	public void setSeat_id(int seat_id) {
-		this.seat_id = seat_id;
+
+	public int getScheduleId() {
+		return scheduleId;
 	}
-	public String getTicket_date() {
-		return ticket_date;
+
+	public void setScheduleId(int scheduleId) {
+		this.scheduleId = scheduleId;
 	}
-	public void setTicket_date(String ticket_date) {
-		this.ticket_date = ticket_date;
+
+	public float getPrice() {
+		return price;
 	}
-	public int getTicket_times() {
-		return ticket_times;
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
-	public void setTicket_times(int ticket_times) {
-		this.ticket_times = ticket_times;
+
+	public int getStatus() {
+		return status;
 	}
-	public int getTicket_sold() {
-		return ticket_sold;
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
-	public void setTicket_sold(int ticket_sold) {
-		this.ticket_sold = ticket_sold;
+
+	public Date getLocked_time() {
+		return locked_time;
+	}
+
+	public void setLocked_time(Date locked_time) {
+		this.locked_time = locked_time;
+	}
+
+	public Seat getSeat() {
+		return seat;
+	}
+
+	public void setSeat(Seat seat) {
+		this.seat = seat;
+	}
+
+	public String getPlayName() {
+		return playName;
+	}
+
+	public void setPlayName(String playName) {
+		this.playName = playName;
+	}
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+	}
+
+	public Date getCurrent_locked_time() {
+		return current_locked_time;
+	}
+
+	public void setCurrent_locked_time(Date current_locked_time) {
+		this.current_locked_time = current_locked_time;
 	}
 	
 }

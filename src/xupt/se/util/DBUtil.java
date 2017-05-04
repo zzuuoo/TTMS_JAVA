@@ -137,4 +137,8 @@ public class DBUtil {
 		}
 	}
 
+	public Connection getConn() {
+		return conn;
+	}
+
 }

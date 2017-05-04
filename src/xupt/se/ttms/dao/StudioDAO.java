@@ -30,10 +30,17 @@ public class StudioDAO implements iStudioDAO {
 					+ "' )";
 			DBUtil db = new DBUtil();
 			db.openConnection();
+			System.out.println("数据库连接成功");
 			ResultSet rst = db.getInsertObjectIDs(sql);
+
+//				      
 			if (rst!=null && rst.first()) {
 				stu.setID(rst.getInt(1));
 			}
+			System.out.println("hello");
+//			if(rst.next()&&rst.first()){
+//				stu.setID(rst.getInt(1));
+//			}
 			db.close(rst);
 			db.close();
 			return 1;
@@ -58,6 +65,7 @@ public class StudioDAO implements iStudioDAO {
 			sql += " where studio_id = " + stu.getID();
 			DBUtil db = new DBUtil();
 			db.openConnection();
+			System.out.println("数据库连接成功");
 			rtn =db.execCommand(sql);
 			db.close();
 		} catch (Exception e) {
@@ -74,6 +82,7 @@ public class StudioDAO implements iStudioDAO {
 			sql += " where studio_id = " + ID;
 			DBUtil db = new DBUtil();
 			db.openConnection();
+			System.out.println("数据库连接成功");
 			rtn=db.execCommand(sql);
 			db.close();
 		} catch (Exception e) {

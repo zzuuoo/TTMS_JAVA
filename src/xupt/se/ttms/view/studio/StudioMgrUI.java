@@ -20,6 +20,8 @@ import java.util.Iterator;
 
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.StudioSrv;
+import xupt.se.ttms.view.login.Login;
+import xupt.se.ttms.view.login.SystemMgUI;
 import xupt.se.ttms.view.tmpl.*;
 
 class StudioTableMouseListener extends MouseAdapter {
@@ -102,6 +104,11 @@ public class StudioMgrUI extends MainUITmpl {
 	/**
 	 * 
 	 */
+	
+	protected void onWindowClosing(){
+		this.dispose();
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private Studio stud=new Studio();
 	private JLabel ca1 = null; // 界面提示
@@ -235,4 +242,12 @@ public class StudioMgrUI extends MainUITmpl {
 		StudioMgrUI frmStuMgr = new StudioMgrUI();
 		frmStuMgr.setVisible(true);
 	}
+	protected void btnExitClicked(ActionEvent Event){
+		this.dispose();
+
+//		this.getParent().setVisible(true);
+//		new Login().setVisible(true);;
+//		SystemMgUI  smg = new SystemMgUI();
+//		smg.setVisible(true);
+	}	
 }

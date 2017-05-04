@@ -75,6 +75,11 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 		this.add(imageJP);
 	}
 	
+	protected void onWindowClosing(){
+//		System.exit(0);
+		this.dispose();
+//		this.setVisible(false);
+	}
 	
 	public boolean getReturnStatus(){
 		   return rst;
@@ -85,6 +90,7 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 		if (e.getSource() == btnCancel) {
 			rst=false;
 			this.dispose();
+//			this.setVisible(false);
 			getParent().setVisible(true);
 
 		} else if (e.getSource() == btnSave) {
@@ -104,7 +110,8 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			stu.setIntroduction("test");
 
 			stuSrv.add(stu);
-			this.setVisible(false);
+			this.dispose();
+//			this.setVisible(false);
 			rst=true;
 			getParent().setVisible(true);
 		} else {

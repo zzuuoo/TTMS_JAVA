@@ -28,7 +28,7 @@ public class MainUITmpl extends JFrame  {
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=1024;
 	private int frmHeight=700;
-	protected final ImagePanel headPan = new ImagePanel("resource/image/mm.gif");
+	protected final ImagePanel headPan = new ImagePanel("resource/image/mui.jpg");
 	protected final JPanel contPan = new JPanel();
 	protected JLabel usrLabel = new JLabel();
 	protected JLabel usrName = new JLabel();
@@ -39,19 +39,21 @@ public class MainUITmpl extends JFrame  {
 		this.setSize(frmWidth, frmHeight);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		this.setTitle("汉唐剧院票务管理系统");
+		this.setTitle("千达剧院票务管理系统");
 		this.setLayout(null);
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				onWindowClosing();
 			}
 		});		
-		headPan.setBounds(0, 0, frmWidth, frmHeight);
+//		headPan.setBounds(0, 0, frmWidth, frmHeight);
+		headPan.setBounds(0, 0, frmWidth, 80);
 		headPan.setLayout(null);
 		this.add(headPan);
 		
 		contPan.setBounds(0, 80, frmWidth, this.frmHeight-100);
 		contPan.setLayout(null);
+		
 		this.add(contPan);	
 		
 		initHeader();
@@ -100,6 +102,7 @@ public class MainUITmpl extends JFrame  {
 			btnModPwd.setBounds(frmWidth-160, 40, 80, 30);
 			btnModPwd.setMargin(new Insets(0,0,0,0));
 			btnModPwd.setContentAreaFilled(false);
+			btnModPwd.setForeground(Color.white);
 			headPan.add(btnModPwd);
 			btnModPwd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent Event) {
@@ -109,6 +112,7 @@ public class MainUITmpl extends JFrame  {
 			
 			btnExit.setBounds(frmWidth-80, 40, 80, 30);
 			btnExit.setContentAreaFilled(false);
+			btnExit.setForeground(Color.white);
 			btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent Event) {
 					btnExitClicked(Event);
@@ -128,9 +132,9 @@ public class MainUITmpl extends JFrame  {
 	
 	
 	private void btnModUserClicked(){
-		SysUserModUI dlgUserMod=new SysUserModUI();
-		dlgUserMod.setModal(true);
-		dlgUserMod.setVisible(true);
+//		SysUserModUI dlgUserMod=new SysUserModUI();
+//		dlgUserMod.setModal(true);
+//		dlgUserMod.setVisible(true);
 	}	
 	
 	private void showCurrentUser(){
@@ -155,7 +159,7 @@ public class MainUITmpl extends JFrame  {
 	
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
-		System.exit(0);
+		this.dispose();
 	}	
 
 }

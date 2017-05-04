@@ -12,7 +12,7 @@ public class PopUITmpl extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=800;
 	private int frmHeight=600;
-	public static final ImagePanel headPan = new ImagePanel("resource/image/header_pop.jpg");
+	public static final ImagePanel headPan = new ImagePanel("resource/image/header2.jpg");
 	public static final JPanel contPan = new JPanel();
 	public static JLabel windowName = new JLabel();
 
