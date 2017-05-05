@@ -21,7 +21,11 @@ import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.tmpl.PopUITmpl;
-
+/**
+ * 登陆
+ * @author zuo
+ *
+ */
 public class Login extends JFrame implements ActionListener{
 
 	
@@ -185,8 +189,8 @@ public class Login extends JFrame implements ActionListener{
 					this.dispose();
 				}else if (who.compareTo("售票员")==0){
 					System.out.println("账号："+zhanghao.getText()+"   密码："+mima.getText());
-					SellTicketUI st = new SellTicketUI();
-					st.setVisible(true);
+					Seller se = new Seller();
+					se.setVisible(true);
 					this.dispose();
 				}
 				break;

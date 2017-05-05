@@ -3,9 +3,10 @@ package xupt.se.ttms.view.sellticket;
 import java.awt.event.ActionEvent;
 
 import xupt.se.ttms.view.login.Login;
+import xupt.se.ttms.view.login.Seller;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 /**
- * 售票员的UI
+ * 售票的UI
  * @author zuo
  *
  */
@@ -21,9 +22,9 @@ public class SellTicketUI extends MainUITmpl{
 	
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
-//		System.exit(0);
+
 		this.dispose();
-		new Login().setVisible(true);;
+		new Seller().setVisible(true);;
 	}	
 	
 }

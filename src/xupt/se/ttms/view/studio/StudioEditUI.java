@@ -24,6 +24,7 @@ import xupt.se.ttms.view.studio.StudioAddUI;;
 public class StudioEditUI extends StudioAddUI{
 
 	public StudioEditUI(Studio stu) {
+		this.setTitle("修改演出厅");
 		initData(stu);
 	}
 

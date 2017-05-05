@@ -1,5 +1,7 @@
 ﻿package xupt.se.ttms.view.studio;
-
+/**
+ * 演出厅管理
+ */
 import java.awt.Color;
 import java.awt.Label;
 import java.awt.Rectangle;
