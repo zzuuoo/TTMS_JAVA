@@ -38,14 +38,6 @@ public class ImagePanel extends JPanel {
 		}
 	}
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		ImagePanel panel = new ImagePanel("resource/image/header.jpg");
-//		JButton b = new JButton("按钮");
-//		panel.add(b);
-//		frame.add(panel);
-//		frame.setVisible(true);
-//
-//	}
+
 
 }

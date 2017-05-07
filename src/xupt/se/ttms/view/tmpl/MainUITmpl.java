@@ -28,7 +28,7 @@ public class MainUITmpl extends JFrame  {
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=1024;
 	private int frmHeight=700;
-	protected final ImagePanel headPan = new ImagePanel("resource/image/mui.jpg");
+	protected final ImagePanel headPan = new ImagePanel("resource/image/header2.jpg");
 	protected final JPanel contPan = new JPanel();
 	protected JLabel usrLabel = new JLabel();
 	protected JLabel usrName = new JLabel();

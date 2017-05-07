@@ -8,9 +8,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import xupt.se.ttms.view.sellticket.QuitTicketUIPop;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.tmpl.ImagePanel;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
@@ -35,12 +37,12 @@ public class Seller extends MainUITmpl{
 		JPanel workPanel = new JPanel();
 //		ImagePanel workPanel = new ImagePanel("resource/image/l3.jpg");
 		workPanel.setLayout(null);
-		workPanel.setBounds(0, 0, 1000, 600);
+		workPanel.setBounds(0, 0, 1024, 600);
 		
 		JButton sale = new JButton();
 		sale.setVerticalTextPosition(SwingConstants.BOTTOM);
 		sale.setHorizontalTextPosition(SwingConstants.CENTER);
-		sale.setIcon(new ImageIcon("resource/image/p4.jpg"));
+		sale.setIcon(new ImageIcon("resource/image/p3.jpg"));
 		sale.setBackground(Color.WHITE);
 		sale.setText(" 售 票 ");
 		sale.setBounds(150, 100, 160, 160);
@@ -57,10 +59,19 @@ public class Seller extends MainUITmpl{
 		JButton refund = new JButton();
 		refund.setVerticalTextPosition(SwingConstants.BOTTOM);
 		refund.setHorizontalTextPosition(SwingConstants.CENTER);
-		refund.setIcon(new ImageIcon("resource/image/p3.jpg"));
+		refund.setIcon(new ImageIcon("resource/image/p4.jpg"));
 		refund.setBackground(Color.WHITE);
 		refund.setText(" 退 票 ");
 		refund.setBounds(450, 100, 160, 160);
+		refund.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				new QuitTicketUIPop().setVisible(true);
+				
+			}
+		});
 		
 		JButton checkList = new JButton();
 		checkList.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -70,9 +81,15 @@ public class Seller extends MainUITmpl{
 		checkList.setText("查看销售记录");
 		checkList.setBounds(750, 100, 160, 160);
 		
+		JLabel jb = new JLabel();
+		jb.setIcon(new ImageIcon("resource/image/study.gif"));
+		jb.setBounds(450,200,1024,400);
+		
 		workPanel.add(sale);
 		workPanel.add(refund);
 		workPanel.add(checkList);
+		workPanel.add(jb);
+		workPanel.setBackground(Color.white);
 		
 		contPan.add(workPanel);
 		contPan.validate();

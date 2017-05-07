@@ -63,7 +63,7 @@ public class PopUITmpl extends JDialog {
 
 			windowName.setBounds(frmWidth-160, 5, 160, 50);
 			windowName.setFont(new java.awt.Font("dialog", 1, 20));
-			windowName.setForeground(Color.blue);	
+			windowName.setForeground(Color.white);	
 			headPan.add(windowName);
 			setWindowName("模块名称");
 			

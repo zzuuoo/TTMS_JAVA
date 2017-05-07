@@ -111,4 +111,9 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		
 	}
+	protected void onWindowClosing(){
+		//System.exit(0);
+		this.dispose();
+//		new SystemMgUI().setVisible(true);
+}
 }
