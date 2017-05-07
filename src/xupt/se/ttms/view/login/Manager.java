@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import xupt.se.ttms.view.sellticket.SellTicketUI;
+import xupt.se.ttms.view.studio.StudioSeat;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 /**
  * 经理UI
@@ -73,6 +74,15 @@ public class Manager extends MainUITmpl{
 		seatmanager.setBackground(Color.WHITE);
 		seatmanager.setText(" 座位管理 ");
 		seatmanager.setBounds(550, 100, 160, 160);
+		seatmanager.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new StudioSeat().setVisible(true);
+				
+			}
+		});
 		
 		JButton checkC = new JButton();
 		checkC.setVerticalTextPosition(SwingConstants.BOTTOM);
