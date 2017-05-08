@@ -245,6 +245,7 @@ public class StudioMgrUI extends MainUITmpl {
 		frmStuMgr.setVisible(true);
 	}
 	protected void btnExitClicked(ActionEvent Event){
+		new SystemMgUI().setVisible(true);
 		this.dispose();
 
 //		this.getParent().setVisible(true);

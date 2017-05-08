@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import schedule.ScheduleMgUI;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.studio.StudioSeat;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
@@ -60,9 +61,9 @@ public class Manager extends MainUITmpl{
 		
 		palyManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
-//				SellTicketUI sellTicketUI = new SellTicketUI();
-//				sellTicketUI.setVisible(true);
-//				Manager.this.dispose();
+
+				new ScheduleMgUI().setVisible(true);
+				Manager.this.dispose();
 			
 			}
 		});
@@ -80,6 +81,7 @@ public class Manager extends MainUITmpl{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				new StudioSeat().setVisible(true);
+				Manager.this.dispose();
 				
 			}
 		});
@@ -91,6 +93,14 @@ public class Manager extends MainUITmpl{
 		checkC.setBackground(Color.WHITE);
 		checkC.setText("统计与查询");
 		checkC.setBounds(750, 100, 160, 160);
+		checkC.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		workPanel.add(filmManager);
 		workPanel.add(palyManager);
@@ -112,8 +122,8 @@ public class Manager extends MainUITmpl{
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
 //		System.exit(0);
+		new Login().setVisible(true);
 		this.dispose();
-		new Login().setVisible(true);;
 	}	
 
 }

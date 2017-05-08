@@ -23,8 +23,9 @@ public class SellTicketUI extends MainUITmpl{
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
 
+		new Seller().setVisible(true);
 		this.dispose();
-		new Seller().setVisible(true);;
+		
 	}	
 	
 }

@@ -26,7 +26,7 @@ public class Seller extends MainUITmpl{
 			new Login().setVisible(true);;
 		}	
 	
-	private static final long serialVersionUID = 1025028999012028956L;
+	private static final long serialVersionUID = 1025028999012028956L;//序列化
 
 	public Seller(){
 		initContent();
@@ -69,6 +69,7 @@ public class Seller extends MainUITmpl{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				new QuitTicketUIPop().setVisible(true);
+				Seller.this.dispose();
 				
 			}
 		});
@@ -80,6 +81,14 @@ public class Seller extends MainUITmpl{
 		checkList.setBackground(Color.WHITE);
 		checkList.setText("查看销售记录");
 		checkList.setBounds(750, 100, 160, 160);
+		checkList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		JLabel jb = new JLabel();
 		jb.setIcon(new ImageIcon("resource/image/study.gif"));

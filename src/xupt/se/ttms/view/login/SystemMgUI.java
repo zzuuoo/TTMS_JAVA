@@ -38,6 +38,7 @@ public class SystemMgUI extends MainUITmpl{
 		btnStudioMg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				new StudioMgrUI().setVisible(true);
+				SystemMgUI.this.dispose();
 			}
 		});
 		
@@ -52,8 +53,8 @@ public class SystemMgUI extends MainUITmpl{
 		btnUserMg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 //				System.out.println("用户管理");
-				SystemMgUI.this.dispose();
 				new SysUserModUI ().setVisible(true);
+				SystemMgUI.this.dispose();
 			}
 		});
 		
