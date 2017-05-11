@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import schedule.ScheduleMgUI;
+import xupt.se.ttms.view.schedule.ScheduleMgUI;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.studio.StudioSeat;
 import xupt.se.ttms.view.tmpl.MainUITmpl;

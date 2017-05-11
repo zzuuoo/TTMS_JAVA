@@ -1,4 +1,4 @@
-package schedule;
+package xupt.se.ttms.view.schedule;
 
 import java.awt.Color;
 import java.awt.Rectangle;
