@@ -37,13 +37,13 @@ public class PlayDAO implements iPlayDAO {
 			ResultSet rst = db.getInsertObjectIDs(sql);
 
 //				      
-			if (rst!=null && rst.first()) {
+//			if (rst!=null && rst.first()) {
+//				stu.setId(rst.getInt(1));
+//			}
+			System.out.println("hello");
+			if(rst.next()&&rst.first()){
 				stu.setId(rst.getInt(1));
 			}
-			System.out.println("hello");
-//			if(rst.next()&&rst.first()){
-//				stu.setID(rst.getInt(1));
-//			}
 			db.close(rst);
 			db.close();
 			return 1;

@@ -58,6 +58,8 @@ public class DBUtil {
 		}
 		
      }
+//	con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+//	con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 	
 	// 查询并得到结果集
 	public ResultSet execQuery(String sql) throws Exception {
@@ -65,7 +67,7 @@ public class DBUtil {
 		try {
 			if (null == conn)
 				throw new Exception("Database not connected!");
-			Statement stmt = conn.createStatement();
+			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			rstSet = stmt.executeQuery(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,7 +82,7 @@ public class DBUtil {
 			if(null==conn)
 				throw new Exception("Database not connected!");
 			
-			Statement stmt = conn.createStatement();
+			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			
 			stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
 			rst = stmt.getGeneratedKeys();
@@ -98,7 +100,7 @@ public class DBUtil {
 			if(null==conn)
 				throw new Exception("Database not connected!");
 			
-			Statement stmt = conn.createStatement();
+			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			flag = stmt.executeUpdate(sql);
 			
 			stmt.close();			

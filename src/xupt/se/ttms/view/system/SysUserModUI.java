@@ -35,16 +35,16 @@ public class SysUserModUI extends MainUITmpl {
 		JTabbedPane jtb = new JTabbedPane(JTabbedPane.LEFT);
 		
 		JPanel wjp = new JPanel();
-		wjp.setLayout(new BorderLayout());
-		wjp.add(BorderLayout.NORTH,new JLabel("用户1"));
+		wjp.setLayout(null);
+		wjp.add(new JLabel("用户1"));
 		
 		JPanel wjp2 = new JPanel();
-		wjp2.setLayout(new BorderLayout());
-		wjp2.add(BorderLayout.NORTH,new JLabel("我是用户"));
+		wjp2.setLayout(null);
+		wjp2.add(new JLabel("我是用户"));
 		
 		JPanel wjp3 = new JPanel();
-		wjp3.setLayout(new BorderLayout());
-		wjp3.add(BorderLayout.NORTH,new JLabel("用户数据测试"));
+		wjp3.setLayout(null);
+		wjp3.add(new JLabel("用户数据测试"));
 		
 		
 		

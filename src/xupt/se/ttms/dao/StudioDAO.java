@@ -2,6 +2,11 @@ package xupt.se.ttms.dao;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,9 +22,11 @@ import xupt.se.util.DBUtil;
 
 
 public class StudioDAO implements iStudioDAO {
+
 	@Override
 	public int insert(Studio stu) {
 		try {
+	
 			String sql = "insert into studio(studio_name, studio_row_count, studio_col_count, studio_introduction )"
 					+ " values('"
 					+ stu.getName()
@@ -33,14 +40,10 @@ public class StudioDAO implements iStudioDAO {
 			System.out.println("数据库连接成功");
 			ResultSet rst = db.getInsertObjectIDs(sql);
 
-//				      
-			if (rst!=null && rst.first()) {
+
+			if(rst.next()&&rst.first()){
 				stu.setID(rst.getInt(1));
 			}
-			System.out.println("hello");
-//			if(rst.next()&&rst.first()){
-//				stu.setID(rst.getInt(1));
-//			}
 			db.close(rst);
 			db.close();
 			return 1;
@@ -60,13 +63,13 @@ public class StudioDAO implements iStudioDAO {
 					+ stu.getName() + "', " + " studio_row_count = "
 					+ stu.getRowCount() + ", " + " studio_col_count = "
 					+ stu.getColCount() + ", " + " studio_introduction = '"
-					+ stu.getIntroduction() + "' ";
+					+ stu.getIntroduction() + "' \n";
 
 			sql += " where studio_id = " + stu.getID();
 			DBUtil db = new DBUtil();
 			db.openConnection();
-			System.out.println("数据库连接成功");
 			rtn =db.execCommand(sql);
+			System.out.println("数据库连接成功--修改");
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();

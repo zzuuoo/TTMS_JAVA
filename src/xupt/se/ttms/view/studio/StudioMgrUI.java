@@ -51,7 +51,7 @@ class StudioTableMouseListener extends MouseAdapter {
 			stud.setIntroduction(jt.getValueAt(row, 4).toString());
 		else
 			stud.setIntroduction("");
-		System.out.println(jt.getValueAt(row, 1).toString());
+		System.out.println(jt.getValueAt(row, 0).toString());
 	}
 }
 
@@ -124,6 +124,7 @@ public class StudioMgrUI extends MainUITmpl {
 	private JButton btnAdd, btnEdit, btnDel, btnQuery;
 
 	public StudioMgrUI() {
+		showTable();
 	}
 
 	// To be override by the detailed business block interface
@@ -211,6 +212,7 @@ public class StudioMgrUI extends MainUITmpl {
 		if (modStu.getReturnStatus()) {
 			showTable();
 		}
+		showTable();
 	}
 
 	private void btnDelClicked() {
@@ -225,6 +227,7 @@ public class StudioMgrUI extends MainUITmpl {
 	private void btnQueryClicked() {
 		if (!input.getText().equals("")) {
 
+			JOptionPane.showMessageDialog(null, "哈哈哈哈");
 
 		} else {
 			JOptionPane.showMessageDialog(null, "请输入检索条件");
@@ -245,6 +248,7 @@ public class StudioMgrUI extends MainUITmpl {
 		frmStuMgr.setVisible(true);
 	}
 	protected void btnExitClicked(ActionEvent Event){
+		
 		new SystemMgUI().setVisible(true);
 		this.dispose();
 

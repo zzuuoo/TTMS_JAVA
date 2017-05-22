@@ -1,5 +1,6 @@
 package xupt.se.ttms.dao;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.sql.ResultSet;
@@ -11,6 +12,10 @@ import xupt.se.util.DBUtil;
 public class ScheduleDAO implements iScheduleDAO {
 	 
 	public int insert(Schedule stu) {
+		
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(stu.getSched_time());
+		
 		try {
 			String sql = "insert into Schedule(studio_id, play_id, sched_time, sched_ticket_price)"
 					+ " values("
@@ -18,16 +23,17 @@ public class ScheduleDAO implements iScheduleDAO {
 					+ ", "
 					+ stu.getPlay_id()
 					+ ", '"
-					+ stu.getSched_time()
+					+ cld.get(Calendar.YEAR)+"-"+(cld.get(Calendar.MONTH)+1)+"-"+cld.get(Calendar.DAY_OF_MONTH)
 					+ "', "
 					+ stu.getSched_ticket_price()
 					+ " )";
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			ResultSet rst = db.getInsertObjectIDs(sql);
-			if (rst != null && rst.first()) {
+			if (rst. next() && rst.first()) {
 				stu.setSched_id(rst.getInt(1));
 			}
+			
 			db.close(rst);
 			db.close();
 			return 1;

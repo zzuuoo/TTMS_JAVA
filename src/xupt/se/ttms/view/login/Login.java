@@ -87,7 +87,7 @@ public class Login extends JFrame implements ActionListener{
 			
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub.
 				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
 //					mima.setFocusable(true);
 //					String t = zhanghao.getText();

@@ -26,12 +26,14 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 	private JButton btnCancel, btnSave; 	//取消，保存按鈕
 
 	protected boolean rst=false; 				//操作结果
-	private JLabel lblName, lblRow, lblColumn;
-	protected JTextField txtName, txtRow, txtColumn;
+	private JLabel lblName, lblRow, lblColumn,introduction;
+	protected JTextField txtName, txtRow, txtColumn,txtintroduction;
 
 	public StudioAddUI() {
 	}
 
+
+	
 	@Override
 	protected void initContent(){
 		this.setTitle("添加演出厅");
@@ -57,6 +59,15 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 		txtColumn.setBounds(150, 130, 120, 30);
 		contPan.add(txtColumn);
 
+		
+		introduction = new JLabel("演出厅简介：");
+		introduction.setBounds(60, 180, 80, 30);
+		contPan.add(introduction);
+		txtintroduction = new JTextField();
+		txtintroduction.setBounds(150, 180, 120, 30);
+		contPan.add(txtintroduction);
+
+		
 		btnSave = new JButton("保存");
 
 		btnSave.addActionListener(this);
@@ -84,8 +95,9 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
 			rst=false;
-			this.dispose();
-			getParent().setVisible(true);
+//			this.dispose();
+			this.setVisible(false);
+//			getParent().setVisible(true);
 
 		} else if (e.getSource() == btnSave) {
 			btnSaveClicked();		//以前未调用，新添加的调用语句
@@ -99,14 +111,18 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			StudioSrv stuSrv = new StudioSrv();
 			Studio stu=new Studio();
 			stu.setName(txtName.getText());
+		
+			System.out.println(txtRow.getText());
 			stu.setRowCount(Integer.parseInt(txtRow.getText()));
 			stu.setColCount(Integer.parseInt(txtColumn.getText()));
-			stu.setIntroduction("test");
+	
+			stu.setIntroduction(txtintroduction.getText());
 
 			stuSrv.add(stu);
 			this.setVisible(false);
+//			this.dispose();
 			rst=true;
-			getParent().setVisible(true);
+//			getParent().setVisible(true);/
 		} else {
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		

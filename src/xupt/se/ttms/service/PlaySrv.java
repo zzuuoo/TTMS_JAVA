@@ -35,7 +35,7 @@ public class PlaySrv {
 		Play play1 = new Play();
 		play1.setName("test1");
 		Play play2 = new Play();
-		play2.setName("test1");
+		play2.setName("test2");
 		list.add(play1);
 		list.add(play2);
 		return list;

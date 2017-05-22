@@ -44,8 +44,8 @@ public class Seller extends MainUITmpl{
 		sale.setHorizontalTextPosition(SwingConstants.CENTER);
 		sale.setIcon(new ImageIcon("resource/image/p3.jpg"));
 		sale.setBackground(Color.WHITE);
-		sale.setText(" 售 票 ");
-		sale.setBounds(150, 100, 160, 160);
+		sale.setText(" 退售 票 ");
+		sale.setBounds(300, 100, 160, 160);
 		
 		sale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
@@ -61,8 +61,8 @@ public class Seller extends MainUITmpl{
 		refund.setHorizontalTextPosition(SwingConstants.CENTER);
 		refund.setIcon(new ImageIcon("resource/image/p4.jpg"));
 		refund.setBackground(Color.WHITE);
-		refund.setText(" 退 票 ");
-		refund.setBounds(450, 100, 160, 160);
+		refund.setText(" 查看销售记录 ");
+		refund.setBounds(600, 100, 160, 160);
 		refund.addActionListener(new ActionListener() {
 			
 			@Override
@@ -74,21 +74,21 @@ public class Seller extends MainUITmpl{
 			}
 		});
 		
-		JButton checkList = new JButton();
-		checkList.setVerticalTextPosition(SwingConstants.BOTTOM);
-		checkList.setHorizontalTextPosition(SwingConstants.CENTER);
-		checkList.setIcon(new ImageIcon("resource/image/p5.jpg"));
-		checkList.setBackground(Color.WHITE);
-		checkList.setText("查看销售记录");
-		checkList.setBounds(750, 100, 160, 160);
-		checkList.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		JButton checkList = new JButton();
+//		checkList.setVerticalTextPosition(SwingConstants.BOTTOM);
+//		checkList.setHorizontalTextPosition(SwingConstants.CENTER);
+//		checkList.setIcon(new ImageIcon("resource/image/p5.jpg"));
+//		checkList.setBackground(Color.WHITE);
+//		checkList.setText("查看销售记录");
+//		checkList.setBounds(750, 100, 160, 160);
+//		checkList.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 		
 		JLabel jb = new JLabel();
 		jb.setIcon(new ImageIcon("resource/image/study.gif"));
@@ -96,7 +96,7 @@ public class Seller extends MainUITmpl{
 		
 		workPanel.add(sale);
 		workPanel.add(refund);
-		workPanel.add(checkList);
+//		workPanel.add(checkList);
 		workPanel.add(jb);
 		workPanel.setBackground(Color.white);
 		

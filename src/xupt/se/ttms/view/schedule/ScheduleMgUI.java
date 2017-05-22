@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -21,15 +23,15 @@ import javax.swing.JTextField;
 
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.ScheduleSrv;
 import xupt.se.ttms.service.StudioSrv;
+import xupt.se.ttms.service.TicketSrv;
 import xupt.se.ttms.view.login.Manager;
-import xupt.se.ttms.view.studio.StudioAddUI;
-import xupt.se.ttms.view.studio.StudioEditUI;
 
 //import xupt.se.ttms.view.studio.StudioTableMouseListener;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 
-class StudioTableMouseListener extends MouseAdapter {
+class ScheduleTableMouseListener extends MouseAdapter {
 
 	private JTable jt;
 	private static Schedule sche;
@@ -38,7 +40,7 @@ class StudioTableMouseListener extends MouseAdapter {
 		return sche;
 	}
 
-	public StudioTableMouseListener(JTable jt, Object[] number, Schedule sche) {
+	public ScheduleTableMouseListener(JTable jt, Object[] number, Schedule sche) {
 		this.sche = sche;
 		this.jt = jt;
 	}
@@ -53,12 +55,24 @@ class StudioTableMouseListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent event) {
 		int row = jt.getSelectedRow();
 		sche.setSched_id(Integer.parseInt(jt.getValueAt(row, 0).toString()));
-		sche.setStudio_id((int)jt.getValueAt(row, 1));
-		sche.setPlay_id(((int)jt.getValueAt(row, 2)));
-		sche.setSched_time(((Date)jt.getValueAt(row, 3)));
+		sche.setStudio_id(Integer.parseInt(jt.getValueAt(row, 1).toString()));
+		sche.setPlay_id((Integer.parseInt(jt.getValueAt(row, 2).toString())));
+//		sche.setStudio_id((int)jt.getValueAt(row, 1));
+//		sche.setPlay_id(((int)jt.getValueAt(row, 2)));
+//		sche.setSched_time(((Date)jt.getValueAt(row, 3)));
 //		sche.setSched_time(DateFormat.parse(jt.getValueAt(row, 3).toString()));
-		
-		sche.setSched_ticket_price(((double)jt.getValueAt(row, 4)));
+		try  
+		{  
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");  
+		    Date date = sdf.parse((String) jt.getValueAt(row, 3));  
+		    sche.setSched_time(date);
+		}  
+		catch (Exception e)  
+		{  
+		    System.out.println(e.getMessage());  
+		} 
+//		sche.setSched_ticket_price(((double)jt.getValueAt(row, 4)));
+		sche.setSched_ticket_price((Double.parseDouble(jt.getValueAt(row, 4).toString())));
 		System.out.println(jt.getValueAt(row, 1).toString());
 	}
 }
@@ -80,13 +94,22 @@ class ScheduleTable {
 
 			Iterator<Schedule> itr = stuList.iterator();
 			int i = 0;
+			Calendar cld = Calendar.getInstance();
+			
 			while (itr.hasNext()) {
 				Schedule stu = itr.next();
+				cld.setTime(stu.getSched_time());
 				data[i][0] = Integer.toString(stu.getSched_id());
+				data[i][0]=stu.getSched_id();
 				data[i][1] = Integer.toString(stu.getPlay_id());
 				data[i][2] = Integer.toString(stu.getPlay_id());
-				data[i][3] = stu.getSched_time().toString();
+//				data[i][3] = stu.getSched_time().toString();
+				data[i][3]=cld.get(Calendar.YEAR)+"-"+(cld.get(Calendar.MONTH)+1)+"-"+cld.get(Calendar.DAY_OF_MONTH);
 				data[i][4] = Double.toString(stu.getSched_ticket_price());
+//				data[i][1] = stu.getPlay_id();
+//				data[i][2] = stu.getPlay_id();
+//				data[i][3] = stu.getSched_time();
+//				data[i][4] = stu.getSched_ticket_price();
 				i++;
 			}
 
@@ -95,7 +118,8 @@ class ScheduleTable {
 			jt.setBounds(0, 0, 700, 450);
 
 			// 添加鼠标监听，监听到所选行
-			StudioTableMouseListener tml = new StudioTableMouseListener(jt, columnNames, stud);
+			ScheduleTableMouseListener tml = new ScheduleTableMouseListener(jt, columnNames, stud);
+			stud=tml.getSchedule();
 			jt.addMouseListener(tml);
 
 			// 设置可调整列宽
@@ -114,7 +138,7 @@ public class ScheduleMgUI extends MainUITmpl{
 	
 	
 	private static final long serialVersionUID = 2L;
-	private Schedule sche=new Schedule();
+	private Schedule sche= new Schedule();
 	private JLabel ca1 = null; // 界面提示
 	// 用来放表格的滚动控件
 	private JScrollPane jsc;
@@ -199,35 +223,41 @@ public class ScheduleMgUI extends MainUITmpl{
 		
 		
 		private void btnAddClicked() {
-//			StudioAddUI addStud = new StudioAddUI();
-//			addStud.setWindowName("添加演出厅");
-//			addStud.toFront();
-//			addStud.setModal(true);
-//			addStud.setVisible(true);
-//
-//			if (addStud.getReturnStatus()) {
-//				showTable();
-//			}
-			System.out.println("add");
+			ScheduleAddUI addStud = new ScheduleAddUI();
+			addStud.setWindowName("添加演出计划");
+			addStud.toFront();
+			addStud.setModal(true);
+			addStud.setVisible(true);
+
+			if (addStud.getReturnStatus()) {
+				showTable();
+			}
+//			System.out.println("add");
 			
 		}
 
 		private void btnModClicked() {
-			System.out.println("修改");
+//			System.out.println("修改");
 				
-//			StudioEditUI modStu = new StudioEditUI(stud);
-//			modStu.setWindowName("修改演出厅");
-//			modStu.toFront();
-//			modStu.setModal(true);
-//			modStu.setVisible(true);
-//			if (modStu.getReturnStatus()) {
-//				showTable();
-//			}
+			ScheduleEditUI modStu = new ScheduleEditUI(sche);
+			modStu.setWindowName("修改演出计划");
+			modStu.toFront();
+			modStu.setModal(true);
+			modStu.setVisible(true);
+			if (modStu.getReturnStatus()) {
+				showTable();
+			}
 		}
 
 		private void btnDelClicked() {
 //			
-				System.out.println("delete");
+			int confirm = JOptionPane.showConfirmDialog(null, "确认删除所选？", "删除", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				ScheduleSrv stuSrv = new ScheduleSrv();
+				stuSrv.delete(sche.getSched_id());
+				showTable();
+			}
+//				System.out.println("delete");
 		}
 
 		private void btnQueryClicked() {
@@ -247,12 +277,32 @@ public class ScheduleMgUI extends MainUITmpl{
 		 */
 
 		public void showTable() {
+			
+			
 			ScheduleTable tms = new ScheduleTable(sche);
-			Object[] in = { "id", "studio_id", "play_id", "sched_time", "ticket_price" };
-//			List<Schedule> stuList = new StudioSrv().FetchAll();
-			List<Schedule> stuList = new ArrayList<>();
+			Object[] in = { "ID", "演出厅ID", "剧目ID", "演出时间", "票单价" };
+			List<Schedule> stuList = new ScheduleSrv().FetchAll();
+
 			tms.createTable(jsc, in, stuList);
 			jsc.repaint();
+			
+//			ScheduleTable tms = new ScheduleTable(sche);
+//			Object[] in = { "ID", "演出厅ID", "剧目ID", "演出时间", "票单价" };
+////			List<Schedule> stuList = new StudioSrv().FetchAll();
+////			List<Schedule> stuList = new ScheduleSrv().FetchAll();
+//			List<Schedule> stuList = new ArrayList<>();
+//			for(int i =0;i<10;i++){
+//				Schedule sc = new Schedule();
+//				sc.setPlay_id(i);
+//				sc.setSched_id(i);
+//				sc.setStudio_id(i);
+//				sc.setSched_time(new Date());
+//				sc.setSched_ticket_price(5*i+10);
+//
+//				stuList.add(sc);
+//			}
+//			tms.createTable(jsc, in, stuList);
+//			jsc.repaint();
 		}
 	
 	//To be override by the detailed business block interface 

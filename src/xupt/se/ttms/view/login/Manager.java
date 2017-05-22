@@ -49,7 +49,15 @@ public class Manager extends MainUITmpl{
 		filmManager.setBackground(Color.WHITE);
 		filmManager.setText(" 剧目管理 ");
 		filmManager.setBounds(150, 100, 160, 160);
-		
+		filmManager.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				
+			}
+		});
 		
 		JButton palyManager = new JButton();
 		palyManager.setVerticalTextPosition(SwingConstants.BOTTOM);
