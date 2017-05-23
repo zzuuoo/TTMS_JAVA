@@ -128,6 +128,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 //			stu.setRowCount(Integer.parseInt(txtRow.getText()));
 //			stu.setColCount(Integer.parseInt(txtColumn.getText()));
 //			stu.setIntroduction("test");
+			
 
 			stuSrv.add(sch);
 			this.setVisible(false);

@@ -64,16 +64,18 @@ class ScheduleTableMouseListener extends MouseAdapter {
 		try  
 		{  
 		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");  
-		    Date date = sdf.parse((String) jt.getValueAt(row, 3));  
+		    System.out.println(jt.getValueAt(row, 3));
+		    Date date = sdf.parse(""+jt.getValueAt(row, 3));  
 		    sche.setSched_time(date);
 		}  
 		catch (Exception e)  
 		{  
-		    System.out.println(e.getMessage());  
+//			e.printStackTrace();
+		    System.out.println("异常："+e.getMessage());  
 		} 
 //		sche.setSched_ticket_price(((double)jt.getValueAt(row, 4)));
 		sche.setSched_ticket_price((Double.parseDouble(jt.getValueAt(row, 4).toString())));
-		System.out.println(jt.getValueAt(row, 1).toString());
+		System.out.println(jt.getValueAt(row, 0).toString());
 	}
 }
 
@@ -104,11 +106,11 @@ class ScheduleTable {
 				data[i][1] = Integer.toString(stu.getPlay_id());
 				data[i][2] = Integer.toString(stu.getPlay_id());
 //				data[i][3] = stu.getSched_time().toString();
-				data[i][3]=cld.get(Calendar.YEAR)+"-"+(cld.get(Calendar.MONTH)+1)+"-"+cld.get(Calendar.DAY_OF_MONTH);
+//				data[i][3]=cld.get(Calendar.YEAR)+"-"+(cld.get(Calendar.MONTH)+1)+"-"+cld.get(Calendar.DAY_OF_MONTH);
 				data[i][4] = Double.toString(stu.getSched_ticket_price());
 //				data[i][1] = stu.getPlay_id();
 //				data[i][2] = stu.getPlay_id();
-//				data[i][3] = stu.getSched_time();
+				data[i][3] = stu.getSched_time();
 //				data[i][4] = stu.getSched_ticket_price();
 				i++;
 			}

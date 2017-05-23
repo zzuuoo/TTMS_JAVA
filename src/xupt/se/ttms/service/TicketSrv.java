@@ -23,7 +23,7 @@ public class TicketSrv {
 	}
 	
 	public List<Ticket> Fetch(String condt){
-		return null;		
+		return stuDAO.select(condt);		
 	}
 	
 	public List<Ticket> FetchAll(){

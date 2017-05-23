@@ -23,11 +23,12 @@ public class ScheduleEditUI extends ScheduleAddUI{
 // stid, plid, pt;
 	private void initData(Schedule sch) {
 		Calendar cld = Calendar.getInstance();
+		SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " ); 
 		cld.setTime(sch.getSched_time());
 		stid.setText(sch.getStudio_id()+"");
 		plid.setText(sch.getPlay_id()+"");
-		pt.setText(cld.get(Calendar.YEAR)+"-"
-		+(cld.get(Calendar.MONTH)+1)+"-"+cld.get(Calendar.DAY_OF_MONTH));
+		pt.setText(sdf.format(sch.getSched_time()));
+		pprice.setText(sch.getSched_ticket_price()+"");
 	}
 
 	@Override

@@ -168,7 +168,8 @@ public class SellTicketUI extends MainUITmpl{
 			leftPanel.removeAll();
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(play_name);
 		ScheduleSrv service = new ScheduleSrv();
-		List<Schedule> list = service.Fetch("play_id="+play_id);
+//		List<Schedule> list = service.Fetch("play_id="+play_id);
+		List<Schedule> list = service.Fetch("play_id="+3);
 		if (list.size() > 0) {
 			List<String> dates = new ArrayList<String>();
 			for (Schedule i : list) {
@@ -215,6 +216,7 @@ public class SellTicketUI extends MainUITmpl{
         	SeatSrv seatSrv = new SeatSrv();
         	StudioSrv studioSrv = new StudioSrv();
         	List<Ticket> tickets = ticketSrv.Fetch("sched_id = "+ schedule.getSched_id());
+//        	List<Ticket> tickets = ticketSrv.Fetch("sched_id = "+ 10);
         	for(Ticket t : tickets){
         		List<Seat> tmp = seatSrv.Fetch("seat_id = " + t.getSeatId());
         		if(tmp.size()>0){
