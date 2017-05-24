@@ -118,7 +118,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 			sch.setPlay_id(pid);
 			sch.setStudio_id(sid);
 			sch.setSched_ticket_price(new Double(pprice.getText()));
-			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
 			try {
 				sch.setSched_time(DF.parse(pt.getText()));
@@ -126,10 +126,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			stu.setName(txtName.getText());
-//			stu.setRowCount(Integer.parseInt(txtRow.getText()));
-//			stu.setColCount(Integer.parseInt(txtColumn.getText()));
-//			stu.setIntroduction("test");
+
 			
 
 			stuSrv.add(sch);
@@ -144,6 +141,5 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	protected void onWindowClosing(){
 		//System.exit(0);
 		this.dispose();
-//		new SystemMgUI().setVisible(true);
 }
 }
