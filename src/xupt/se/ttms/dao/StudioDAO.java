@@ -99,7 +99,7 @@ public class StudioDAO implements iStudioDAO {
 		List<Studio> stuList = null;
 		stuList=new LinkedList<Studio>();
 		try {
-			String sql = "select studio_id, studio_name, studio_row_count, studio_col_count, studio_introduction from studio ";
+			String sql = "select studio_id, studio_name, studio_row_count, studio_col_count, studio_introduction from studio";
 			condt.trim();
 			if(!condt.isEmpty())
 				sql+= " where " + condt;

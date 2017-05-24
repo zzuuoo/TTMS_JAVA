@@ -124,6 +124,8 @@ public class PlayDAO implements iPlayDAO {
 		try {
 			String sql = "select * from play ";
 			condt.trim();
+			if (!condt.isEmpty())
+				sql += " where " + condt;
 			DBUtil db = new DBUtil();
 			if (!db.openConnection()) {
 				System.out.print("fail to connect database");
@@ -162,8 +164,8 @@ public class PlayDAO implements iPlayDAO {
 			String sql = "select play.play_id, play_name from play, schedule " +
 		       "where play.play_id=schedule.play_id ";
 			condt.trim();
-//			if (!condt.isEmpty())
-//				sql += " where " + condt;
+			if (!condt.isEmpty())
+				sql += " where " + condt;
 //			sql += " group by play_name";
 			DBUtil db = new DBUtil();
 			if (!db.openConnection()) {

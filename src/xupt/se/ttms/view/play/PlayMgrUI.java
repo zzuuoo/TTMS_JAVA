@@ -105,7 +105,16 @@ class PlayTable {
 			stud.setName(jt.getValueAt(rowSel, 1).toString());
 		
 			stud.setLength(Integer.parseInt(""+jt.getValueAt(rowSel, 3)));
-			stud.setStatus(Integer.parseInt(""+jt.getValueAt(rowSel, 4)));
+			
+			if((jt.getValueAt(rowSel, 4)+"").equals("待安排演出")){
+				stud.setStatus(0);
+			}else if((jt.getValueAt(rowSel, 4)+"").equals("已安排演出")){
+				stud.setStatus(1);
+			}else {
+				stud.setStatus(-1);
+			}
+			
+//			stud.setStatus(Integer.parseInt(""+jt.getValueAt(rowSel, 4)));
 			stud.setTicketPrice(Float.parseFloat(""+jt.getValueAt(rowSel, 5)));
 			if(jt.getValueAt(rowSel, 6)!=null){
 			stud.setIntroduction(jt.getValueAt(rowSel, 6).toString());
@@ -137,7 +146,17 @@ class PlayTable {
 				data[1] = stu.getName();
 				data[2] = stu.getImage();
 				data[3] = Integer.toString(stu.getLength());
-				data[4] = Integer.toString(stu.getStatus());
+				
+//				data[4] = Integer.toString(stu.getStatus());
+				if(stu.getStatus()==0){
+					data[4]="待安排演出";
+				}else if(stu.getStatus()==1){
+					data[4]="已安排演出";
+				}else {
+					data[4]="已下线";
+				}
+				
+				
 				data[5] = Float.toString(stu.getTicketPrice());
 				data[6] = stu.getIntroduction();
 				tabModel.addRow(data);;

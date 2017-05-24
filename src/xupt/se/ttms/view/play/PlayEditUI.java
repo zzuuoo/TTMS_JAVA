@@ -212,7 +212,16 @@ public class PlayEditUI extends PlayAddUI{
 		txtName.setText(stu.getName());
 		txtintroduction.setText(stu.getIntroduction());
 		txtlength.setText(stu.getLength()+"");
-		txtstatus.setText(stu.getStatus()+"");
+		if(stu.getStatus()==0){
+			playstatus.setSelectedIndex(0);
+		}else if(stu.getStatus()==1){
+			playstatus.setSelectedIndex(1);
+		}else {
+			playstatus.setSelectedIndex(2);
+		}
+		
+
+//		txtstatus.setText(stu.getStatus()+"");
 		txtTicketPrice.setText(stu.getTicketPrice()+"");
 		stud=stu;
 		this.invalidate();
@@ -221,14 +230,20 @@ public class PlayEditUI extends PlayAddUI{
 	@Override
 	protected void btnSaveClicked(){
 		if (txtName.getText() != null && txtintroduction.getText() != null
-				&& txtlength.getText() != null&&txtstatus!=null
+				&& txtlength.getText() != null&&playstatus.getSelectedItem()!=null
 				&&txtTicketPrice.getText()!=null) {
 			PlaySrv stuSrv = new PlaySrv();
 			Play stu= stud;
 			stu.setName(txtName.getText());
 			stu.setIntroduction(txtintroduction.getText());
 			stu.setLength(Integer.parseInt(txtlength.getText()));
-			stu.setStatus(Integer.parseInt(txtstatus.getText()));
+			if(playstatus.getSelectedItem().equals("待安排演出")){
+				stu.setStatus(0);
+			}else if(playstatus.getSelectedItem().equals("已安排演出")){
+				stu.setStatus(1);
+			}else{
+				stu.setStatus(-1);
+			}
 			stu.setTicketPrice(Float.parseFloat(txtTicketPrice.getText()));
 			stuSrv.modify(stu);
 			this.setVisible(false);

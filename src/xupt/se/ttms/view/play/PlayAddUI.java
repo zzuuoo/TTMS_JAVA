@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import xupt.se.ttms.model.Play;
@@ -20,8 +22,10 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 
 	protected boolean rst=false; 				//操作结果
 	private JLabel lblName, lblRow, lblColumn,introduction,price;
-	protected JTextField txtName, txtintroduction, txtlength,txtstatus,txtTicketPrice;
+	protected JTextField txtName,  txtlength,txtTicketPrice;
+	JComboBox playstatus;
 
+	protected JTextArea txtintroduction;
 	public PlayAddUI() {
 //		initContent();
 	}
@@ -39,8 +43,8 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 		txtName.setBounds(150, 30, 120, 30);
 		contPan.add(txtName);
 
-		lblRow = new JLabel("剧目时长：");
-		lblRow.setBounds(60, 80, 90, 30);
+		lblRow = new JLabel("剧目时长(分钟)：");
+		lblRow.setBounds(60, 80, 130, 30);
 		contPan.add(lblRow);
 		txtlength = new JTextField();
 		txtlength.setBounds(150, 80, 120, 30);
@@ -49,9 +53,17 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 		lblColumn = new JLabel("剧目状态：");
 		lblColumn.setBounds(60, 130, 90, 30);
 		contPan.add(lblColumn);
-		txtstatus = new JTextField();
-		txtstatus.setBounds(150, 130, 120, 30);
-		contPan.add(txtstatus);
+	
+		
+//		txtstatus = new JTextField();
+//		txtstatus.setBounds(150, 130, 120, 30);
+//		contPan.add(txtstatus);
+		
+//		 0：待安排演出    1：已安排演出    -1：下线
+		String[] playStatus = {"待安排演出","已安排演出","下线"};
+		playstatus = new JComboBox(playStatus);
+		playstatus.setBounds(150, 130, 120, 30);
+		contPan.add(playstatus);
 
 		
 		price = new JLabel("剧目票价：");
@@ -65,7 +77,8 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 		introduction = new JLabel("剧目简介：");
 		introduction.setBounds(60, 230, 90, 30);
 		contPan.add(introduction);
-		txtintroduction = new JTextField();
+		txtintroduction = new JTextArea();
+		txtintroduction.setLineWrap(true);
 		txtintroduction.setBounds(150, 230, 400, 200);
 		contPan.add(txtintroduction);
 
@@ -128,13 +141,23 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 	protected void btnSaveClicked(){
 		if (txtName.getText() != null && txtintroduction.getText() != null
 				&& txtlength.getText() != null&&txtTicketPrice.getText()!=null
-				&&txtstatus.getText()!=null) {
+				&&playstatus.getSelectedItem()!=null) {
 			PlaySrv stuSrv = new PlaySrv();
 			Play stu=new Play();
 			stu.setName(txtName.getText());
 			System.out.println(txtlength.getText()+11111);
 			stu.setLength(Integer.parseInt(txtlength.getText()+1));
-			stu.setStatus(Integer.parseInt(txtstatus.getText()));
+			if(playstatus.getSelectedItem().equals("待安排演出")){
+				stu.setStatus(0);
+			}else if(playstatus.getSelectedItem().equals("以安排演出")){
+				stu.setStatus(1);
+			}else{
+				stu.setStatus(-1);
+			}
+			
+				
+//				 0：待安排演出    1：已安排演出    -1：下线
+//			stu.setStatus(Integer.parseInt(txtstatus.getText()));
 			stu.setTicketPrice(Float.parseFloat(txtTicketPrice.getText()));
 //			System.out.println(txtRow.getText());
 //			stu.setRowCount(Integer.parseInt(txtRow.getText()));

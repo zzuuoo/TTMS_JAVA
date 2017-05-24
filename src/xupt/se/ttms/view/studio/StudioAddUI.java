@@ -57,6 +57,7 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 		lblIntro.setBounds(60, 130, 80, 30);
 		contPan.add(lblIntro);
 		txtIntro = new JTextArea();
+		txtIntro.setLineWrap(true);
 		txtIntro.setBounds(150, 130, 400, 100);
 		contPan.add(txtIntro);
 
