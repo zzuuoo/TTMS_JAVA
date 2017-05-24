@@ -78,12 +78,12 @@ public class SellTicketUI extends MainUITmpl{
 		handler.makeNewSale();
 		
 		setUpPanel();
-		if(scheduledPlay.size()>0){
-			setLeftPanel(scheduledPlay.get(0).getId(),scheduledPlay.get(0).getName());
-			curPlay = scheduledPlay.get(0);
-		}
-		else
-			setLeftPanel(0,"【无信息】");
+//		if(scheduledPlay.size()>0){
+//			setLeftPanel(scheduledPlay.get(0).getId(),scheduledPlay.get(0).getName());
+//			curPlay = scheduledPlay.get(0);
+//		}
+//		else
+//			setLeftPanel(0,"【无信息】");
 		
 		setRightPanel();
 
@@ -93,6 +93,10 @@ public class SellTicketUI extends MainUITmpl{
 		contPan.add(tabPane);
 		contPan.validate();
 		
+		
+		/**
+		 *这是座位测试数据。。。
+		 */
 		List<Ticket> tickets = new ArrayList<>();
 		for(int i =1;i<9;i++){
 			
@@ -379,30 +383,6 @@ public class SellTicketUI extends MainUITmpl{
 	
 	
 	
-//	private SellTicketHandler handler;
-//	private Play curPlay;
-//	private Schedule curSchedule;
-//	private List<Play> playList;
-//	private List<Schedule> scheduleList;
-//	
-//	
-//	protected void initContent(){
-//		
-//		Rectangle rect = contPan.getBounds();
-//		
-//		
-//		
-//
-//		
-//		//在这添加售票的内容
-//		
-//		
-//	}
-//	
-//	long a = 012;
-//	float f= -111;
-//	int a = (int)true;
-//	double d =0X12345678;
 //	byte b = 128;
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){

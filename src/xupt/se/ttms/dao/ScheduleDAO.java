@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 
 import xupt.se.ttms.idao.iScheduleDAO;
 import xupt.se.ttms.model.Schedule;
@@ -12,9 +13,9 @@ import xupt.se.util.DBUtil;
 public class ScheduleDAO implements iScheduleDAO {
 	 
 	public int insert(Schedule stu) {
-		
-		Calendar cld = Calendar.getInstance();
-		cld.setTime(stu.getSched_time());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+//		Calendar cld = Calendar.getInstance();
+//		cld.setTime(stu.getSched_time());
 		
 		try {
 			String sql = "insert into Schedule(studio_id, play_id, sched_time, sched_ticket_price)"
@@ -23,7 +24,7 @@ public class ScheduleDAO implements iScheduleDAO {
 					+ ", "
 					+ stu.getPlay_id()
 					+ ", '"
-					+ cld.get(Calendar.YEAR)+"-"+(cld.get(Calendar.MONTH)+1)+"-"+cld.get(Calendar.DAY_OF_MONTH)
+					+ sdf.format(stu.getSched_time())
 					+ "', "
 					+ stu.getSched_ticket_price()
 					+ " )";
@@ -48,11 +49,13 @@ public class ScheduleDAO implements iScheduleDAO {
 	 
 	public int update(Schedule stu) {
 		int rtn = 0;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 		try {
 			String sql = "update Schedule set " + " studio_id ="
 					+ stu.getStudio_id() + ", " + " play_id = "
 					+ stu.getPlay_id() + ", " + " sched_time = '"
-					+ stu.getSched_time() + "', " + " sched_ticket_price = "
+					+sdf.format(stu.getSched_time())
+					+ "', " + " sched_ticket_price = "
 					+ stu.getSched_ticket_price() + " ";
 
 			sql += " where sched_id = " + stu.getSched_id();

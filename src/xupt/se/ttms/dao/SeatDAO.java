@@ -13,6 +13,8 @@ public class SeatDAO implements iSeatDAO {
 	public int insert(Seat stu) {
 
 		try {
+			
+			
 			String sql = "insert into seat(seat_id, studio_id, seat_row, seat_column )"
 					+ " values("
 					+ stu.getId()
@@ -27,7 +29,8 @@ public class SeatDAO implements iSeatDAO {
 			ResultSet rst = db.getInsertObjectIDs(sql);
 
 
-			System.out.println("hello");
+			System.out.println("hello——seat");
+
 			if(rst.next()&&rst.first()){
 				stu.setId(rst.getInt(1));
 			}

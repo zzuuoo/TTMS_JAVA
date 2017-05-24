@@ -43,7 +43,8 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule stu= stud;
 			stu.setPlay_id(Integer.parseInt(plid.getText()));
-			stu.setSched_id(Integer.parseInt(stid.getText()));
+			stu.setStudio_id(Integer.parseInt(stid.getText()));
+//			stu.setSched_id(Integer.parseInt(stid.getText()));
 			stu.setSched_ticket_price(Double.parseDouble(pprice.getText()));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 			try {

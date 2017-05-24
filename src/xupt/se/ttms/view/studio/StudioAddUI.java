@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.tmpl.*;
 
@@ -103,6 +105,18 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			stu.setColCount(Integer.parseInt(txtColumn.getText()));
 			stu.setIntroduction(txtIntro.getText());
 
+			/**
+			 * 生成演出厅的同时生成座位数据
+			 */
+//			SeatSrv seatsrv = new SeatSrv();
+//			int studioID = stu.getID();
+//			for(int i =0;i<stu.getRowCount();i++){
+//				for(int j =0;j<stu.getColCount();j++){
+//					seatsrv.add(new Seat(studioID,i,j));
+//				}
+//			}
+			
+			
 			stuSrv.add(stu);
 			this.setVisible(false);
 			rst=true;

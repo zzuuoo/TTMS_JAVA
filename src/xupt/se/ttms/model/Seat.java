@@ -17,6 +17,12 @@ public class Seat {
 		this.column = column;
 	}
 
+	public Seat(int studioId, int row, int column) {
+		super();
+		this.studioId = studioId;
+		this.row = row;
+		this.column = column;
+	}
 	public int getId() {
 		return id;
 	}
