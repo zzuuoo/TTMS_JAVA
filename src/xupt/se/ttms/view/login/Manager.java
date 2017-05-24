@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import xupt.se.ttms.view.play.PlayMgrUI;
 import xupt.se.ttms.view.schedule.ScheduleMgUI;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.studio.StudioSeat;
@@ -54,7 +55,8 @@ public class Manager extends MainUITmpl{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				new PlayMgrUI().setVisible(true);
+				Manager.this.dispose();
 				
 			}
 		});

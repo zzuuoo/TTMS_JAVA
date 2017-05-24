@@ -1,3 +1,4 @@
+
 package xupt.se.ttms.view.tmpl;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -8,13 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+
+
 public class PopUITmpl extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=800;
 	private int frmHeight=600;
-	public static final ImagePanel headPan = new ImagePanel("resource/image/header2.jpg");
-	public static final JPanel contPan = new JPanel();
-	public static JLabel windowName = new JLabel();
+	public final ImagePanel headPan = new ImagePanel("resource/image/header2.jpg");
+	public JPanel contPan = new JPanel();
+	public JLabel windowName = new JLabel();
 
 	public PopUITmpl(){
 		this.setSize(frmWidth, frmHeight);
@@ -36,9 +39,10 @@ public class PopUITmpl extends JDialog {
 		this.add(contPan);	
 		
 		initHeader();
-		initContent();
+		initContent();		
+		
 	}
-
+	
 	/**
 	 * @param args
 	 */
@@ -63,7 +67,7 @@ public class PopUITmpl extends JDialog {
 
 			windowName.setBounds(frmWidth-160, 5, 160, 50);
 			windowName.setFont(new java.awt.Font("dialog", 1, 20));
-			windowName.setForeground(Color.white);	
+			windowName.setForeground(Color.blue);	
 			headPan.add(windowName);
 			setWindowName("模块名称");
 			
@@ -82,7 +86,7 @@ public class PopUITmpl extends JDialog {
 	
 	//To be override by the detailed business block interface 
 	protected void onWindowClosing(){
-		System.exit(0);
+		this.dispose();
 	}
 	
 	
@@ -92,9 +96,4 @@ public class PopUITmpl extends JDialog {
 	}
 	
 
-	
-	//To be override by the detailed business block interface 
-	protected void btnExitClicked(ActionEvent Event){
-		System.exit(0);
-	}
 }

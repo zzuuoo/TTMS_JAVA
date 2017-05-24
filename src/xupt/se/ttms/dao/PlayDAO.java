@@ -13,13 +13,26 @@ public class PlayDAO implements iPlayDAO {
 	public int insert(Play stu) {
 
 		try {
-			String sql = "insert into play(play_id, play_type_id, play_lang_id, play_name,play_introduction,play_image,play_length,play_ticket_price,play_status )"
-					+ " values("
-					+ stu.getId()
-					+ ", "
-					+ stu.getTypeId()
-					+ ", " + stu.getLangId()
-					+",'"
+//			String sql = "insert into play(play_id, play_type_id, play_lang_id, play_name,play_introduction,play_image,play_length,play_ticket_price,play_status )"
+//					+ " values("
+//					+ stu.getId()
+//					+ ", "
+//					+ stu.getTypeId()
+//					+ ", " + stu.getLangId()
+//					+",'"
+//					+stu.getName()
+//					+"','"
+//					+stu.getIntroduction()
+//					+"','"
+//					+stu.getImage()
+//					+"',"
+//					+stu.getLength()
+//					+","
+//					+stu.getTicketPrice()
+//					+ ", " + stu.getStatus()
+//					+ ")";
+			String sql = "insert into play(play_name,play_introduction,play_image,play_length,play_ticket_price,play_status )"
+					+ " values( '"
 					+stu.getName()
 					+"','"
 					+stu.getIntroduction()
@@ -60,10 +73,17 @@ public class PlayDAO implements iPlayDAO {
 	public int update(Play stu) {
 		int rtn = 0;
 		try {
-			String sql = "update play set " + " play_type_id ="
-					+ stu.getTypeId() + ", " + " play_lang_id = "
-					+ stu.getLangId() + ", "  + " play_name = '"
-					+ stu.getName() + "' ,"+"play_introtuction = '"
+//			String sql = "update play set " + " play_type_id ="
+//					+ stu.getTypeId() + ", " + " play_lang_id = "
+//					+ stu.getLangId() + ", "  + " play_name = '"
+//					+ stu.getName() + "' ,"+"play_introtuction = '"
+//					+stu.getIntroduction()+"',"+"play_image='"
+//					+stu.getImage()+"',"+"play_length="
+//					+stu.getLength()+","+"play_ticket_price="
+//					+stu.getTicketPrice()+","+"play_status="
+//					+stu.getStatus();
+			String sql = "update play set "  + " play_name = '"
+					+ stu.getName() + "' ,"+"play_introduction = '"
 					+stu.getIntroduction()+"',"+"play_image='"
 					+stu.getImage()+"',"+"play_length="
 					+stu.getLength()+","+"play_ticket_price="
@@ -99,7 +119,39 @@ public class PlayDAO implements iPlayDAO {
 
 	 
 	public List<Play> select(String condt) {
-		return null;
+		List<Play> stuList = null;
+		stuList = new LinkedList<Play>();
+		try {
+			String sql = "select * from play ";
+			condt.trim();
+			DBUtil db = new DBUtil();
+			if (!db.openConnection()) {
+				System.out.print("fail to connect database");
+				return null;
+			}
+			ResultSet rst = db.execQuery(sql);
+			if (rst != null) {
+				while (rst.next()) {
+					Play stu = new Play();
+					stu.setId(rst.getInt("play_id"));
+					stu.setName(rst.getString("play_name"));
+					stu.setIntroduction(rst.getString("play_introduction"));
+					stu.setLength(rst.getInt("play_length"));
+					stu.setTicketPrice(rst.getFloat("play_ticket_price"));
+					stu.setStatus(rst.getInt("play_status"));
+//					stu.setImage(rst.get);
+					stuList.add(stu);
+				}
+			}
+			db.close(rst);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return stuList;
 	}	
 	
 	 

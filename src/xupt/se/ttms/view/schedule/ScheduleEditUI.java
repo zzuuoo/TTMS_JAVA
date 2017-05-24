@@ -18,12 +18,13 @@ public class ScheduleEditUI extends ScheduleAddUI{
 
 	public ScheduleEditUI(Schedule sch) {
 		this.setTitle("修改演出计划");
+//		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		initData(sch);
 	}
 // stid, plid, pt;
 	private void initData(Schedule sch) {
 		Calendar cld = Calendar.getInstance();
-		SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " ); 
+		SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm " ); 
 		cld.setTime(sch.getSched_time());
 		stid.setText(sch.getStudio_id()+"");
 		plid.setText(sch.getPlay_id()+"");
@@ -39,7 +40,7 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			Schedule stu=new Schedule();
 			stu.setStudio_id(Integer.parseInt(stid.getText()));
 			stu.setPlay_id(Integer.parseInt(stid.getText()));
-			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat DF = new SimpleDateFormat(" yyyy-MM-dd HH:mm");
 			
 			try {
 				stu.setSched_time(DF.parse(pt.getText()));
@@ -48,7 +49,9 @@ public class ScheduleEditUI extends ScheduleAddUI{
 				e.printStackTrace();
 			}
 			schSrv.modify(stu);
+		
 			this.setVisible(false);
+			System.gc();
 			rst=true;
 			getParent().setVisible(true);
 		} else {

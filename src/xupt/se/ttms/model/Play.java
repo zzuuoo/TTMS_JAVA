@@ -2,8 +2,8 @@ package xupt.se.ttms.model;
 
 public class Play {
 	private int id;
-	private int typeId;
-	private int langId;
+//	private int typeId;
+//	private int langId;
 	private String name;
 	private String introduction;
 	private int[] image;
@@ -15,13 +15,27 @@ public class Play {
 		
 	}
 	
-	public Play(int id, int typeId, int langId, String name,
+//	public Play(int id, int typeId, int langId, String name,
+//			String introduction, int[] image, int length, float ticketPrice,
+//			int status) {
+//		super();
+//		this.id = id;
+//		this.typeId = typeId;
+//		this.langId = langId;
+//		this.name = name;
+//		this.introduction = introduction;
+//		this.image = image;
+//		this.length = length;
+//		this.ticketPrice = ticketPrice;
+//		this.status = status;
+//	}
+	public Play(int id, String name,
 			String introduction, int[] image, int length, float ticketPrice,
 			int status) {
 		super();
 		this.id = id;
-		this.typeId = typeId;
-		this.langId = langId;
+//		this.typeId = typeId;
+//		this.langId = langId;
 		this.name = name;
 		this.introduction = introduction;
 		this.image = image;
@@ -38,21 +52,21 @@ public class Play {
 		this.id = id;
 	}
 
-	public int getTypeId() {
-		return typeId;
-	}
-
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
-	}
-
-	public int getLangId() {
-		return langId;
-	}
-
-	public void setLangId(int langId) {
-		this.langId = langId;
-	}
+//	public int getTypeId() {
+//		return typeId;
+//	}
+//
+//	public void setTypeId(int typeId) {
+//		this.typeId = typeId;
+//	}
+//
+//	public int getLangId() {
+//		return langId;
+//	}
+//
+//	public void setLangId(int langId) {
+//		this.langId = langId;
+//	}
 
 	public String getName() {
 		return name;

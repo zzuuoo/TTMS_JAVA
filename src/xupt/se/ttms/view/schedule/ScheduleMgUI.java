@@ -63,9 +63,9 @@ class ScheduleTableMouseListener extends MouseAdapter {
 //		sche.setSched_time(DateFormat.parse(jt.getValueAt(row, 3).toString()));
 		try  
 		{  
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");  
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
 		    System.out.println(jt.getValueAt(row, 3));
-		    Date date = sdf.parse(""+jt.getValueAt(row, 3));  
+		    Date date = sdf.parse(jt.getValueAt(row, 3)+"");  
 		    sche.setSched_time(date);
 		}  
 		catch (Exception e)  
@@ -110,7 +110,8 @@ class ScheduleTable {
 				data[i][4] = Double.toString(stu.getSched_ticket_price());
 //				data[i][1] = stu.getPlay_id();
 //				data[i][2] = stu.getPlay_id();
-				data[i][3] = stu.getSched_time();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+				data[i][3] = sdf.format(stu.getSched_time());
 //				data[i][4] = stu.getSched_ticket_price();
 				i++;
 			}
@@ -151,6 +152,8 @@ public class ScheduleMgUI extends MainUITmpl{
 	// 查找，编辑和删除按钮
 	private JButton btnAdd, btnEdit, btnDel, btnQuery;
 
+	private ScheduleEditUI modStu;
+	private ScheduleAddUI addStud;
 	
 
 	public ScheduleMgUI(){
@@ -225,7 +228,7 @@ public class ScheduleMgUI extends MainUITmpl{
 		
 		
 		private void btnAddClicked() {
-			ScheduleAddUI addStud = new ScheduleAddUI();
+			addStud = new ScheduleAddUI();
 			addStud.setWindowName("添加演出计划");
 			addStud.toFront();
 			addStud.setModal(true);
@@ -241,7 +244,7 @@ public class ScheduleMgUI extends MainUITmpl{
 		private void btnModClicked() {
 //			System.out.println("修改");
 				
-			ScheduleEditUI modStu = new ScheduleEditUI(sche);
+			modStu = new ScheduleEditUI(sche);
 			modStu.setWindowName("修改演出计划");
 			modStu.toFront();
 			modStu.setModal(true);

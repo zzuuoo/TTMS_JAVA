@@ -92,8 +92,10 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
 			rst=false;
+			this.onWindowClosing();
 			this.dispose();
-			getParent().setVisible(true);
+			System.gc();
+//			getParent().setVisible(true);
 
 		} else if (e.getSource() == btnSave) {
 			btnSaveClicked();		//以前未调用，新添加的调用语句
@@ -116,7 +118,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 			sch.setPlay_id(pid);
 			sch.setStudio_id(sid);
 			sch.setSched_ticket_price(new Double(pprice.getText()));
-			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 			try {
 				sch.setSched_time(DF.parse(pt.getText()));
@@ -132,6 +134,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 
 			stuSrv.add(sch);
 			this.setVisible(false);
+			System.gc();
 			rst=true;
 //			getParent().setVisible(true);
 		} else {
