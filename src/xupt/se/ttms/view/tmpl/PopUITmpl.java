@@ -15,7 +15,7 @@ public class PopUITmpl extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=800;
 	private int frmHeight=600;
-	public final ImagePanel headPan = new ImagePanel("resource/image/header2.jpg");
+	public final ImagePanel headPan = new ImagePanel("resource/image/pop1.jpg");
 	public JPanel contPan = new JPanel();
 	public JLabel windowName = new JLabel();
 
@@ -67,7 +67,7 @@ public class PopUITmpl extends JDialog {
 
 			windowName.setBounds(frmWidth-160, 5, 160, 50);
 			windowName.setFont(new java.awt.Font("dialog", 1, 20));
-			windowName.setForeground(Color.blue);	
+			windowName.setForeground(Color.black);	
 			headPan.add(windowName);
 			setWindowName("模块名称");
 			

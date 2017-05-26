@@ -2,6 +2,8 @@ package xupt.se.ttms.view.schedule;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -20,7 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -60,6 +65,24 @@ class ScheduleTable {
 		tabModel.addColumn("票价");
 		//初始化列明
 		jt=new JTable(tabModel);	
+		
+		jt=new JTable(tabModel);
+		jt.setSelectionBackground(Color.green);
+//		jt.setGridColor(Color.orange);
+		JTableHeader th = jt.getTableHeader();
+//		th.setResizingAllowed(true);
+		th.setFont(new Font("宋体",3,25));
+		th.setPreferredSize(new Dimension(jt.getWidth(), 40));
+		jt.setRowHeight(30);
+		jt.setFont(new Font("宋体",1,20));
+		DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+	       render.setHorizontalAlignment(SwingConstants.CENTER);
+	       
+	       jt.getColumn("演出计划ID").setCellRenderer(render);
+	       jt.getColumn("演出厅ID").setCellRenderer(render);
+	       jt.getColumn("剧目ID").setCellRenderer(render);
+	       jt.getColumn("演出时间").setCellRenderer(render);
+	       jt.getColumn("票价").setCellRenderer(render);
 		
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();

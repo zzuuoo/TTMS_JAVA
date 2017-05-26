@@ -27,8 +27,8 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			return;
 		}
 
-		stid.setText(stu.getStudio_id()+"");
-		plid.setText(stu.getPlay_id()+"");
+//		stid.setText(stu.getStudio_id()+"");
+//		plid.setText(stu.getPlay_id()+"");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
 		pt.setText(sdf.format(stu.getSched_time()));
 		pprice.setText(stu.getSched_ticket_price()+"");
@@ -38,12 +38,12 @@ public class ScheduleEditUI extends ScheduleAddUI{
 
 	@Override
 	protected void btnSaveClicked(){
-		if (stid.getText() != null && plid.getText() != null
+		if (jstudioID!= null && jplayID!= null
 				&& pt.getText() != null&&pprice.getText()!=null) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule stu= stud;
-			stu.setPlay_id(Integer.parseInt(plid.getText()));
-			stu.setStudio_id(Integer.parseInt(stid.getText()));
+//			stu.setPlay_id(Integer.parseInt(plid.getText()));
+//			stu.setStudio_id(Integer.parseInt(stid.getText()));
 //			stu.setSched_id(Integer.parseInt(stid.getText()));
 			stu.setSched_ticket_price(Double.parseDouble(pprice.getText()));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 

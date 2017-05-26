@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+
+import xupt.se.ttms.view.myview.CircleButton;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.tmpl.PopUITmpl;
 /**
@@ -138,7 +141,9 @@ public class Login extends JFrame implements ActionListener{
 		log_in.setBounds(400, 400, 70, 35);
 		register.setBounds(500, 400, 70, 35);
 		log_in.setBackground(Color.GREEN);
+		log_in.setBorder(BorderFactory.createRaisedBevelBorder()); 
 		register.setBackground(Color.green);
+		register.setBorder(BorderFactory.createRaisedBevelBorder()); 
 		log_in.addActionListener(this);
 		register.addActionListener(this);
 

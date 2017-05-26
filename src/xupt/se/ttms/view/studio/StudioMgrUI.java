@@ -1,6 +1,8 @@
 ﻿package xupt.se.ttms.view.studio;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -26,6 +31,7 @@ import java.util.Iterator;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.login.SystemMgUI;
+import xupt.se.ttms.view.myview.MyJTable;
 import xupt.se.ttms.view.tmpl.*;
 
 class StudioTable {
@@ -45,17 +51,33 @@ class StudioTable {
 				return false;              
 			};
 		};
-		tabModel.addColumn("id");
-		tabModel.addColumn("name");
-		tabModel.addColumn("row");
-		tabModel.addColumn("column");
-		tabModel.addColumn("desciption");
+		tabModel.addColumn("ID");
+		tabModel.addColumn("名字");
+		tabModel.addColumn("行");
+		tabModel.addColumn("列");
+		tabModel.addColumn("演出厅描述");
 		//初始化列明
-		jt=new JTable(tabModel);	
+		jt=new JTable(tabModel);
+		jt.setSelectionBackground(Color.green);
+//		jt.setGridColor(Color.orange);
+		JTableHeader th = jt.getTableHeader();
+//		th.setResizingAllowed(true);
+		th.setFont(new Font("宋体",3,25));
+		th.setPreferredSize(new Dimension(jt.getWidth(), 40));
+		jt.setRowHeight(30);
+		jt.setFont(new Font("宋体",1,20));
+		DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+	       render.setHorizontalAlignment(SwingConstants.CENTER);
+	       
+	       jt.getColumn("名字").setCellRenderer(render);
+	       jt.getColumn("行").setCellRenderer(render);
+	       jt.getColumn("列").setCellRenderer(render);
+	       jt.getColumn("ID").setCellRenderer(render);
+	       jt.getColumn("演出厅描述").setCellRenderer(render);
 		
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();
-	    
+
 	    //隐藏ID这一列
         TableColumn column = columnModel.getColumn(0);
 //        column.setMinWidth(0);
@@ -64,7 +86,7 @@ class StudioTable {
         column.setPreferredWidth(10);
 
         column = columnModel.getColumn(1);
-        column.setPreferredWidth(10);
+        column.setPreferredWidth(50);
         column = columnModel.getColumn(2);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(3);

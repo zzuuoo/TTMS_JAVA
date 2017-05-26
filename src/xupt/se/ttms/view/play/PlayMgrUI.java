@@ -2,6 +2,8 @@ package xupt.se.ttms.view.play;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -17,7 +19,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -51,7 +56,7 @@ class PlayTable {
 		};
 //Object[] in = { "id", "name", "image", "introduction", "length","status","ticketprice" };
 
-		tabModel.addColumn("id");
+		tabModel.addColumn("ID");
 		tabModel.addColumn("名字");
 		tabModel.addColumn("image");
 		tabModel.addColumn("时长");
@@ -61,6 +66,26 @@ class PlayTable {
 		
 		//初始化列明
 		jt=new JTable(tabModel);	
+		
+//
+		jt.setSelectionBackground(Color.green);
+////		jt.setGridColor(Color.orange);
+		JTableHeader th = jt.getTableHeader();
+//		th.setResizingAllowed(true);
+		th.setFont(new Font("宋体",3,15));
+		th.setPreferredSize(new Dimension(jt.getWidth(), 30));
+		jt.setRowHeight(20);
+		jt.setFont(new Font("宋体",1,12));
+		DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+	       render.setHorizontalAlignment(SwingConstants.CENTER);
+	       
+	       jt.getColumn("ID").setCellRenderer(render);
+	       jt.getColumn("名字").setCellRenderer(render);
+	       jt.getColumn("image").setCellRenderer(render);
+	       jt.getColumn("时长").setCellRenderer(render);
+	       jt.getColumn("票价").setCellRenderer(render);
+	       jt.getColumn("状态").setCellRenderer(render);
+	       jt.getColumn("简介").setCellRenderer(render);
 		
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();

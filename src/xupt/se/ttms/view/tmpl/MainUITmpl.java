@@ -28,7 +28,7 @@ public class MainUITmpl extends JFrame  {
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=1024;
 	private int frmHeight=700;
-	protected final ImagePanel headPan = new ImagePanel("resource/image/header2.jpg");
+	protected final ImagePanel headPan = new ImagePanel("resource/image/header3.jpg");
 	protected final JPanel contPan = new JPanel();
 	protected JLabel usrLabel = new JLabel();
 	protected JLabel usrName = new JLabel();
@@ -96,13 +96,13 @@ public class MainUITmpl extends JFrame  {
 			usrName.setBounds(frmWidth-80, 5, 80, 30);
 			usrName.setText("匿名");
 			usrName.setFont(new java.awt.Font("宋体", 1, 15));
-			usrName.setForeground(Color.blue);				
+			usrName.setForeground(Color.black);				
 			headPan.add(usrName);
 			
 			btnModPwd.setBounds(frmWidth-160, 40, 80, 30);
 			btnModPwd.setMargin(new Insets(0,0,0,0));
 			btnModPwd.setContentAreaFilled(false);
-			btnModPwd.setForeground(Color.white);
+			btnModPwd.setForeground(Color.black);
 			headPan.add(btnModPwd);
 			btnModPwd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent Event) {
@@ -112,7 +112,7 @@ public class MainUITmpl extends JFrame  {
 			
 			btnExit.setBounds(frmWidth-80, 40, 80, 30);
 			btnExit.setContentAreaFilled(false);
-			btnExit.setForeground(Color.white);
+			btnExit.setForeground(Color.black);
 			btnExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent Event) {
 					btnExitClicked(Event);

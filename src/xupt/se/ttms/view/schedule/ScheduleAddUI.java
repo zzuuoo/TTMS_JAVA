@@ -10,16 +10,24 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
+import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.model.Ticket;
+import xupt.se.ttms.service.PlaySrv;
 import xupt.se.ttms.service.ScheduleSrv;
+import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.tmpl.*;
 
 public class ScheduleAddUI extends PopUITmpl implements ActionListener {
@@ -28,28 +36,53 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 
 	protected boolean rst=false; 				//操作结果
 	private JLabel studioid, playid, playtime,playprice;
-	protected JTextField stid, plid, pt,pprice;
+	protected JTextField pt,pprice;
+	protected JComboBox jstudioID,jplayID;
+	List<Studio> Lstudio;
+	List<Play> Lplay;
 
 	public ScheduleAddUI() {
+		
+		
 	}
 
 	@Override
 	protected void initContent(){
 		this.setTitle("添加演出计划");
 
-		studioid = new JLabel("演出厅ID：");
+		Lstudio = getValidStudio();
+		String []studioName =new String[Lstudio.size()];
+		for(int i=0;i<Lstudio.size();i++){
+			studioName[i]=Lstudio.get(i).getName();
+		}
+		Lplay = getValidPlay();
+		String []playName = new String[Lplay.size()];
+		for(int i =0;i<Lplay.size();i++){
+			playName[i] = Lplay.get(i).getName();
+		}
+		
+		
+		studioid = new JLabel("演出厅：");
 		studioid.setBounds(60, 30, 80, 30);
 		contPan.add(studioid);
-		stid = new JTextField();
-		stid.setBounds(150, 30, 120, 30);
-		contPan.add(stid);
+		jstudioID = new JComboBox(studioName);
+		jstudioID.setBounds(150, 30, 200, 30);
+		contPan.add(jstudioID);
+		
+//		stid = new JTextField();
+//		stid.setBounds(150, 30, 120, 30);
+//		contPan.add(stid);
 
 		playid = new JLabel("剧目ID：");
 		playid.setBounds(60, 80, 50, 30);
 		contPan.add(playid);
-		plid = new JTextField();
-		plid.setBounds(150, 80, 120, 30);
-		contPan.add(plid);
+		jplayID = new JComboBox(playName);
+		jplayID.setBounds(150, 80, 200, 30);
+		contPan.add(jplayID);
+		
+//		plid = new JTextField();
+//		plid.setBounds(150, 80, 120, 30);
+//		contPan.add(plid);
 
 		playtime = new JLabel("演出时间：");
 		playtime.setBounds(60, 130, 90, 30);
@@ -104,17 +137,22 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	}
 	
 	protected void btnSaveClicked(){
-		if (stid.getText() != null && plid.getText() != null
+		
+//		System.out.println(studioID.getSelectedItem().toString());
+		
+		if (jstudioID!=null&& jplayID != null
 				&& pt.getText() != null&&pprice.getText()!=null) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule sch=new Schedule();
 			int pid=0,sid=0;
-			try{
-			pid = Integer.parseInt(plid.getText());
-			sid = Integer.parseInt(stid.getText());
-			}catch (NumberFormatException e){
-				e.printStackTrace();
-			}
+//			try{
+//			pid = Integer.parseInt(plid.getText());
+//			sid = Integer.parseInt(stid.getText());
+//			}catch (NumberFormatException e){
+//				e.printStackTrace();
+//			}
+			sid = Lstudio.get(jstudioID.getSelectedIndex()).getID();
+			pid = Lplay.get(jplayID.getSelectedIndex()).getId();
 			sch.setPlay_id(pid);
 			sch.setStudio_id(sid);
 			sch.setSched_ticket_price(new Double(pprice.getText()));
@@ -135,9 +173,23 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 			rst=true;
 //			getParent().setVisible(true);
 		} else {
+			
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		
 	}
+	
+	protected List<Studio> getValidStudio(){
+		StudioSrv stuSrv = new StudioSrv();
+		return stuSrv.FetchAll();
+	}
+	
+	protected List<Play> getValidPlay(){
+		PlaySrv stuSrv = new PlaySrv();
+		return stuSrv.Fetch("play_status != -1");
+	}
+	
+	
+	
 	protected void onWindowClosing(){
 		//System.exit(0);
 		this.dispose();
