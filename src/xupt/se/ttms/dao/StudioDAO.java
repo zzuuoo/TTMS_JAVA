@@ -3,20 +3,13 @@ package xupt.se.ttms.dao;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
-
-
-
-
 import xupt.se.ttms.idao.iStudioDAO;
+import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.SeatSrv;
 import xupt.se.util.DBUtil;
 
 
@@ -40,12 +33,17 @@ public class StudioDAO implements iStudioDAO {
 			System.out.println("数据库连接成功");
 			ResultSet rst = db.getInsertObjectIDs(sql);
 
-
 			if(rst.next()&&rst.first()){
 				stu.setID(rst.getInt(1));
 			}
 			db.close(rst);
 			db.close();
+			
+			
+			
+//			
+//			addSeat(stu);
+			System.out.println(stu.getID());
 			return 1;
 			
 		} catch (Exception e) {
@@ -55,6 +53,16 @@ public class StudioDAO implements iStudioDAO {
 		return 0;
 	}
 
+//	public void addSeat(Studio stu){
+//		
+//		SeatSrv  ss = new SeatSrv();
+//		for(int i=0;i<stu.getColCount();i++){
+//			for(int j =0;j<stu.getRowCount();j++){
+//				ss.add(new Seat(stu.getID(),j,i));
+//			}
+//		}
+//	}
+	
 	@Override
 	public int update(Studio stu) {
 		int rtn=0;
@@ -85,7 +93,7 @@ public class StudioDAO implements iStudioDAO {
 			sql += " where studio_id = " + ID;
 			DBUtil db = new DBUtil();
 			db.openConnection();
-			System.out.println("数据库连接成功");
+			System.out.println("数据库连接成功__删除");
 			rtn=db.execCommand(sql);
 			db.close();
 		} catch (Exception e) {
@@ -130,5 +138,39 @@ public class StudioDAO implements iStudioDAO {
 		}
 		
 		return stuList;
+	}
+
+	@Override
+	public Studio selectById(String condt) {
+		// TODO Auto-generated method stub
+		Studio stu=new Studio();
+		try {
+			String sql = "select studio_id, studio_name, studio_row_count, studio_col_count, studio_introduction from studio";
+			
+			sql+= " where  " + condt;
+			DBUtil db = new DBUtil();
+			if(!db.openConnection()){
+				System.out.print("fail to connect database");
+				return null;
+			}
+			
+			ResultSet rst = db.execQuery(sql);
+			if(rst!=null&&rst.next()){
+			stu.setID(rst.getInt("studio_id"));
+			stu.setName(rst.getString("studio_name"));
+			stu.setRowCount(rst.getInt("studio_row_count"));
+			stu.setColCount(rst.getInt("studio_col_count"));
+			stu.setIntroduction(rst.getString("studio_introduction"));
+			db.close(rst);
+			}
+
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			
+		}
+		return stu;
 	}
 }

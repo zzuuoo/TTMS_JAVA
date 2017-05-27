@@ -228,20 +228,21 @@ public class PlayMgrUI extends MainUITmpl {
 		contPan.add(ca1);
 
 		jsc = new JScrollPane();
-		jsc.setBounds(0, 40, rect.width, rect.height - 90);
+		jsc.setBounds(0, 40, rect.width, rect.height - 100);
 		contPan.add(jsc);
 
 		hint = new JLabel("请输入剧目名称:", JLabel.RIGHT);
-		hint.setBounds(60, rect.height - 45, 150, 30);
+		hint.setFont(new Font("",1,15));
+		hint.setBounds(60, rect.height - 50, 150, 30);
 		contPan.add(hint);
 
 		input = new JTextField();
-		input.setBounds(220, rect.height - 45, 200, 30);
+		input.setBounds(220, rect.height - 50, 200, 30);
 		contPan.add(input);
 
 		// 查找 ，删除和编辑的按钮，其中含有相关的事件处理！
 		btnQuery = new JButton("查找");
-		btnQuery.setBounds(440, rect.height - 45, 60, 30);
+		btnQuery.setBounds(440, rect.height - 50, 60, 30);
 		btnQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnQueryClicked();

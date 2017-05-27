@@ -191,4 +191,38 @@ public class PlayDAO implements iPlayDAO {
 
 		return stuList;
 	}
+
+
+	@Override
+	public Play selectOneById(String condt) {
+		Play stu = new Play();
+		try {
+			String sql = "select * from play ";
+			condt.trim();
+			if (!condt.isEmpty())
+				sql += " where " + condt;
+			DBUtil db = new DBUtil();
+			if (!db.openConnection()) {
+				System.out.print("fail to connect database");
+				return null;
+			}
+			ResultSet rst = db.execQuery(sql);
+			if(rst!=null&&rst.next()){
+					stu.setId(rst.getInt("play_id"));
+					stu.setName(rst.getString("play_name"));
+					stu.setIntroduction(rst.getString("play_introduction"));
+					stu.setLength(rst.getInt("play_length"));
+					stu.setTicketPrice(rst.getFloat("play_ticket_price"));
+					stu.setStatus(rst.getInt("play_status"));
+					db.close(rst);
+			}
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return stu;
+	}
 }

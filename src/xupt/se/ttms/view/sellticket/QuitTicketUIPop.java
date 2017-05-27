@@ -10,7 +10,6 @@ public class QuitTicketUIPop extends MainUITmpl{
 	public QuitTicketUIPop(){
 //		setWindowName(" 退  票 ");
 		initContent();
-		
 	}
 	
 

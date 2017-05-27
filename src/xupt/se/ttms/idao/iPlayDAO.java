@@ -16,4 +16,5 @@ public interface iPlayDAO {
 	public int delete(int ID);
 	public List<Play> select(String condt); 
 	public List<Play> selectScheduledPlay(String condt);
+	public Play selectOneById(String condt);
 }

@@ -30,6 +30,10 @@ public class PlaySrv {
 		return stuDAO.select("");	
 	}
 	
+	public Play FetchOneById(String s){
+		return stuDAO.selectOneById(s);	
+	}
+	
 	public List<Play> selectScheduledPlay(String condt){
 		return stuDAO.selectScheduledPlay(condt);	
 //		List<Play> list = new ArrayList<Play>();

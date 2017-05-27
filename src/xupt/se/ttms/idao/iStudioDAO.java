@@ -15,4 +15,5 @@ public interface iStudioDAO {
 	public int update(Studio stu);
 	public int delete(int ID);
 	public List<Studio> select(String condt); 
+	public Studio selectById(String condt); 
 }

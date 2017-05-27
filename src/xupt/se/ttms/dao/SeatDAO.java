@@ -15,26 +15,25 @@ public class SeatDAO implements iSeatDAO {
 		try {
 			
 			
-			String sql = "insert into seat(seat_id, studio_id, seat_row, seat_column )"
+			String sql = "insert into seat(studio_id, seat_row, seat_column )"
 					+ " values("
-					+ stu.getId()
-					+ ", "
 					+ stu.getStudioId()
 					+ ", " + stu.getRow()
 					+ ", " + stu.getColumn()
 					+ ")";
 			DBUtil db = new DBUtil();
 			db.openConnection();
-			System.out.println("数据库连接成功");
+			System.out.println("数据库连接成功_插入");
 			ResultSet rst = db.getInsertObjectIDs(sql);
 
 
 			System.out.println("hello——seat");
 
-			if(rst.next()&&rst.first()){
+			if(rst!=null&&rst.next()&&rst.first()){
 				stu.setId(rst.getInt(1));
+				db.close(rst);
 			}
-			db.close(rst);
+//			db.close(rst);
 			db.close();
 			return 1;
 			
@@ -48,7 +47,7 @@ public class SeatDAO implements iSeatDAO {
 
 	
 	public int update(Seat stu) {
-		int rtn = 0;
+		int rtn = 1;
 		try {
 			String sql = "update seat set " + " studio_id ="
 					+ stu.getStudioId() + ", " + " seat_row = "
@@ -63,7 +62,7 @@ public class SeatDAO implements iSeatDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return rtn;
+		return 1;
 	}
 
 	 
@@ -72,6 +71,21 @@ public class SeatDAO implements iSeatDAO {
 		try {
 			String sql = "delete from seat ";
 			sql += " where seat_id = " + ID;
+			DBUtil db = new DBUtil();
+			db.openConnection();
+			rtn = db.execCommand(sql);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rtn;
+	}
+
+	public int delete(String condt) {
+		int rtn = 0;
+		try {
+			String sql = "delete from seat ";
+			sql += " where  " + condt;
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			rtn = db.execCommand(sql);
@@ -98,6 +112,7 @@ public class SeatDAO implements iSeatDAO {
 			}
 			ResultSet rst = db.execQuery(sql);
 			if (rst != null) {
+				System.out.println("rst!=null");
 				while (rst.next()) {
 					Seat stu = new Seat();
 					stu.setId(rst.getInt("seat_id"));

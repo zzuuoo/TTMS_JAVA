@@ -34,6 +34,7 @@ import java.util.Iterator;
 
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.PlaySrv;
 import xupt.se.ttms.service.ScheduleSrv;
 import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.login.Manager;
@@ -59,8 +60,8 @@ class ScheduleTable {
 		};
 //		Object[] in = { "ID", "演出厅ID", "剧目ID", "演出时间", "票单价" };
 		tabModel.addColumn("演出计划ID");
-		tabModel.addColumn("演出厅ID");
-		tabModel.addColumn("剧目ID");
+		tabModel.addColumn("演出厅");
+		tabModel.addColumn("剧目");
 		tabModel.addColumn("演出时间");
 		tabModel.addColumn("票价");
 		//初始化列明
@@ -79,8 +80,8 @@ class ScheduleTable {
 	       render.setHorizontalAlignment(SwingConstants.CENTER);
 	       
 	       jt.getColumn("演出计划ID").setCellRenderer(render);
-	       jt.getColumn("演出厅ID").setCellRenderer(render);
-	       jt.getColumn("剧目ID").setCellRenderer(render);
+	       jt.getColumn("演出厅").setCellRenderer(render);
+	       jt.getColumn("剧目").setCellRenderer(render);
 	       jt.getColumn("演出时间").setCellRenderer(render);
 	       jt.getColumn("票价").setCellRenderer(render);
 		
@@ -135,11 +136,14 @@ class ScheduleTable {
 	public Schedule getSchedule() {
 		int rowSel=jt.getSelectedRow();
 		if(rowSel>=0){
-//			Object[] in = { "ID", "演出厅ID", "剧目ID", "演出时间", "票单价" };
+//			Object[] in = { "ID", "演出厅", "剧目", "演出时间", "票单价" };
 			Schedule stud = new Schedule();
 			stud.setSched_id(Integer.parseInt(jt.getValueAt(rowSel, 0)+""));
-			stud.setStudio_id(Integer.parseInt(jt.getValueAt(rowSel, 1)+""));
-			stud.setPlay_id(Integer.parseInt(jt.getValueAt(rowSel, 2)+""));
+			stud.setPlay_id((new PlaySrv().FetchOneById("play_name = '"+jt.getValueAt(rowSel, 2)+"'")).getId());
+			stud.setStudio_id((new StudioSrv().FetchOneById("studio_name = '"+jt.getValueAt(rowSel, 1)+"'")).getID());
+			
+//			stud.setStudio_id(Integer.parseInt(jt.getValueAt(rowSel, 1)+""));
+//			stud.setPlay_id(Integer.parseInt(jt.getValueAt(rowSel, 2)+""));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 			try {
 				stud.setSched_time(sdf.parse(jt.getValueAt(rowSel,3)+""));
@@ -181,8 +185,11 @@ class ScheduleTable {
 				Schedule stu = itr.next();
 				Object data[] = new Object[5];
 				data[0] = Integer.toString(stu.getSched_id());
-				data[1] = Integer.toString(stu.getStudio_id());
-				data[2] = Integer.toString(stu.getPlay_id());
+//				String s = "studio_id = "+stu.getStudio_id();
+				data[1] = (new StudioSrv().FetchOneById("studio_id = "+stu.getStudio_id())).getName();
+//				data[1] = Integer.toString(stu.getStudio_id());
+//				data[2] = Integer.toString(stu.getPlay_id());
+				data[2] = (new PlaySrv().FetchOneById("play_id = "+stu.getPlay_id())).getName();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
 				data[3] = sdf.format(stu.getSched_time());
 //				data[3] = stu.getSched_time();
@@ -231,20 +238,21 @@ public class ScheduleMgUI extends MainUITmpl {
 		contPan.add(ca1);
 
 		jsc = new JScrollPane();
-		jsc.setBounds(0, 40, rect.width, rect.height - 90);
+		jsc.setBounds(0, 40, rect.width, rect.height - 100);
 		contPan.add(jsc);
 
 		hint = new JLabel("请输入演出计划名称:", JLabel.RIGHT);
-		hint.setBounds(60, rect.height - 45, 150, 30);
+		hint.setFont(new Font("",1,15));
+		hint.setBounds(60, rect.height - 50, 150, 30);
 		contPan.add(hint);
 
 		input = new JTextField();
-		input.setBounds(220, rect.height - 45, 200, 30);
+		input.setBounds(220, rect.height - 50, 200, 30);
 		contPan.add(input);
 
 		// 查找 ，删除和编辑的按钮，其中含有相关的事件处理！
 		btnQuery = new JButton("查找");
-		btnQuery.setBounds(440, rect.height - 45, 60, 30);
+		btnQuery.setBounds(440, rect.height - 50, 60, 30);
 		btnQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnQueryClicked();
@@ -253,7 +261,7 @@ public class ScheduleMgUI extends MainUITmpl {
 		contPan.add(btnQuery);
 
 		btnAdd = new JButton("添加");
-		btnAdd.setBounds(rect.width - 220, rect.height - 45, 60, 30);
+		btnAdd.setBounds(rect.width - 220, rect.height - 50, 60, 30);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnAddClicked();
@@ -262,7 +270,7 @@ public class ScheduleMgUI extends MainUITmpl {
 		contPan.add(btnAdd);
 
 		btnEdit = new JButton("修改");
-		btnEdit.setBounds(rect.width - 150, rect.height - 45, 60, 30);
+		btnEdit.setBounds(rect.width - 150, rect.height - 50, 60, 30);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnModClicked();
@@ -271,7 +279,7 @@ public class ScheduleMgUI extends MainUITmpl {
 		contPan.add(btnEdit);
 
 		btnDel = new JButton("删除");
-		btnDel.setBounds(rect.width - 80, rect.height - 45, 60, 30);
+		btnDel.setBounds(rect.width - 80, rect.height - 50, 60, 30);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnDelClicked();

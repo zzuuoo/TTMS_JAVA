@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Iterator;
 
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.login.SystemMgUI;
 import xupt.se.ttms.view.myview.MyJTable;
@@ -159,7 +160,7 @@ public class StudioMgrUI extends MainUITmpl {
 	private JTextField input;
 
 	// 查找，编辑和删除按钮
-	private JButton btnAdd, btnEdit, btnDel, btnQuery;
+	private JButton btnAdd, btnEdit, btnDel, btnQuery,btnAddSeat;
 	
 	StudioTable tms; //显示演出厅列表
 
@@ -180,20 +181,21 @@ public class StudioMgrUI extends MainUITmpl {
 		contPan.add(ca1);
 
 		jsc = new JScrollPane();
-		jsc.setBounds(0, 40, rect.width, rect.height - 90);
+		jsc.setBounds(0, 40, rect.width, rect.height - 100);
 		contPan.add(jsc);
 
 		hint = new JLabel("请输入演出厅名称:", JLabel.RIGHT);
-		hint.setBounds(60, rect.height - 45, 150, 30);
+		hint.setFont(new Font("",1,15));
+		hint.setBounds(60, rect.height - 50, 150, 30);
 		contPan.add(hint);
 
 		input = new JTextField();
-		input.setBounds(220, rect.height - 45, 200, 30);
+		input.setBounds(220, rect.height - 50, 200, 30);
 		contPan.add(input);
 
 		// 查找 ，删除和编辑的按钮，其中含有相关的事件处理！
 		btnQuery = new JButton("查找");
-		btnQuery.setBounds(440, rect.height - 45, 60, 30);
+		btnQuery.setBounds(440, rect.height - 50, 60, 30);
 		btnQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnQueryClicked();
@@ -201,8 +203,21 @@ public class StudioMgrUI extends MainUITmpl {
 		});
 		contPan.add(btnQuery);
 
+		btnAddSeat = new JButton("座位管理");
+		btnAddSeat.setBounds(rect.width - 350, rect.height - 50, 100, 30);
+		btnAddSeat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent Event) {
+//				btnAddClicked();
+//				System.out.println("座位管家");
+				btnAddSeatCkicked();
+				
+			}
+		});
+		contPan.add(btnAddSeat);
+		
+		
 		btnAdd = new JButton("添加");
-		btnAdd.setBounds(rect.width - 220, rect.height - 45, 60, 30);
+		btnAdd.setBounds(rect.width - 220, rect.height - 50, 60, 30);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnAddClicked();
@@ -211,7 +226,7 @@ public class StudioMgrUI extends MainUITmpl {
 		contPan.add(btnAdd);
 
 		btnEdit = new JButton("修改");
-		btnEdit.setBounds(rect.width - 150, rect.height - 45, 60, 30);
+		btnEdit.setBounds(rect.width - 150, rect.height - 50, 60, 30);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnModClicked();
@@ -220,7 +235,7 @@ public class StudioMgrUI extends MainUITmpl {
 		contPan.add(btnEdit);
 
 		btnDel = new JButton("删除");
-		btnDel.setBounds(rect.width - 80, rect.height - 45, 60, 30);
+		btnDel.setBounds(rect.width - 80, rect.height - 50, 60, 30);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnDelClicked();
@@ -232,6 +247,18 @@ public class StudioMgrUI extends MainUITmpl {
 		tms = new StudioTable(jsc);
 		
 		showTable();
+	}
+	
+	
+	private void btnAddSeatCkicked(){
+		Studio stud = tms.getStudio();
+		if(null== stud){
+			JOptionPane.showMessageDialog(null, "请选择要管理的演出厅");
+			return; 
+		}	
+		new StudioSeat(stud).setVisible(true);
+		this.dispose();
+		
 	}
 
 	private void btnAddClicked() {
@@ -246,6 +273,7 @@ public class StudioMgrUI extends MainUITmpl {
 		addStuUI.setVisible(true);
 		if (addStuUI.getReturnStatus()) {
 			showTable();
+			
 		}
 	}
 
@@ -280,7 +308,10 @@ public class StudioMgrUI extends MainUITmpl {
 		int confirm = JOptionPane.showConfirmDialog(null, "确认删除所选？", "删除", JOptionPane.YES_NO_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
 			StudioSrv stuSrv = new StudioSrv();
+			SeatSrv seatsrv = new SeatSrv();
+			seatsrv.delete("studio_id = "+stud.getID());
 			stuSrv.delete(stud.getID());
+
 			showTable();
 		}
 	}
@@ -288,6 +319,7 @@ public class StudioMgrUI extends MainUITmpl {
 	private void btnQueryClicked() {
 		if (!input.getText().equals("")) {
 			//请自行补充
+			
 
 		} else {
 			JOptionPane.showMessageDialog(null, "请输入检索条件");

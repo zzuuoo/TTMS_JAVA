@@ -28,4 +28,8 @@ public class StudioSrv {
 	public List<Studio> FetchAll(){
 		return stuDAO.select("");		
 	}
+	
+	public Studio FetchOneById(String condt){
+		return stuDAO.selectById(condt);		
+	}
 }

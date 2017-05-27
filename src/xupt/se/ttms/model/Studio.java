@@ -7,7 +7,14 @@ public class Studio {
 	private int rowCount=0;
 	private int colCount=0;
 	private String introduction=""; //���
+	private int seatStatus = 0;
 	
+	public void setSeatStatus(int s){
+		this.seatStatus =s;
+	}
+	public int getSeatStatus(){
+		return this.seatStatus;
+	}
 	public void setID(int ID){
 		this.id=ID;
 	}

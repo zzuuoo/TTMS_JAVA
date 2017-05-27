@@ -34,7 +34,6 @@ public class MainUITmpl extends JFrame  {
 	protected JLabel usrName = new JLabel();
 	protected JButton btnModPwd = new JButton("修改密码");
 	protected JButton btnExit = new JButton("返回");	
-
 	public MainUITmpl(){
 		this.setSize(frmWidth, frmHeight);
 		this.setLocationRelativeTo(null);
@@ -79,11 +78,9 @@ public class MainUITmpl extends JFrame  {
 	}
 	public int getWidth(){
 		return this.frmWidth;
-		
 	}
 	public int getHeight(){
 		return this.frmHeight;
-		
 	}
 	
 	private void initHeader() {

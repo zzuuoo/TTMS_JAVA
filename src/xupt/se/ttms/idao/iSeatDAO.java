@@ -14,5 +14,6 @@ public interface iSeatDAO {
 	public int insert(Seat stu);
 	public int update(Seat stu);
 	public int delete(int ID);
+	public int delete(String condt);
 	public List<Seat> select(String condt); 
 }
