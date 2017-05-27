@@ -17,4 +17,5 @@ public interface iTicketDAO {
 	public int lockTicket(int ID, String time);
 	public int unlockTicket(int ID);
 	public List<Ticket> select(String condt); 
+	public int delete(String  con);
 }

@@ -7,7 +7,7 @@ public class Ticket {
 	private int id;
 	private int seatId;
 	private int scheduleId;
-	private float price;
+	private double price;
 	private int status;  //0：待销售  1：锁定    9：卖出
 	private Date locked_time;
 	
@@ -21,6 +21,14 @@ public class Ticket {
 	public Ticket(int id, int seatId, int scheduleId, float price, int status) {
 		super();
 		this.id = id;
+		this.seatId = seatId;
+		this.scheduleId = scheduleId;
+		this.price = price;
+		this.status = status;
+	}
+	
+	public Ticket(int seatId, int scheduleId, float price, int status) {
+		super();
 		this.seatId = seatId;
 		this.scheduleId = scheduleId;
 		this.price = price;
@@ -51,11 +59,11 @@ public class Ticket {
 		this.scheduleId = scheduleId;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

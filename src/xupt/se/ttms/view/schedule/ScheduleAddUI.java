@@ -23,11 +23,14 @@ import javax.swing.JTextField;
 
 import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
+import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.model.Ticket;
 import xupt.se.ttms.service.PlaySrv;
 import xupt.se.ttms.service.ScheduleSrv;
+import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.StudioSrv;
+import xupt.se.ttms.service.TicketSrv;
 import xupt.se.ttms.view.tmpl.*;
 
 public class ScheduleAddUI extends PopUITmpl implements ActionListener {
@@ -42,7 +45,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	List<Play> Lplay;
 
 	public ScheduleAddUI() {
-		
+	
 		
 	}
 
@@ -167,10 +170,35 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 
 			
 
-			stuSrv.add(sch);
-			this.setVisible(false);
-			System.gc();
-			rst=true;
+			int scheduleID = stuSrv.add(sch);
+			if(scheduleID!= 0 ){
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				ScheduleSrv schSrv = new ScheduleSrv();
+//				Schedule sc = schSrv.FetchOne(" studio_id = "+sch.getStudio_id()+" and "
+//						+" play_id = "+sch.getPlay_id()+" and "+"sched_time = "
+//						+sdf.format(sch.getSched_time())+" and "
+//						+" sched_ticket_price = "+sch.getSched_ticket_price());
+				Schedule sc = schSrv.FetchOne(" sched_id = "+scheduleID);
+				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+sc.getStudio_id());
+//				public Ticket(int seatId, int scheduleId, float price, int status) {
+				TicketSrv ts = new TicketSrv();
+				for(int i=0;i<Ls.size();i++){
+					Ticket t = new Ticket();
+					t.setPrice(sc.getSched_ticket_price());
+					t.setScheduleId(sc.getSched_id());
+					t.setSeatId(Ls.get(i).getId());
+					t.setStatus(0);
+					ts.add(t);
+				}
+				
+				
+				this.setVisible(false);
+				rst=true;
+			}
+//			stuSrv.add(sch);
+//			this.setVisible(false);
+//			System.gc();
+//			rst=true;
 //			getParent().setVisible(true);
 		} else {
 			

@@ -37,7 +37,7 @@ public class ScheduleDAO implements iScheduleDAO {
 			
 			db.close(rst);
 			db.close();
-			return 1;
+			return stu.getSched_id();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +63,7 @@ public class ScheduleDAO implements iScheduleDAO {
 			db.openConnection();
 			rtn = db.execCommand(sql);
 			db.close();
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,5 +121,40 @@ public class ScheduleDAO implements iScheduleDAO {
 		}
 
 		return stuList;
+	}
+	
+	public Schedule selectOne(String condt) {
+		Schedule stu = new Schedule();
+		try {
+			String sql = "select sched_id, studio_id, play_id, sched_time, sched_ticket_price from Schedule ";
+			condt.trim();
+			if (!condt.isEmpty())
+				sql += " where " + condt;
+			DBUtil db = new DBUtil();
+			if (!db.openConnection()) {
+				System.out.print("fail to connect database");
+				return null;
+			}
+			ResultSet rst = db.execQuery(sql);
+			if (rst != null) {
+				if (rst.next()) {
+					
+					stu.setSched_id(rst.getInt("sched_id"));
+					stu.setStudio_id(rst.getInt("studio_id"));
+					stu.setPlay_id(rst.getInt("play_id"));
+					stu.setSched_time(rst.getTimestamp("sched_time"));
+					stu.setSched_ticket_price(rst.getDouble("sched_ticket_price"));
+					
+				}
+			}
+			db.close(rst);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return stu;
 	}
 }

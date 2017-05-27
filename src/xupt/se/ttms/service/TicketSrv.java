@@ -21,7 +21,9 @@ public class TicketSrv {
 	public int delete(int ID){
 		return stuDAO.delete(ID); 		
 	}
-	
+	public int delete(String con){
+		return stuDAO.delete(con); 		
+	}
 	public List<Ticket> Fetch(String condt){
 		return stuDAO.select(condt);		
 	}

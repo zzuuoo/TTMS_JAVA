@@ -110,10 +110,10 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 
 
 			System.out.println("演出厅ID："+stu.getID());
-			
-			if(stuSrv.add(stu)==1){
+			int studioID = stuSrv.add(stu);
+			if(studioID!=0){
 				SeatSrv seatsrv = new SeatSrv();
-				int studioID = stuSrv.FetchOneById("studio_name = '"+stu.getName()+"'").getID();
+//				int studioID = stuSrv.FetchOneById("studio_name = '"+stu.getName()+"'").getID();
 				for(int i=0;i<stu.getRowCount();i++){
 					for(int j = 0;j<stu.getColCount();j++){
 						seatsrv.add(new Seat(studioID,i,j));

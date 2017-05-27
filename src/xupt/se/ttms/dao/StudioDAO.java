@@ -44,7 +44,7 @@ public class StudioDAO implements iStudioDAO {
 //			
 //			addSeat(stu);
 			System.out.println(stu.getID());
-			return 1;
+			return stu.getID();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

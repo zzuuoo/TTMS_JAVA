@@ -15,4 +15,5 @@ public interface iScheduleDAO {
 	public int update(Schedule stu);
 	public int delete(int ID);
 	public List<Schedule> select(String condt); 
+	public Schedule selectOne(String condt);
 }

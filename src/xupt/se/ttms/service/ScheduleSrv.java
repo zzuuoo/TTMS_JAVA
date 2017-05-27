@@ -23,7 +23,9 @@ public class ScheduleSrv {
 	public int delete(int ID){
 		return stuDAO.delete(ID); 		
 	}
-	
+	public Schedule FetchOne(String condt){
+		return stuDAO.selectOne(condt);
+	}
 	public List<Schedule> Fetch(String condt){
 		
 		

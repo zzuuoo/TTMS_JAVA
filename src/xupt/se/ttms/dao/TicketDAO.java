@@ -12,10 +12,19 @@ public class TicketDAO implements iTicketDAO {
 	 
 	public int insert(Ticket stu) {
 		try {
-			String sql = "insert into ticket(ticket_id, seat_id, sched_id, ticket_price,ticket_status,ticket_locked_time)"
+//			String sql = "insert into ticket(seat_id, sched_id, ticket_price,ticket_status,ticket_locked_time)"
+//					+ " values("
+//					+ stu.getSeatId()
+//					+ ", "
+//					+ stu.getScheduleId()
+//					+ ", "
+//					+ stu.getPrice()
+//					+","
+//					+stu.getStatus()
+//					+",'"+stu.getLocked_time()
+//					+ "' )";
+			String sql = "insert into ticket(seat_id, sched_id, ticket_price,ticket_status)"
 					+ " values("
-					+ stu.getId()
-					+ ", "
 					+ stu.getSeatId()
 					+ ", "
 					+ stu.getScheduleId()
@@ -23,8 +32,7 @@ public class TicketDAO implements iTicketDAO {
 					+ stu.getPrice()
 					+","
 					+stu.getStatus()
-					+",'"+stu.getLocked_time()
-					+ "' )";
+					+" )";
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			ResultSet rst = db.getInsertObjectIDs(sql);
@@ -71,6 +79,21 @@ public class TicketDAO implements iTicketDAO {
 		try {
 			String sql = "delete from ticket ";
 			sql += " where ticket_id = " + ID;
+			DBUtil db = new DBUtil();
+			db.openConnection();
+			rtn = db.execCommand(sql);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rtn;
+	}
+	
+	public int delete(String  con) {
+		int rtn = 0;
+		try {
+			String sql = "delete from ticket ";
+			sql += " where  " + con;
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			rtn = db.execCommand(sql);

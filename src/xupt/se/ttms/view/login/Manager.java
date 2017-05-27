@@ -67,7 +67,7 @@ public class Manager extends MainUITmpl{
 		palyManager.setIcon(new ImageIcon("resource/image/playm.png"));
 		palyManager.setBackground(Color.WHITE);
 		palyManager.setText(" 演出计划管理 ");
-		palyManager.setBounds(350, 100, 160, 160);
+		palyManager.setBounds(430, 100, 160, 160);
 		
 		palyManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
@@ -78,23 +78,23 @@ public class Manager extends MainUITmpl{
 			}
 		});
 		
-		JButton seatmanager = new JButton();
-		seatmanager.setVerticalTextPosition(SwingConstants.BOTTOM);
-		seatmanager.setHorizontalTextPosition(SwingConstants.CENTER);
-		seatmanager.setIcon(new ImageIcon("resource/image/seatm.png"));
-		seatmanager.setBackground(Color.WHITE);
-		seatmanager.setText(" 座位管理 ");
-		seatmanager.setBounds(550, 100, 160, 160);
-		seatmanager.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				new StudioSeat().setVisible(true);
-				Manager.this.dispose();
-				
-			}
-		});
+//		JButton seatmanager = new JButton();
+//		seatmanager.setVerticalTextPosition(SwingConstants.BOTTOM);
+//		seatmanager.setHorizontalTextPosition(SwingConstants.CENTER);
+//		seatmanager.setIcon(new ImageIcon("resource/image/seatm.png"));
+//		seatmanager.setBackground(Color.WHITE);
+//		seatmanager.setText(" 座位管理 ");
+//		seatmanager.setBounds(550, 100, 160, 160);
+//		seatmanager.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				new StudioSeat().setVisible(true);
+//				Manager.this.dispose();
+//				
+//			}
+//		});
 		
 		JButton checkC = new JButton();
 		checkC.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -102,7 +102,7 @@ public class Manager extends MainUITmpl{
 		checkC.setIcon(new ImageIcon("resource/image/checkc.png"));
 		checkC.setBackground(Color.WHITE);
 		checkC.setText("统计与查询");
-		checkC.setBounds(750, 100, 160, 160);
+		checkC.setBounds(700, 100, 160, 160);
 		checkC.addActionListener(new ActionListener() {
 			
 			@Override
@@ -114,7 +114,7 @@ public class Manager extends MainUITmpl{
 		
 		workPanel.add(filmManager);
 		workPanel.add(palyManager);
-		workPanel.add(seatmanager);
+//		workPanel.add(seatmanager);
 		workPanel.add(checkC);
 		JLabel jb = new JLabel("    此广告位招租 ");
 		jb.setFont(new Font("",2,36));
