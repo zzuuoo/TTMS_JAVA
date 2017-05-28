@@ -40,7 +40,9 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	protected boolean rst=false; 				//操作结果
 	private JLabel studioid, playid, playtime,playprice;
 	protected JTextField pt,pprice;
-	protected JComboBox jstudioID,jplayID;
+	protected JComboBox jstudioID,jplayID;//剧目和演出厅的选择器
+	
+	//可供选择的演出厅和剧目
 	List<Studio> Lstudio;
 	List<Play> Lplay;
 
@@ -52,7 +54,6 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	@Override
 	protected void initContent(){
 		this.setTitle("添加演出计划");
-
 		Lstudio = getValidStudio();
 		String []studioName =new String[Lstudio.size()];
 		for(int i=0;i<Lstudio.size();i++){
@@ -63,8 +64,6 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 		for(int i =0;i<Lplay.size();i++){
 			playName[i] = Lplay.get(i).getName();
 		}
-		
-		
 		studioid = new JLabel("演出厅：");
 		studioid.setBounds(60, 30, 80, 30);
 		contPan.add(studioid);
@@ -72,20 +71,12 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 		jstudioID.setBounds(150, 30, 200, 30);
 		contPan.add(jstudioID);
 		
-//		stid = new JTextField();
-//		stid.setBounds(150, 30, 120, 30);
-//		contPan.add(stid);
-
 		playid = new JLabel("剧目ID：");
 		playid.setBounds(60, 80, 50, 30);
 		contPan.add(playid);
 		jplayID = new JComboBox(playName);
 		jplayID.setBounds(150, 80, 200, 30);
-		contPan.add(jplayID);
-		
-//		plid = new JTextField();
-//		plid.setBounds(150, 80, 120, 30);
-//		contPan.add(plid);
+		contPan.add(jplayID);	
 
 		playtime = new JLabel("演出时间：");
 		playtime.setBounds(60, 130, 90, 30);
@@ -111,15 +102,10 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 		btnCancel.addActionListener(this);
 		btnCancel.setBounds(180, 220, 60, 30);
 		contPan.add(btnCancel);
-//
-//		ImageJPanel imageJP = new ImageJPanel(new ImageIcon(
-//				"files/imgs/pencil.jpg").getImage());
-//		imageJP.setBounds(360, 160, 100, 100);
-//		imageJP.setLayout(null);
-//		this.add(imageJP);
+
 	}
 	
-	
+	//返回操作结果
 	public boolean getReturnStatus(){
 		   return rst;
 	}
@@ -131,29 +117,19 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 			this.onWindowClosing();
 			this.dispose();
 			System.gc();
-//			getParent().setVisible(true);
 
 		} else if (e.getSource() == btnSave) {
-			btnSaveClicked();		//以前未调用，新添加的调用语句
+			btnSaveClicked();		
 		}
 
 	}
 	
 	protected void btnSaveClicked(){
-		
-//		System.out.println(studioID.getSelectedItem().toString());
-		
 		if (jstudioID!=null&& jplayID != null
 				&& pt.getText() != null&&pprice.getText()!=null) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule sch=new Schedule();
 			int pid=0,sid=0;
-//			try{
-//			pid = Integer.parseInt(plid.getText());
-//			sid = Integer.parseInt(stid.getText());
-//			}catch (NumberFormatException e){
-//				e.printStackTrace();
-//			}
 			sid = Lstudio.get(jstudioID.getSelectedIndex()).getID();
 			pid = Lplay.get(jplayID.getSelectedIndex()).getId();
 			sch.setPlay_id(pid);
@@ -174,13 +150,8 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 			if(scheduleID!= 0 ){
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 				ScheduleSrv schSrv = new ScheduleSrv();
-//				Schedule sc = schSrv.FetchOne(" studio_id = "+sch.getStudio_id()+" and "
-//						+" play_id = "+sch.getPlay_id()+" and "+"sched_time = "
-//						+sdf.format(sch.getSched_time())+" and "
-//						+" sched_ticket_price = "+sch.getSched_ticket_price());
 				Schedule sc = schSrv.FetchOne(" sched_id = "+scheduleID);
 				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+sc.getStudio_id());
-//				public Ticket(int seatId, int scheduleId, float price, int status) {
 				TicketSrv ts = new TicketSrv();
 				for(int i=0;i<Ls.size();i++){
 					Ticket t = new Ticket();
@@ -190,36 +161,26 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 					t.setStatus(0);
 					ts.add(t);
 				}
-				
-				
 				this.setVisible(false);
 				rst=true;
 			}
-//			stuSrv.add(sch);
-//			this.setVisible(false);
-//			System.gc();
-//			rst=true;
-//			getParent().setVisible(true);
 		} else {
 			
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		
 	}
-	
+	//获取有效演出厅
 	protected List<Studio> getValidStudio(){
 		StudioSrv stuSrv = new StudioSrv();
 		return stuSrv.FetchAll();
 	}
-	
+	//获取有效剧目
 	protected List<Play> getValidPlay(){
 		PlaySrv stuSrv = new PlaySrv();
 		return stuSrv.Fetch("play_status != -1");
 	}
-	
-	
-	
+	//窗口关闭按钮
 	protected void onWindowClosing(){
-		//System.exit(0);
 		this.dispose();
 }
 }

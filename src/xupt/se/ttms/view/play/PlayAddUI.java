@@ -27,11 +27,8 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 
 	protected JTextArea txtintroduction;
 	public PlayAddUI() {
-//		initContent();
 	}
 
-
-	
 	@Override
 	protected void initContent(){
 		this.setTitle("添加剧目");
@@ -55,9 +52,6 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 		contPan.add(lblColumn);
 	
 		
-//		txtstatus = new JTextField();
-//		txtstatus.setBounds(150, 130, 120, 30);
-//		contPan.add(txtstatus);
 		
 //		 0：待安排演出    1：已安排演出    -1：下线
 		String[] playStatus = {"待安排演出","已安排演出","下线"};
@@ -87,38 +81,13 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 
 		btnSave.addActionListener(this);
 		btnSave.setBounds(60, 450, 60, 30);
-//		btnSave.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				btnSaveClicked();
-//				
-//			}
-//		});
 		contPan.add(btnSave);
 
 		btnCancel = new JButton("取消");
 		btnCancel.addActionListener(this);
 		btnCancel.setBounds(180, 450, 60, 30);
 		contPan.add(btnCancel);
-//		btnCancel.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				rst=false;
-//				System.out.println("cancle1");
-//				this.dispose();
-//				this.setVisible(false);
-//			}
-//		});
-//
-//		ImageJPanel imageJP = new ImageJPanel(new ImageIcon(
-//				"files/imgs/pencil.jpg").getImage());
-//		imageJP.setBounds(360, 160, 100, 100);
-//		imageJP.setLayout(null);
-//		this.add(imageJP);
+
 	}
 	
 	
@@ -137,7 +106,7 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 		}
 	}
 
-	
+	//保存按钮点击事件
 	protected void btnSaveClicked(){
 		if (txtName.getText() != null && txtintroduction.getText() != null
 				&& txtlength.getText() != null&&txtTicketPrice.getText()!=null
@@ -157,11 +126,7 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 			
 				
 //				 0：待安排演出    1：已安排演出    -1：下线
-//			stu.setStatus(Integer.parseInt(txtstatus.getText()));
 			stu.setTicketPrice(Float.parseFloat(txtTicketPrice.getText()));
-//			System.out.println(txtRow.getText());
-//			stu.setRowCount(Integer.parseInt(txtRow.getText()));
-//			stu.setColCount(Integer.parseInt(txtColumn.getText()));
 	
 			stu.setIntroduction(txtintroduction.getText());
 
@@ -169,14 +134,11 @@ public class PlayAddUI extends PopUITmpl implements ActionListener {
 			this.setVisible(false);
 			this.dispose();
 			rst=true;
-//			getParent().setVisible(true);/
 		} else {
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		
 	}
 	protected void onWindowClosing(){
-		//System.exit(0);
 		this.dispose();
-//		new SystemMgUI().setVisible(true);
 }
 }

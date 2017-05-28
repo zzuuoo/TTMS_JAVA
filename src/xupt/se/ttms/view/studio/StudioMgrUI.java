@@ -32,7 +32,6 @@ import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.login.SystemMgUI;
-import xupt.se.ttms.view.myview.MyJTable;
 import xupt.se.ttms.view.tmpl.*;
 
 class StudioTable {
@@ -60,9 +59,7 @@ class StudioTable {
 		//初始化列明
 		jt=new JTable(tabModel);
 		jt.setSelectionBackground(Color.green);
-//		jt.setGridColor(Color.orange);
 		JTableHeader th = jt.getTableHeader();
-//		th.setResizingAllowed(true);
 		th.setFont(new Font("宋体",3,25));
 		th.setPreferredSize(new Dimension(jt.getWidth(), 40));
 		jt.setRowHeight(30);
@@ -94,8 +91,6 @@ class StudioTable {
         column.setPreferredWidth(10);
         column = columnModel.getColumn(4);
         column.setPreferredWidth(500);        
-
-		
 		jp.add(jt);
 		jp.setViewportView(jt);
 		

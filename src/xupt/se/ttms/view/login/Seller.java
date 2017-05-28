@@ -12,16 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import xupt.se.ttms.view.sellticket.QuitTicketUIPop;
-import xupt.se.ttms.view.sellticket.SellTicketUI;
-import xupt.se.ttms.view.tmpl.ImagePanel;
+import xupt.se.ttms.view.sellticket.SellTicketMgUI;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 
 public class Seller extends MainUITmpl{
 
 	//To be override by the detailed business block interface 
 		protected void btnExitClicked(ActionEvent Event){
-//			System.exit(0);
 			this.dispose();
 			new Login().setVisible(true);;
 		}	
@@ -35,7 +32,6 @@ public class Seller extends MainUITmpl{
 	@Override
 	protected void initContent() {
 		JPanel workPanel = new JPanel();
-//		ImagePanel workPanel = new ImagePanel("resource/image/l3.jpg");
 		workPanel.setLayout(null);
 		workPanel.setBounds(0, 0, 1024, 600);
 		
@@ -49,7 +45,7 @@ public class Seller extends MainUITmpl{
 		
 		sale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
-				SellTicketUI sellTicketUI = new SellTicketUI();
+				SellTicketMgUI sellTicketUI = new SellTicketMgUI();
 				sellTicketUI.setVisible(true);
 				Seller.this.dispose();
 			
@@ -67,28 +63,12 @@ public class Seller extends MainUITmpl{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				new QuitTicketUIPop().setVisible(true);
-				Seller.this.dispose();
+
+//				Seller.this.dispose();
 				
 			}
 		});
 		
-//		JButton checkList = new JButton();
-//		checkList.setVerticalTextPosition(SwingConstants.BOTTOM);
-//		checkList.setHorizontalTextPosition(SwingConstants.CENTER);
-//		checkList.setIcon(new ImageIcon("resource/image/p5.jpg"));
-//		checkList.setBackground(Color.WHITE);
-//		checkList.setText("查看销售记录");
-//		checkList.setBounds(750, 100, 160, 160);
-//		checkList.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
 		
 		JLabel jb = new JLabel();
 		jb.setIcon(new ImageIcon("resource/image/study.gif"));
@@ -96,7 +76,6 @@ public class Seller extends MainUITmpl{
 		
 		workPanel.add(sale);
 		workPanel.add(refund);
-//		workPanel.add(checkList);
 		workPanel.add(jb);
 		workPanel.setBackground(Color.white);
 		

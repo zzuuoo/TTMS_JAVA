@@ -13,17 +13,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
-import javax.swing.SpringLayout;
-
-import xupt.se.ttms.view.myview.CircleButton;
-import xupt.se.ttms.view.sellticket.SellTicketUI;
-import xupt.se.ttms.view.tmpl.PopUITmpl;
 /**
  * 登陆
  * @author zuo
@@ -43,8 +36,6 @@ public class Login extends JFrame implements ActionListener{
 		    img.paintIcon(this, g, 0, 0);  
 		   }  
 		  };  
-	
-	
 	
 	private JButton log_in = new JButton("登陆");
 	private JButton register = new JButton("注册");
@@ -73,43 +64,33 @@ public class Login extends JFrame implements ActionListener{
 		this.setResizable(false);
 		
 	
-//		zhanghao.requestFocus(true);
+//		监听输入账号时键盘的敲击
 		account.addKeyListener(new KeyListener() {
-			
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				
 			}
-			
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}
-			
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				// TODO Auto-generated method stub.
 				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
-//					mima.setFocusable(true);
-//					String t = zhanghao.getText();
-//					zhanghao.setText(t.replaceAll("\r|\n", ""));
 					password.requestFocus();
 				}
 			}
 		});
-		
+		//监听输入密码时键盘 的敲击
 		password.addKeyListener(new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
-				
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					log_in.doClick();
-					
 				}
 			}
 
@@ -134,7 +115,6 @@ public class Login extends JFrame implements ActionListener{
 		
 	
 		this.setSize(1024, 700);
-//		this.setSize(800, 800);
 		this.setLocation(500, 150);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

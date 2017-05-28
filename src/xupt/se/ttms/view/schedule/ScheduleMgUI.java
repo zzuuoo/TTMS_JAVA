@@ -69,9 +69,7 @@ class ScheduleTable {
 		
 		jt=new JTable(tabModel);
 		jt.setSelectionBackground(Color.green);
-//		jt.setGridColor(Color.orange);
 		JTableHeader th = jt.getTableHeader();
-//		th.setResizingAllowed(true);
 		th.setFont(new Font("宋体",3,25));
 		th.setPreferredSize(new Dimension(jt.getWidth(), 40));
 		jt.setRowHeight(30);
@@ -119,9 +117,6 @@ class ScheduleTable {
 			stud.setSched_id(Integer.parseInt(jt.getValueAt(rowSel, 0)+""));
 			stud.setPlay_id((new PlaySrv().FetchOneById("play_name = '"+jt.getValueAt(rowSel, 2)+"'")).getId());
 			stud.setStudio_id((new StudioSrv().FetchOneById("studio_name = '"+jt.getValueAt(rowSel, 1)+"'")).getID());
-			
-//			stud.setStudio_id(Integer.parseInt(jt.getValueAt(rowSel, 1)+""));
-//			stud.setPlay_id(Integer.parseInt(jt.getValueAt(rowSel, 2)+""));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 			try {
 				stud.setSched_time(sdf.parse(jt.getValueAt(rowSel,3)+""));
@@ -130,18 +125,6 @@ class ScheduleTable {
 				e.printStackTrace();
 				System.out.println("???");
 			}
-//			try  
-//			{  
-//			    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
-//			    System.out.println(jt.getValueAt(rowSel, 3));
-//			    Date date = sdf.parse(jt.getValueAt(rowSel, 3));
-//			    stud.setSched_time(date);
-//			}  
-//			catch (Exception e)  
-//			{  
-//				e.printStackTrace();
-////			    System.out.println("异常："+e.getMessage());  
-//			} 
 			stud.setSched_ticket_price(Double.parseDouble(jt.getValueAt(rowSel, 4)+""));
 
 			return stud;
@@ -163,14 +146,10 @@ class ScheduleTable {
 				Schedule stu = itr.next();
 				Object data[] = new Object[5];
 				data[0] = Integer.toString(stu.getSched_id());
-//				String s = "studio_id = "+stu.getStudio_id();
 				data[1] = (new StudioSrv().FetchOneById("studio_id = "+stu.getStudio_id())).getName();
-//				data[1] = Integer.toString(stu.getStudio_id());
-//				data[2] = Integer.toString(stu.getPlay_id());
 				data[2] = (new PlaySrv().FetchOneById("play_id = "+stu.getPlay_id())).getName();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
 				data[3] = sdf.format(stu.getSched_time());
-//				data[3] = stu.getSched_time();
 				data[4] = stu.getSched_ticket_price();
 				tabModel.addRow(data);;
 			}
@@ -274,7 +253,6 @@ public class ScheduleMgUI extends MainUITmpl {
 	private void btnAddClicked() {
 
 		ScheduleAddUI addStuUI=null;
-		
 		addStuUI = new ScheduleAddUI();
 		addStuUI.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		addStuUI.setWindowName("添加演出计划");
@@ -287,16 +265,11 @@ public class ScheduleMgUI extends MainUITmpl {
 	}
 
 	private void btnModClicked() {
-		
-
-		
-		
 		Schedule stud = tms.getSchedule();
 		if(null== stud){
 			JOptionPane.showMessageDialog(null, "请选择要修改的演出计划");
 			return; 
 		}
-		
 		ScheduleEditUI modStuUI = new ScheduleEditUI(stud);
 		modStuUI.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		modStuUI.setWindowName("修改演出计划");
@@ -317,7 +290,6 @@ public class ScheduleMgUI extends MainUITmpl {
 			JOptionPane.showMessageDialog(null, "请选择要删除的演出计划");
 			return; 
 		}		
-		
 		int confirm = JOptionPane.showConfirmDialog(null, "确认删除所选？", "删除", JOptionPane.YES_NO_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
@@ -340,7 +312,6 @@ public class ScheduleMgUI extends MainUITmpl {
 		tms.showScheduleList(stuList);
 	}
 	
-
 	public static void main(String[] args) {
 		ScheduleMgUI frmStuMgr = new ScheduleMgUI();
 		frmStuMgr.setVisible(true);

@@ -72,20 +72,12 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 		btnCancel.setBounds(180, 280, 60, 30);
 		contPan.add(btnCancel);
 
-/*		ImageJPanel imageJP = new ImageJPanel(new ImageIcon(
-				"files/imgs/pencil.jpg").getImage());
-		imageJP.setBounds(360, 160, 100, 100);
-		imageJP.setLayout(null);
-		this.add(imageJP);
-		*/
 	}
-	
 	
 	public boolean getReturnStatus(){
 		   return rst;
 	}
 	
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {
@@ -93,11 +85,8 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			this.setVisible(false);
 		} else if (e.getSource() == btnSave) {
 			 btnSaveClicked();
-			
-			
 		}
 	}
-	
 	protected  void btnSaveClicked(){
 		if (txtName.getText() != null && txtRow.getText() != null
 				&& txtColumn.getText() != null) {
@@ -113,11 +102,9 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			int studioID = stuSrv.add(stu);
 			if(studioID!=0){
 				SeatSrv seatsrv = new SeatSrv();
-//				int studioID = stuSrv.FetchOneById("studio_name = '"+stu.getName()+"'").getID();
 				for(int i=0;i<stu.getRowCount();i++){
 					for(int j = 0;j<stu.getColCount();j++){
-						seatsrv.add(new Seat(studioID,i,j));
-						
+						seatsrv.add(new Seat(studioID,i,j));	
 					}
 				}
 				this.setVisible(false);
@@ -130,7 +117,6 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		
 		
-//		return 0;
 	}
 
 }

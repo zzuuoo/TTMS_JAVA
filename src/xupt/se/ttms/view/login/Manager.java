@@ -30,19 +30,10 @@ public class Manager extends MainUITmpl{
 	protected void initContent(){
 		
 		JPanel workPanel = new JPanel();
-//		ImagePanel workPanel = new ImagePanel("resource/image/l3.jpg");
 		workPanel.setLayout(null);
 		workPanel.setBounds(0, 0, 1024, 600);
 		workPanel.setBackground(Color.white);
-		
-//		JPanel workPanel2 = new JPanel();
-//		workPanel2.setLayout(null);
-////		workPanel2.setBounds(0, 0, 1024, 240);
-//		workPanel2.setSize( 1024, 240);
-//		workPanel2.add(new JLabel(" 此广告位招租 "));
-//		workPanel2.setBackground(Color.white);
-//		
-		
+	
 		JButton filmManager = new JButton();
 		filmManager.setVerticalTextPosition(SwingConstants.BOTTOM);
 		filmManager.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -69,6 +60,7 @@ public class Manager extends MainUITmpl{
 		palyManager.setText(" 演出计划管理 ");
 		palyManager.setBounds(430, 100, 160, 160);
 		
+		//演出计划管理按钮监听
 		palyManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 
@@ -77,24 +69,6 @@ public class Manager extends MainUITmpl{
 			
 			}
 		});
-		
-//		JButton seatmanager = new JButton();
-//		seatmanager.setVerticalTextPosition(SwingConstants.BOTTOM);
-//		seatmanager.setHorizontalTextPosition(SwingConstants.CENTER);
-//		seatmanager.setIcon(new ImageIcon("resource/image/seatm.png"));
-//		seatmanager.setBackground(Color.WHITE);
-//		seatmanager.setText(" 座位管理 ");
-//		seatmanager.setBounds(550, 100, 160, 160);
-//		seatmanager.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				new StudioSeat().setVisible(true);
-//				Manager.this.dispose();
-//				
-//			}
-//		});
 		
 		JButton checkC = new JButton();
 		checkC.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -114,7 +88,6 @@ public class Manager extends MainUITmpl{
 		
 		workPanel.add(filmManager);
 		workPanel.add(palyManager);
-//		workPanel.add(seatmanager);
 		workPanel.add(checkC);
 		JLabel jb = new JLabel("    此广告位招租 ");
 		jb.setFont(new Font("",2,36));

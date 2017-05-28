@@ -19,7 +19,7 @@ import xupt.se.ttms.view.studio.StudioAddUI;;
 
 public class ScheduleEditUI extends ScheduleAddUI{
 	/**
-	 * 
+	 * 演出计划修改
 	 */
 	private static final long serialVersionUID = 1L;
 	private Schedule stud;
@@ -30,8 +30,6 @@ public class ScheduleEditUI extends ScheduleAddUI{
 	}
 	
 	public void initData(Schedule stu) {
-		
-//		System.out.println(jstudioID.getSelectedItem());
 		if(null== stu){
 			return;
 		}
@@ -52,9 +50,6 @@ public class ScheduleEditUI extends ScheduleAddUI{
 				break;
 			}
 		}
-//		jstudioID.setSelectedItem(anObject);
-//		stid.setText(stu.getStudio_id()+"");
-//		plid.setText(stu.getPlay_id()+"");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
 		pt.setText(sdf.format(stu.getSched_time()));
 		pprice.setText(stu.getSched_ticket_price()+"");
@@ -68,10 +63,6 @@ public class ScheduleEditUI extends ScheduleAddUI{
 				&& pt.getText() != null&&pprice.getText()!=null) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule stu= stud;
-//			stu.setPlay_id(Integer.parseInt(plid.getText()));
-//			stu.setStudio_id(Integer.parseInt(stid.getText()));
-//			stu.setSched_id(Integer.parseInt(stid.getText()));
-//			stu.setPlay_id(jplayID.getSelectedItem());
 			stu.setPlay_id((new PlaySrv().FetchOneById("play_name = '"+jplayID.getSelectedItem()+"'")).getId());
 			stu.setSched_ticket_price(Double.parseDouble(pprice.getText()));
 			stu.setStudio_id((new StudioSrv().FetchOneById("studio_name = '"+jstudioID.getSelectedItem()+"'")).getID());
@@ -81,7 +72,6 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("???");
 			}
 		
 			stuSrv.modify(stu);

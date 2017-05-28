@@ -34,18 +34,23 @@ import xupt.se.ttms.view.studio.StudioMgrUI;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 
 public class SelectTicketUI extends MainUITmpl{
+	
+	//中、右、上的面板
 	private JPanel  middlePanel;
 	private JPanel rightPanel;
 	private JPanel upPanel;
-	private Ticket[][] ticketArray;
-	private SellTicketHandler handler;
-	private JTextArea detail;
+	
+	private Ticket[][] ticketArray;//对应演出计划的票
+	private SellTicketHandler handler;//售票工具
+	private JTextArea detail;//选票信息展示
+	//票关联的演出计划、演出厅、剧目
 	private Schedule sched;
 	private Studio studio;
-//	private JPanel sellPanel;
 	private Play play;
+	//演出厅行、列
 	private int col=0;
 	private int row=0;//行
+	
 	private List<Ticket> tList;
 	private List<Seat> sList;
 	
@@ -54,13 +59,9 @@ public class SelectTicketUI extends MainUITmpl{
 		initContent();
 	}
 	
-	protected void initContent(){
-//		private String playName;
-//		private Schedule schedule;
-//		private Seat seat;
-//		private Date current_locked_time;
-//		sellPanel = new JPanel();
-		contPan.setLayout(new BorderLayout());
+	//重新获取票的状态，刷新选票区
+	private void getTickets(Schedule schedule){
+		
 		if(sched!=null){
 			studio = new StudioSrv().FetchOneById("studio_id = "+sched.getStudio_id());
 			row =  studio.getRowCount();
@@ -78,34 +79,52 @@ public class SelectTicketUI extends MainUITmpl{
 						t.setSeat(s);
 					}
 				}
+				if(handler.isTicketSelected(t)){
+    				t.setStatus(2);
+    			}
 				
+			}
+        	setMiddlePanel(studio.getRowCount(), studio.getColCount(), tList); 
+        }
+	}
+	
+	protected void initContent(){
+
+		contPan.setLayout(new BorderLayout());
+		handler = new SellTicketHandler();
+		handler.makeNewSale();
+		if(sched!=null){
+			studio = new StudioSrv().FetchOneById("studio_id = "+sched.getStudio_id());
+			row =  studio.getRowCount();
+			col = studio.getColCount();
+			play = new PlaySrv().FetchOneById(" play_id = "+sched.getPlay_id());
+			tList = new TicketSrv().Fetch("sched_id = "+sched.getSched_id());
+			sList = new SeatSrv().Fetch(" studio_id = "+studio.getID());
+			
+			for(Ticket t:tList){
+				
+				t.setPlayName(play.getName());
+				t.setSchedule(sched);
+				for(Seat s:sList){
+					if(t.getSeatId()==s.getId()){
+						t.setSeat(s);
+					}
+				}
+				if(handler.isTicketSelected(t)){
+    				t.setStatus(2);
+    			}
 				
 			}
 			middlePanel = new JPanel();
 			middlePanel.setBounds(0, 0, 800, 500);
+			if(tList!=null){
 			setMiddlePanel(row,col,tList);
+			}
 			setUpPanel();
 			setRightPanel();
 		}
 		Rectangle rect = contPan.getBounds();
 
-//		contPan.setLayout(new BorderLayout());
-		
-		
-//		JPanel sell = new JPanel();
-//		sell.setLayout(new BorderLayout());
-//		sell.setBounds(rect);
-//		System.out.println(rect.getWidth()+"   "+rect.getHeight());
-
-		
-		handler = new SellTicketHandler();
-		handler.makeNewSale();
-//		setUpPanel();
-//		setRightPanel();
-//		sellPanel.add(upPanel, BorderLayout.NORTH);
-//		sellPanel.add(middlePanel,BorderLayout.CENTER);
-//		sellPanel.add(rightPanel,BorderLayout.EAST);
-//		contPan.add(sellPanel);
 		contPan.validate();
 	}
 	
@@ -120,7 +139,6 @@ public class SelectTicketUI extends MainUITmpl{
 		upPanel = new JPanel();
 		upPanel.setLayout(new BorderLayout());
 		JPanel filmPanel = new JPanel();
-//		filmPanel.setLayout(new BorderLayout());
 		if(play!=null){
 			JLabel label = new JLabel("演出厅:"+studio.getName()+", 影片:"+play.getName());
 			label.setFont(new Font("宋体",1,20));
@@ -136,12 +154,9 @@ public class SelectTicketUI extends MainUITmpl{
 			middlePanel = new JPanel();
 		else
 			middlePanel.removeAll();
-		
 		JLabel lmainview = new JLabel();
-
 		ImageIcon selectsite = new ImageIcon("resource/image/selectsite.png");
 		lmainview.setIcon(selectsite);
-
 		JPanel sites = new JPanel();
 		GridLayout gridLayout = new GridLayout(m+1, n+1);
 		gridLayout.setHgap(8);
@@ -230,12 +245,8 @@ public class SelectTicketUI extends MainUITmpl{
 		lmainview.add(sites);
 		middlePanel.add(lmainview);
 		contPan.add(middlePanel, BorderLayout.CENTER);
-//		contPan.add(middlePanel);
 		middlePanel.updateUI();
-//		sellPanel.updateUI();
 	}
-
-	
 
 	private void setRightPanel() {
 		rightPanel = new JPanel();
@@ -251,7 +262,7 @@ public class SelectTicketUI extends MainUITmpl{
 			public void actionPerformed(ActionEvent e) {
 				if(handler.doSale()){
 					detail.setText("");					
-//					getTickets(curNode);
+					getTickets(sched);
 					JOptionPane.showMessageDialog(null, "出票成功。");
 				}else{
 					JOptionPane.showMessageDialog(null, "出现错误，请重试。");					
@@ -263,7 +274,7 @@ public class SelectTicketUI extends MainUITmpl{
 			public void actionPerformed(ActionEvent e) {
 				handler.clearSale();
 				detail.setText("");
-//				getTickets(curNode);
+				getTickets(sched);
 			}
 		});
 		buttons.add(sale);
@@ -271,9 +282,5 @@ public class SelectTicketUI extends MainUITmpl{
 		rightPanel.add(buttons, BorderLayout.SOUTH);
 		contPan.add(rightPanel, BorderLayout.EAST);
 	}
-	
-	
-	
-
 
 }

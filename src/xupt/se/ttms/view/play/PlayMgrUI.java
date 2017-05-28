@@ -39,7 +39,7 @@ import xupt.se.ttms.view.tmpl.*;
 
 class PlayTable {
 	/**
-	 * 
+	 * 剧目表格绘制
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jt;
@@ -66,12 +66,8 @@ class PlayTable {
 		
 		//初始化列明
 		jt=new JTable(tabModel);	
-		
-//
 		jt.setSelectionBackground(Color.green);
-////		jt.setGridColor(Color.orange);
 		JTableHeader th = jt.getTableHeader();
-//		th.setResizingAllowed(true);
 		th.setFont(new Font("宋体",3,15));
 		th.setPreferredSize(new Dimension(jt.getWidth(), 30));
 		jt.setRowHeight(20);
@@ -141,8 +137,6 @@ class PlayTable {
 			}else {
 				stud.setStatus(-1);
 			}
-			
-//			stud.setStatus(Integer.parseInt(""+jt.getValueAt(rowSel, 4)));
 			stud.setTicketPrice(Float.parseFloat(""+jt.getValueAt(rowSel, 5)));
 			if(jt.getValueAt(rowSel, 6)!=null){
 			stud.setIntroduction(jt.getValueAt(rowSel, 6).toString());
@@ -199,7 +193,7 @@ class PlayTable {
 
 public class PlayMgrUI extends MainUITmpl {
 	/**
-	 * 
+	 * author 剧目管理
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel ca1 = null; // 界面提示

@@ -48,8 +48,7 @@ public class SystemMgUI extends MainUITmpl{
 		btnUserMg.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnUserMg.setIcon(new ImageIcon("resource/image/user.png"));
 		btnUserMg.setBackground(Color.white);
-//		btnUserMg.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-		
+//		用户管理button监听
 		btnUserMg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 //				System.out.println("用户管理");
@@ -60,20 +59,16 @@ public class SystemMgUI extends MainUITmpl{
 		
 		JLabel jb = new JLabel();
 		jb.setBounds(335, 50, 1024, 200);
-//		jb.setSize(1024, 200);
 		jb.setIcon(new ImageIcon("resource/image/tan.gif"));
 		
 		contPan.add(jb);
 		contPan.add(btnUserMg);
 		contPan.add(btnStudioMg);
 		contPan.setBackground(Color.white);
-//		mainPan.setBounds(0, 0, contPan.getWidth(), contPan.getHeight());
-//		mainPan.setLayout(null);
-//		contPan.add(mainPan);
+
 	}
 	
 	protected void btnExitClicked(ActionEvent Event){
-//		this.getParent().setVisible(true);
 		this.dispose();
 		new Login().setVisible(true);;
 	}	

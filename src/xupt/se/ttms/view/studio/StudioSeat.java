@@ -15,6 +15,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -31,7 +32,7 @@ import xupt.se.ttms.view.tmpl.MainUITmpl;
 public class StudioSeat extends MainUITmpl implements ActionListener{
 //	
 
-	private JPanel  middlePanel;
+	private JPanel  middlePanel;//座位区
 	private Studio stu;
 	private JButton btnSave,btnCancle;
 	int[][] seats;
@@ -55,15 +56,10 @@ public class StudioSeat extends MainUITmpl implements ActionListener{
 		//To be override by the detailed business block interface 
 		protected void initContent(){
 			
-
 			Rectangle rect = contPan.getBounds();
-
-
 			middlePanel = new JPanel();
 			middlePanel.setBounds(0, 0, 1024, 600);
-			
-			
-			
+
 			btnSave = new JButton("保存");
 			btnSave.setBounds(400, rect.height - 100, 60, 30);
 			btnSave.addActionListener(this);
@@ -72,24 +68,19 @@ public class StudioSeat extends MainUITmpl implements ActionListener{
 			btnCancle = new JButton("取消");
 			btnCancle.setBounds(500, rect.height - 100, 60, 30);
 			btnCancle.addActionListener(this);
-			contPan.add(btnCancle);
 			
+			contPan.add(btnCancle);	
 			contPan.add(middlePanel);
 			contPan.validate();
-			
-			
-			
-			
+					
 		}
 		
 		//To be override by the detailed business block interface 
 		protected void btnExitClicked(ActionEvent Event){
-			
 			new StudioMgrUI().setVisible(true);
 			this.dispose();
 		}	
 	
-
 		private void setMiddlePanel(Studio stu) {
 			int m =stu.getRowCount(),n=stu.getColCount();
 			seats = new int[m+1][n+1];
@@ -97,8 +88,6 @@ public class StudioSeat extends MainUITmpl implements ActionListener{
 				middlePanel = new JPanel();
 			else
 				middlePanel.removeAll();
-//			middlePanel.setBounds(0, 0, 1024, 600);
-//			middlePanel.setSize(1024,500);
 			JLabel lmainview = new JLabel();
 
 			ImageIcon selectsite = new ImageIcon("resource/image/selectsite1.png");
@@ -111,7 +100,6 @@ public class StudioSeat extends MainUITmpl implements ActionListener{
 			sites.setLayout(gridLayout);
 			sites.setOpaque(false); // 设置背景为透明
 			sites.setBounds(105, 120, 510, 300);
-
 
 			final ImageIcon siteimgwhite = new ImageIcon("resource/image/white.png");
 			final ImageIcon siteimggreen = new ImageIcon("resource/image/green.png");
@@ -197,13 +185,17 @@ public class StudioSeat extends MainUITmpl implements ActionListener{
 		private void btnSaveClicked() {
 			// TODO Auto-generated method stub
 			SeatSrv seatsrv = new SeatSrv();
-			seatsrv.delete(" studio_id = "+stu.getID());
+			
+			if(seatsrv.delete(" studio_id = "+stu.getID())!=0){
 			for(int i=1;i<stu.getRowCount()+1;i++ ){
 				for(int j = 1 ;j<stu.getColCount()+1;j++){
 					if(seats[i][j]==0){
 						seatsrv.add(new Seat(stu.getID(),i-1,j-1));
 					}
 				}
+			}
+			}else{
+				JOptionPane.showMessageDialog(null, "该演出厅正在使用，不能修改");
 			}
 			new StudioMgrUI().setVisible(true);
 			this.dispose();
