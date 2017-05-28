@@ -36,7 +36,7 @@ public class SellTicketHandler {
     	for(Ticket t: curTickets){
     		info+="影片："+t.getPlayName()+"\n";
     		info+="场次："+DateFormat.getDateTimeInstance().format(t.getSchedule().getSched_time())+"\n";
-    		info+="座位："+t.getSeat().getRow()+"排"+t.getSeat().getColumn()+"座\n";
+    		info+="座位："+(t.getSeat().getRow()+1)+"排"+(t.getSeat().getColumn()+1)+"座\n";
     		info+="价格："+t.getSchedule().getSched_ticket_price()+"元\n\n";
     		i++;
     		price+=t.getSchedule().getSched_ticket_price();

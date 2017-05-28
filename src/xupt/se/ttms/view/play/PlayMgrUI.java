@@ -102,6 +102,9 @@ class PlayTable {
         column = columnModel.getColumn(1);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(2);
+        column.setMinWidth(0);
+        column.setMaxWidth(0);
+        column.setWidth(0);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(3);
         column.setPreferredWidth(10);
