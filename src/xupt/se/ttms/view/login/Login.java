@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 /**
  * 登陆
  * @author zuo
@@ -24,15 +25,13 @@ import javax.swing.JTextArea;
  */
 public class Login extends JFrame implements ActionListener{
 
-	
-	
 	private String who="经理";
 //	private JPanel jp = new JPanel();
 	private JPanel jp =new JPanel(){  
 		   @Override  
 		   protected void paintComponent(Graphics g) {  
 		    super.paintComponent(g);  
-		    ImageIcon img = new ImageIcon("resource/image/mui.jpg"); 
+		    ImageIcon img = new ImageIcon("resource/image/login2.jpg"); 
 		    img.paintIcon(this, g, 0, 0);  
 		   }  
 		  };  
@@ -45,7 +44,7 @@ public class Login extends JFrame implements ActionListener{
 	private JLabel welccome = new JLabel("欢迎进入千达票务管理系统");
 	
 	
-	private JTextArea account = new JTextArea("");
+	private JTextField account = new JTextField("");
 	private JPasswordField password = new JPasswordField("");
 	
 	JRadioButton jrb1 = new JRadioButton("经理",true);
@@ -63,6 +62,7 @@ public class Login extends JFrame implements ActionListener{
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		
+//		log_in.setIcon(new ImageIcon("resource/image/login.png"));
 	
 //		监听输入账号时键盘的敲击
 		account.addKeyListener(new KeyListener() {
@@ -115,14 +115,15 @@ public class Login extends JFrame implements ActionListener{
 		
 	
 		this.setSize(1024, 700);
-		this.setLocation(500, 150);
+		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		log_in.setBounds(400, 400, 70, 35);
+//		log_in.setLocation(400, 400);
 		register.setBounds(500, 400, 70, 35);
-		log_in.setBackground(Color.GREEN);
+//		log_in.setBackground(Color.GREEN);
 		log_in.setBorder(BorderFactory.createRaisedBevelBorder()); 
-		register.setBackground(Color.green);
+//		register.setBackground(Color.green);
 		register.setBorder(BorderFactory.createRaisedBevelBorder()); 
 		log_in.addActionListener(this);
 		register.addActionListener(this);

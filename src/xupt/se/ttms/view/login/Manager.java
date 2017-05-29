@@ -89,6 +89,15 @@ public class Manager extends MainUITmpl{
 		workPanel.add(filmManager);
 		workPanel.add(palyManager);
 		workPanel.add(checkC);
+		
+		
+		
+		
+
+//		JLabel jb = new JLabel();
+//		jb.setIcon(new ImageIcon("resource/image/dabai.gif"));
+//		jb.setBounds(450,200,1024,400);
+		
 		JLabel jb = new JLabel("    此广告位招租 ");
 		jb.setFont(new Font("",2,36));
 		jb.setBounds(100,400,1024,200);
