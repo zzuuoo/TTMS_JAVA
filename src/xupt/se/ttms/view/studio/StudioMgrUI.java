@@ -314,10 +314,12 @@ public class StudioMgrUI extends MainUITmpl {
 	private void btnQueryClicked() {
 		if (!input.getText().equals("")) {
 			//请自行补充
-			
+			List<Studio> stuList = new StudioSrv().Fetch(" studio_name = '"+input.getText()+"'");
+			tms.showStudioList(stuList);
 
 		} else {
-			JOptionPane.showMessageDialog(null, "请输入检索条件");
+//			JOptionPane.showMessageDialog(null, "请输入检索条件");
+			showTable();
 		}
 	}
 

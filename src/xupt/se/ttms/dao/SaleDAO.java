@@ -25,7 +25,12 @@ public class SaleDAO implements iSaleDAO {
 			con = db.getConn();
 			con.setAutoCommit(false);
 
-	        String sql = "insert into sale(sale_time, sale_type, sale_status) VALUES(?,1,1)";  
+			double n=0;
+			if(!tickets.isEmpty()){
+				n=tickets.get(0).getPrice();
+			}
+			double payment = tickets.size()*n;
+	        String sql = "insert into sale(sale_time, sale_payment,sale_type, sale_status) VALUES(?,"+payment+",1,1)";  
 	        PreparedStatement prep = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);  
 	        prep.setTimestamp(1, new Timestamp(new Date().getTime()));  
 	        prep.executeUpdate();  

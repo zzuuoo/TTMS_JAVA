@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 
 import javax.lang.model.type.TypeKind;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,6 +33,7 @@ import javax.swing.table.TableColumnModel;
 import java.util.List;
 import java.util.Iterator;
 
+import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.PlaySrv;
@@ -172,6 +174,8 @@ public class ScheduleMgUI extends MainUITmpl {
 	// 查找的提示和输出
 	private JLabel hint;
 	private JTextField input;
+	
+	protected JComboBox inquery;
 
 	// 查找，编辑和删除按钮
 	private JButton btnAdd, btnEdit, btnDel, btnQuery;
@@ -198,7 +202,7 @@ public class ScheduleMgUI extends MainUITmpl {
 		jsc.setBounds(0, 40, rect.width, rect.height - 100);
 		contPan.add(jsc);
 
-		hint = new JLabel("请输入演出计划名称:", JLabel.RIGHT);
+		hint = new JLabel("请输入查询内容:", JLabel.RIGHT);
 		hint.setFont(new Font("",1,15));
 		hint.setBounds(60, rect.height - 50, 150, 30);
 		contPan.add(hint);
@@ -207,9 +211,14 @@ public class ScheduleMgUI extends MainUITmpl {
 		input.setBounds(220, rect.height - 50, 200, 30);
 		contPan.add(input);
 
+		String [] inqueryType = {"按剧目查找","按演出厅查找","按票价查找"};
+		inquery = new JComboBox(inqueryType);
+		inquery.setBounds(440, rect.height - 50, 130, 30);
+		contPan.add(inquery);
+
 		// 查找 ，删除和编辑的按钮，其中含有相关的事件处理！
 		btnQuery = new JButton("查找");
-		btnQuery.setBounds(440, rect.height - 50, 60, 30);
+		btnQuery.setBounds(600, rect.height - 50, 60, 30);
 		btnQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnQueryClicked();
@@ -301,9 +310,24 @@ public class ScheduleMgUI extends MainUITmpl {
 	private void btnQueryClicked() {
 		if (!input.getText().equals("")) {
 			//请自行补充
-
+			if(inquery.getSelectedIndex()==0){//按剧目查询
+				//play_id
+				Play p = new PlaySrv().FetchOneById(" play_name = '"+input.getText()+"'");
+				List<Schedule> stuList = new ScheduleSrv().Fetch(" play_id = "+p.getId());
+				tms.showScheduleList(stuList);
+			}
+			else if(inquery.getSelectedIndex()==1){//按演出厅查询
+				Studio s= new StudioSrv().FetchOneById(" studio_name = '"+input.getText()+"'");
+				List<Schedule> stuList = new ScheduleSrv().Fetch(" studio_id = "+s.getID());
+				tms.showScheduleList(stuList);
+			}else {//按票价查询
+				List<Schedule> stuList = new ScheduleSrv().Fetch(" sched_ticket_price = "+input.getText());
+				tms.showScheduleList(stuList);
+			}
+			System.out.println(inquery.getSelectedItem());
 		} else {
-			JOptionPane.showMessageDialog(null, "请输入检索条件");
+//			JOptionPane.showMessageDialog(null, "请输入检索条件");
+			showTable();
 		}
 	}
 

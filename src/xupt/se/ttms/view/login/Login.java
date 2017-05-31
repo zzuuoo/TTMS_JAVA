@@ -26,14 +26,13 @@ import javax.swing.JTextField;
 public class Login extends JFrame implements ActionListener{
 
 	private String who="经理";
-//	private JPanel jp = new JPanel();
 	private JPanel jp =new JPanel(){  
 		   @Override  
 		   protected void paintComponent(Graphics g) {  
 		    super.paintComponent(g);  
 		    ImageIcon img = new ImageIcon("resource/image/login2.jpg"); 
 		    img.paintIcon(this, g, 0, 0);  
-		   }  
+		   }
 		  };  
 	
 	private JButton log_in = new JButton("登陆");
@@ -52,17 +51,10 @@ public class Login extends JFrame implements ActionListener{
 	JRadioButton jrb3 = new JRadioButton("售票员");
 	ButtonGroup bg = new ButtonGroup();
 
-	
 	public Login(){
-
-		
 		super("TTMS");
-		
-		
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		
-//		log_in.setIcon(new ImageIcon("resource/image/login.png"));
 	
 //		监听输入账号时键盘的敲击
 		account.addKeyListener(new KeyListener() {
@@ -119,11 +111,8 @@ public class Login extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		log_in.setBounds(400, 400, 70, 35);
-//		log_in.setLocation(400, 400);
 		register.setBounds(500, 400, 70, 35);
-//		log_in.setBackground(Color.GREEN);
 		log_in.setBorder(BorderFactory.createRaisedBevelBorder()); 
-//		register.setBackground(Color.green);
 		register.setBorder(BorderFactory.createRaisedBevelBorder()); 
 		log_in.addActionListener(this);
 		register.addActionListener(this);
@@ -178,8 +167,6 @@ public class Login extends JFrame implements ActionListener{
 		new Login().setVisible(true);;
 	}
 
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -220,7 +207,6 @@ public class Login extends JFrame implements ActionListener{
 			
 		}
 	}
-
 	
 }
 

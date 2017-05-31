@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 
 import javax.lang.model.type.TypeKind;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,8 +31,10 @@ import java.util.List;
 import java.util.Iterator;
 
 import xupt.se.ttms.model.Play;
+import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.PlaySrv;
+import xupt.se.ttms.service.ScheduleSrv;
 import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.view.login.Manager;
 import xupt.se.ttms.view.login.SystemMgUI;
@@ -202,7 +205,7 @@ public class PlayMgrUI extends MainUITmpl {
 	// 查找的提示和输出
 	private JLabel hint;
 	private JTextField input;
-
+	protected JComboBox inquery;
 	// 查找，编辑和删除按钮
 	private JButton btnAdd, btnEdit, btnDel, btnQuery;
 	
@@ -237,9 +240,14 @@ public class PlayMgrUI extends MainUITmpl {
 		input.setBounds(220, rect.height - 50, 200, 30);
 		contPan.add(input);
 
+		String [] inqueryType = {"按剧名查找","按时长查找","按票价查找"};
+		inquery = new JComboBox(inqueryType);
+		inquery.setBounds(440, rect.height - 50, 130, 30);
+		contPan.add(inquery);
+
 		// 查找 ，删除和编辑的按钮，其中含有相关的事件处理！
 		btnQuery = new JButton("查找");
-		btnQuery.setBounds(440, rect.height - 50, 60, 30);
+		btnQuery.setBounds(600, rect.height - 50, 60, 30);
 		btnQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnQueryClicked();
@@ -334,9 +342,22 @@ public class PlayMgrUI extends MainUITmpl {
 	private void btnQueryClicked() {
 		if (!input.getText().equals("")) {
 			//请自行补充
-
+			if(inquery.getSelectedIndex()==0){//按剧名查
+//				Play p = new PlaySrv().FetchOneById(" play_name = '"+input.getText()+"'");
+				List<Play> stuList = new PlaySrv().Fetch(" play_name = '"+input.getText()+"'");
+				tms.showPlayList(stuList);
+			}
+			else if(inquery.getSelectedIndex()==1){//按时长查询
+				List<Play> stuList = new PlaySrv().Fetch(" play_length = "+input.getText());
+				tms.showPlayList(stuList);
+			}else {//按票价查询
+				List<Play> stuList = new PlaySrv().Fetch(" play_ticket_price = "+input.getText());
+				tms.showPlayList(stuList);
+			}
+			System.out.println(inquery.getSelectedItem());
 		} else {
-			JOptionPane.showMessageDialog(null, "请输入检索条件");
+//			JOptionPane.showMessageDialog(null, "请输入检索条件");
+			showTable();
 		}
 	}
 

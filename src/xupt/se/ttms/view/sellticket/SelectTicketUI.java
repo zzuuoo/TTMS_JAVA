@@ -173,6 +173,7 @@ public class SelectTicketUI extends MainUITmpl{
 			private static final long serialVersionUID = -144569051730123316L;
 
 			public void actionPerformed(ActionEvent e) {
+//				System.out.println("dianle");
 				JButton site = (JButton) e.getSource();
 				String name = site.getName();
 				String tmp[] = name.split(",");
@@ -188,6 +189,11 @@ public class SelectTicketUI extends MainUITmpl{
 					site.setIcon(siteimgwhite);
 					handler.removeTicket(ticketArray[i][j]);
 					detail.setText(handler.getInfo());
+				}else if (ticketArray[i][j].getStatus()==9){
+//					JOptionPane.showOptionDialog(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+					JOptionPane.showMessageDialog(null, "正在测试");	
+//					ticketArray[i][j].setStatus(0);
+					System.out.println("已售票");
 				}
 			}
 		};
@@ -232,10 +238,11 @@ public class SelectTicketUI extends MainUITmpl{
 						site.setIcon(siteimggreen);
 						site.setName(i+","+j);
 						sites.add(site);
-					} else{
-						JButton site = new JButton();
+					} else if (seats[i][j] == 9) {
+						JButton site = new JButton(act);
 						site.setBackground(Color.WHITE);
 						site.setIcon(siteimgred);
+						site.setName(i+","+j);
 						sites.add(site);
 					}
 				}
