@@ -74,7 +74,7 @@ class PersonDataSaleTable {
 		tabModel.addColumn("empID");
 		tabModel.addColumn("时间");
 		tabModel.addColumn("收款");
-		tabModel.addColumn("change");
+		tabModel.addColumn("找零");
 		tabModel.addColumn("单据");
 		tabModel.addColumn("状态");
 		
@@ -94,7 +94,7 @@ class PersonDataSaleTable {
 	       jt.getColumn("empID").setCellRenderer(render);
 	       jt.getColumn("时间").setCellRenderer(render);
 	       jt.getColumn("收款").setCellRenderer(render);
-	       jt.getColumn("change").setCellRenderer(render);
+	       jt.getColumn("找零").setCellRenderer(render);
 	       jt.getColumn("单据").setCellRenderer(render);
 	       jt.getColumn("状态").setCellRenderer(render);
 		
@@ -332,7 +332,7 @@ public class PersonalDataSale extends MainUITmpl {
 //			//请自行补充
 		} else {
 			JOptionPane.showMessageDialog(null, "请输入检索条件");
-			showTable();
+//			showTable();
 		}
 	}
 

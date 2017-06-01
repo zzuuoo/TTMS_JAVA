@@ -72,7 +72,7 @@ public class SelectTicketUI extends MainUITmpl{
 			sList = new SeatSrv().Fetch(" studio_id = "+studio.getID());
 			
 			for(Ticket t:tList){
-				
+//				t.setPrice(schedule.getSched_ticket_price());
 				t.setPlayName(play.getName());
 				t.setSchedule(sched);
 				for(Seat s:sList){
@@ -103,7 +103,7 @@ public class SelectTicketUI extends MainUITmpl{
 			sList = new SeatSrv().Fetch(" studio_id = "+studio.getID());
 			
 			for(Ticket t:tList){
-				
+//				t.setPrice(sched.getSched_ticket_price());
 				t.setPlayName(play.getName());
 				t.setSchedule(sched);
 				for(Seat s:sList){

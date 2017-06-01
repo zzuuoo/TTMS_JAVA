@@ -82,6 +82,15 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			p.setStatus(1);
 			ps.modify(p);
 			
+			TicketSrv tsrv = new TicketSrv();
+			List<Ticket> lt = tsrv.Fetch(" sched_id = "+stu.getSched_id());
+			for(Ticket t:lt){
+				t.setPrice(stu.getSched_ticket_price());
+				tsrv.modify(t);
+//				System.out.println(t.getPrice());
+			}
+
+			
 			if(fstudioID != stu.getStudio_id()){
 				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+stu.getStudio_id());
 				TicketSrv ts = new TicketSrv();
