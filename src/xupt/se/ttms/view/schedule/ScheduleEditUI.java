@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
@@ -75,6 +76,12 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			}
 		
 			stuSrv.modify(stu);
+			
+			PlaySrv ps = new PlaySrv();
+			Play p  = ps.FetchOneById(" play_id = "+stu.getPlay_id());
+			p.setStatus(1);
+			ps.modify(p);
+			
 			if(fstudioID != stu.getStudio_id()){
 				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+stu.getStudio_id());
 				TicketSrv ts = new TicketSrv();

@@ -1,8 +1,12 @@
 package xupt.se.ttms.view.play;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 import xupt.se.ttms.model.Play;
+import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.service.PlaySrv;
+import xupt.se.ttms.service.ScheduleSrv;
 
 public class PlayEditUI extends PlayAddUI{
 	/**
@@ -58,6 +62,18 @@ public class PlayEditUI extends PlayAddUI{
 			stuSrv.modify(stu);
 			this.setVisible(false);
 			rst=true;
+			
+			
+			//当剧目下线，删除所有相关联的演出计划
+//			if(stu.getStatus()==-1){
+//				
+//				ScheduleSrv ss = new ScheduleSrv();
+//				List<Schedule> sdList = ss.Fetch(" play_id = "+stu.getId());
+//				for(Schedule s:sdList){
+//					ss.delete(s.getSched_id());
+//				}
+//			}
+			//外键冲突，删不了
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "数据不完整");

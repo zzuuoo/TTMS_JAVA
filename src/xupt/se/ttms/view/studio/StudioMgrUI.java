@@ -303,8 +303,8 @@ public class StudioMgrUI extends MainUITmpl {
 		int confirm = JOptionPane.showConfirmDialog(null, "确认删除所选？", "删除", JOptionPane.YES_NO_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
 			StudioSrv stuSrv = new StudioSrv();
-			SeatSrv seatsrv = new SeatSrv();
-			seatsrv.delete("studio_id = "+stud.getID());
+//			SeatSrv seatsrv = new SeatSrv();
+//			seatsrv.delete("studio_id = "+stud.getID());
 			stuSrv.delete(stud.getID());
 
 			showTable();

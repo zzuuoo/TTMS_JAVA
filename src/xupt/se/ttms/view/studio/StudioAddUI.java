@@ -14,6 +14,7 @@ import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.StudioSrv;
+import xupt.se.ttms.view.dialog.StudioAddDialog;
 import xupt.se.ttms.view.tmpl.*;
 
 public class StudioAddUI extends PopUITmpl implements ActionListener {
@@ -99,6 +100,11 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			
 			int studioID = stuSrv.add(stu);
 			System.out.println("演出厅ID："+studioID);
+//			if(studioID!=0){
+//				this.setVisible(false);
+//				rst=true;
+//			new StudioAddDialog(studioID,stu.getRowCount(),stu.getColCount());
+//			}
 			if(studioID!=0){
 				SeatSrv seatsrv = new SeatSrv();
 				for(int i=0;i<stu.getRowCount();i++){
@@ -108,7 +114,8 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 				}
 				this.setVisible(false);
 				rst=true;
-			}else{
+			}
+			else{
 				JOptionPane.showMessageDialog(null, "数据添加失败");
 			}
 			

@@ -64,7 +64,6 @@ class ScheduleTable {
 		tabModel.addColumn("演出时间");
 		tabModel.addColumn("票价");
 		//初始化列明
-		jt=new JTable(tabModel);	
 		
 		jt=new JTable(tabModel);
 		jt.setSelectionBackground(Color.green);

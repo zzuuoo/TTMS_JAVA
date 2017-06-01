@@ -148,6 +148,10 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 
 			int scheduleID = stuSrv.add(sch);
 			if(scheduleID!= 0 ){
+				PlaySrv ps = new PlaySrv();
+				Play p  = ps.FetchOneById(" play_id = "+sch.getPlay_id());
+				p.setStatus(1);
+				ps.modify(p);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 				ScheduleSrv schSrv = new ScheduleSrv();
 				Schedule sc = schSrv.FetchOne(" sched_id = "+scheduleID);
