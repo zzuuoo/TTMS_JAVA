@@ -2,6 +2,14 @@ package xupt.se.ttms.idao;
 import xupt.se.ttms.dao.*;
 
 public class DAOFactory {
+	public static iLogindeDAO creatLogindeDAO(){
+		return new LogindeDAO();
+	}
+	
+	public static iemployeeDAO creatEmployeeDAO(){
+		return new employeeDAO();
+	}
+
 	
 	public static IDataDictDAO creatDataDictDAO(){
 		return new DataDictDAO();

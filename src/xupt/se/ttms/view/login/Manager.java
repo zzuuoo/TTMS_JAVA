@@ -2,6 +2,7 @@ package xupt.se.ttms.view.login;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.xml.bind.JAXBElement.GlobalScope;
 
+import xupt.se.ttms.model.Employee;
+import xupt.se.ttms.model.GlobalVariable;
+import xupt.se.ttms.service.EmployeeSrv;
 import xupt.se.ttms.view.play.PlayMgrUI;
 import xupt.se.ttms.view.schedule.ScheduleMgUI;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
@@ -29,6 +34,7 @@ public class Manager extends MainUITmpl{
 	
 	protected void initContent(){
 		
+		System.out.println(GlobalVariable.emp_id);
 		JPanel workPanel = new JPanel();
 		workPanel.setLayout(null);
 		workPanel.setBounds(0, 0, 1024, 600);
@@ -111,6 +117,64 @@ public class Manager extends MainUITmpl{
 		
 		
 	}
+	
+	protected void showCurrentUser(){
+//		LoginedUser curUser=LoginedUser.getInstance();
+//		String name=curUser.getEmpName();
+		Employee ep = new EmployeeSrv().FetchOne(" emp_id =  "+GlobalVariable.emp_id);
+		String name =ep.getEmp_name();
+		if(null==name ||  name.isEmpty())
+			usrName.setText("匿名用户");
+		else
+			usrName.setText(name);		
+	}
+	
+	
+	protected void initHeader() {
+		try {
+
+			usrLabel.setBounds(frmWidth-160, 5, 80, 30);
+			usrLabel.setText("当前用户：");
+			headPan.add(usrLabel);
+			
+			usrName.setBounds(frmWidth-80, 5, 80, 30);
+			usrName.setText("匿名");
+			usrName.setFont(new java.awt.Font("宋体", 1, 15));
+			usrName.setForeground(Color.black);				
+			headPan.add(usrName);
+			
+			btnModPwd.setBounds(frmWidth-160, 40, 80, 30);
+			btnModPwd.setMargin(new Insets(0,0,0,0));
+			btnModPwd.setContentAreaFilled(false);
+			btnModPwd.setForeground(Color.black);
+			headPan.add(btnModPwd);
+			btnModPwd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent Event) {
+					btnModUserClicked();
+				}
+			});
+			
+			btnExit.setBounds(frmWidth-80, 40, 80, 30);
+			btnExit.setContentAreaFilled(false);
+			btnExit.setForeground(Color.black);
+			btnExit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent Event) {
+					btnExitClicked(Event);
+				}
+			});
+			
+			headPan.add(btnExit);	
+			
+			//Show the information of current user
+			showCurrentUser();
+			
+		} catch (Exception e) {
+			javax.swing.JOptionPane.showMessageDialog(null, e, "Exception", 0);
+			e.printStackTrace();
+		}
+	}
+	
+	
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
 //		System.exit(0);

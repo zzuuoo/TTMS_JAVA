@@ -3,74 +3,62 @@
 import java.io.Serializable;
 
 public class Employee implements Serializable {
-	private int access;
-	private int id;
-	private String name;
-	private String password;
-	private String cName;
-	private String tel;
+	private int emp_id;
+	private String emp_name;
+	private String emp_tel_num;
+	private String emp_addr;
+	private String emp_email;
 	
-	public String getcName() {
-		return cName;
+	public Employee() {
+		// TODO Auto-generated constructor stub
 	}
-
-	public void setcName(String cName) {
-		this.cName = cName;
+	
+	public Employee(int emp_id,String emp_name,String emp_tel_num,String emp_addr,String emp_email) {
+		// TODO Auto-generated constructor stub
+		this.emp_id      =  emp_id;
+		this.emp_name    =  emp_name;
+		this.emp_tel_num =  emp_tel_num;
+		this.emp_addr    =  emp_addr;
+		this.emp_email   =  emp_email;
 	}
-
-	public String getTel() {
-		return tel;
+	
+	public int getEmp_id() {
+		return emp_id;
 	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
+	
+	public String getEmp_name() {
+		return emp_name;
 	}
-
-	public Employee(){
-		
+	
+	public String getEmp_tel_num() {
+		return emp_tel_num;
 	}
-
-	public Employee(int access, int id, String name, String password) {
-		this.access = access;
-		this.id = id;
-		this.name = name;
-		this.password = password;
+	
+	public String getEmp_addr() {
+		return emp_addr;
 	}
-
-	public int getAccess() {
-		return access;
+	
+	public String getEmp_email() {
+		return emp_email;
 	}
-
-	public int getId() {
-		return id;
+	
+	public void setEmp_id(int emp_id) {
+		this.emp_id = emp_id;
 	}
-
-	public String getName() {
-		return name;
+	
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
-
-	public String getPassword() {
-		return password;
+	
+	public void setEmp_tel_num(String emp_tel_num) {
+		this.emp_tel_num = emp_tel_num;
 	}
-
-	public void setAccess(int access) {
-		this.access = access;
+	
+	public void setEmp_addr(String emp_addr) {
+		this.emp_addr = emp_addr;
 	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public void setEmp_email(String emp_email) {
+		this.emp_email = emp_email;
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void showValue() {
-		System.out.println("编号：" + id + "\t姓名：" + name);
-	}
-
 }

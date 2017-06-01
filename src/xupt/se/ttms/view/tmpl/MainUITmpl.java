@@ -16,6 +16,9 @@ import javax.swing.JButton;
 import java.awt.Insets;
 
 import xupt.se.ttms.view.system.*;
+import xupt.se.ttms.model.Employee;
+import xupt.se.ttms.model.GlobalVariable;
+import xupt.se.ttms.service.EmployeeSrv;
 import xupt.se.ttms.service.LoginedUser;
 
 /**
@@ -26,8 +29,8 @@ import xupt.se.ttms.service.LoginedUser;
 public class MainUITmpl extends JFrame  {
 
 	private static final long serialVersionUID = 1L;
-	private int frmWidth=1024;
-	private int frmHeight=700;
+	protected int frmWidth=1024;
+	protected int frmHeight=700;
 	protected final ImagePanel headPan = new ImagePanel("resource/image/header3.jpg");
 	protected final JPanel contPan = new JPanel();
 	protected JLabel usrLabel = new JLabel();
@@ -83,7 +86,7 @@ public class MainUITmpl extends JFrame  {
 		return this.frmHeight;
 	}
 	
-	private void initHeader() {
+	protected void initHeader() {
 		try {
 
 			usrLabel.setBounds(frmWidth-160, 5, 80, 30);
@@ -128,15 +131,17 @@ public class MainUITmpl extends JFrame  {
 	}
 	
 	
-	private void btnModUserClicked(){
+	protected void btnModUserClicked(){
 //		SysUserModUI dlgUserMod=new SysUserModUI();
 //		dlgUserMod.setModal(true);
 //		dlgUserMod.setVisible(true);
 	}	
 	
-	private void showCurrentUser(){
-		LoginedUser curUser=LoginedUser.getInstance();
-		String name=curUser.getEmpName();
+	protected void showCurrentUser(){
+//		LoginedUser curUser=LoginedUser.getInstance();
+//		String name=curUser.getEmpName();
+		Employee ep = new EmployeeSrv().FetchOne(" emp_id =  "+GlobalVariable.emp_id);
+		String name =ep.getEmp_name();
 		if(null==name ||  name.isEmpty())
 			usrName.setText("匿名用户");
 		else

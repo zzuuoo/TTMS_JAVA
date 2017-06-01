@@ -13,11 +13,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import xupt.se.ttms.model.Loginde;
+import xupt.se.ttms.service.LogindeSrv;
 /**
  * 登陆
  * @author zuo
@@ -182,23 +186,59 @@ public class Login extends JFrame implements ActionListener{
 			case "登陆":
 				if(who.compareTo("经理")==0){
 					password.getPassword();
+					Loginde  lg = new Loginde(account.getText().replaceAll("\n", ""),new String(password.getPassword()),"经理");
+					LogindeSrv lgs = new LogindeSrv();
+					if(lgs.LogindeDAO_log(lg)==1){
+						Manager  mgr = new Manager();
+						mgr.setVisible(true);
+						this.dispose();
+					}
+					else{
+						System.out.println("账号或密码错误");	
+						JOptionPane.showMessageDialog(null, "账号或密码错误");	
+					}
 					System.out.println("账号："+account.getText().replaceAll("\n", "")+"\n密码："+new String(password.getPassword()));
-					Manager  mgr = new Manager();
-					mgr.setVisible(true);
-					this.dispose();
-				}else if(who.compareTo("系统管理者")==0){
+//					Manager  mgr = new Manager();
+//					mgr.setVisible(true);
+//					this.dispose();
+				}
+				else if(who.compareTo("系统管理者")==0){
+					Loginde  lg2 = new Loginde(account.getText().replaceAll("\n", ""),new String(password.getPassword()),"系统管理者");
+					LogindeSrv lgs2 = new LogindeSrv();
+					if(lgs2.LogindeDAO_log(lg2)==1){
+						SystemMgUI  smg = new SystemMgUI();
+						smg.setVisible(true);
+						this.dispose();
+					}
+					else{
+						System.out.println("账号或密码错误");
+						JOptionPane.showMessageDialog(null, "账号或密码错误");	
+					}
 					System.out.println("账号："+account.getText().replaceAll("\n", "")+"\n密码："+new String(password.getPassword()));
-					SystemMgUI  smg = new SystemMgUI();
-					smg.setVisible(true);
-					this.dispose();
-				}else if (who.compareTo("售票员")==0){
+//					SystemMgUI  smg = new SystemMgUI();
+//					smg.setVisible(true);
+//					this.dispose();
+				}
+				else if (who.compareTo("售票员")==0){
+					Loginde  lg3 = new Loginde(account.getText().replaceAll("\n", ""),new String(password.getPassword()),"售票员");
+					LogindeSrv lgs3 = new LogindeSrv();
+					if(lgs3.LogindeDAO_log(lg3)==1){
+						Seller se = new Seller();
+						se.setVisible(true);
+						this.dispose();
+					}
+					else{
+						System.out.println("账号或密码错误");
+						JOptionPane.showMessageDialog(null, "账号或密码错误");	
+					}
 					System.out.println("账号："+account.getText().replaceAll("\n", "")+"\n密码："+new String(password.getPassword()));
-					Seller se = new Seller();
-					se.setVisible(true);
-					this.dispose();
+//					Seller se = new Seller();
+//					se.setVisible(true);
+//					this.dispose();
 				}
 				break;
 			case "注册":
+
 				account.setText(who+e.getActionCommand());
 				break;
 			default:
