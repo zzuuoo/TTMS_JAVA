@@ -3,6 +3,7 @@ package xupt.se.ttms.dao;
 import java.util.LinkedList;
 import java.util.List;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 
 import xupt.se.ttms.idao.iTicketDAO;
 import xupt.se.ttms.model.Ticket;
@@ -53,14 +54,16 @@ public class TicketDAO implements iTicketDAO {
 	 
 	public int update(Ticket stu) {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
 		int rtn = 0;
+		if(stu.getCurrent_locked_time()!=null){
 		try {
 			String sql = "update ticket set " + " seat_id ="
 					+ stu.getSeatId() + ", " + " sched_id = "
 					+ stu.getScheduleId() + ", " + " ticket_price= "
 					+ stu.getPrice() + ", " + " ticket_status = "
 					+ stu.getStatus() + ", "+"ticket_locked_time='"
-					+stu.getLocked_time()+"'";
+					+sdf.format(stu.getLocked_time())+"'";
 
 			sql += " where ticket_id = " + stu.getId();
 			DBUtil db = new DBUtil();
@@ -69,6 +72,23 @@ public class TicketDAO implements iTicketDAO {
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		}else{
+				try {
+					String sql = "update ticket set " + " seat_id ="
+							+ stu.getSeatId() + ", " + " sched_id = "
+							+ stu.getScheduleId() + ", " + " ticket_price= "
+							+ stu.getPrice() + ", " + " ticket_status = "
+							+ stu.getStatus() + ", "+"ticket_locked_time= null";
+
+					sql += " where ticket_id = " + stu.getId();
+					DBUtil db = new DBUtil();
+					db.openConnection();
+					rtn = db.execCommand(sql);
+					db.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		return rtn;
 	}

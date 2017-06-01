@@ -139,6 +139,7 @@ public class PlayDAO implements iPlayDAO {
 					stu.setName(rst.getString("play_name"));
 					stu.setIntroduction(rst.getString("play_introduction"));
 					stu.setLength(rst.getInt("play_length"));
+					stu.setImage(rst.getString("play_image"));
 					stu.setTicketPrice(rst.getFloat("play_ticket_price"));
 					stu.setStatus(rst.getInt("play_status"));
 //					stu.setImage(rst.get);
@@ -161,7 +162,8 @@ public class PlayDAO implements iPlayDAO {
 		List<Play> stuList = null;
 		stuList = new LinkedList<Play>();
 		try {
-			String sql = "select play.play_id, play_name from play, schedule " +
+			String sql = "select play.play_id, play_name"
+					+ ",play_introduction,play_image,play_length,play_ticket_price,play_status  from play, schedule " +
 		       "where play.play_id=schedule.play_id ";
 			condt.trim();
 			if (!condt.isEmpty())
@@ -178,6 +180,11 @@ public class PlayDAO implements iPlayDAO {
 					Play stu = new Play();
 					stu.setId(rst.getInt("play_id"));
 					stu.setName(rst.getString("play_name"));
+					stu.setIntroduction(rst.getString("play_introduction"));
+					stu.setLength(rst.getInt("play_length"));
+					stu.setImage(rst.getString("play_image"));
+					stu.setTicketPrice(rst.getFloat("play_ticket_price"));
+					stu.setStatus(rst.getInt("play_status"));
 					stuList.add(stu);
 				}
 			}
@@ -214,6 +221,7 @@ public class PlayDAO implements iPlayDAO {
 					stu.setLength(rst.getInt("play_length"));
 					stu.setTicketPrice(rst.getFloat("play_ticket_price"));
 					stu.setStatus(rst.getInt("play_status"));
+					stu.setImage(rst.getString("play_image"));
 					db.close(rst);
 			}
 			db.close();

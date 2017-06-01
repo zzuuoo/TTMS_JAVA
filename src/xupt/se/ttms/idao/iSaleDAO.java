@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface iSaleDAO {
 	public boolean doSale(List<Ticket> tickets);
+	public boolean refund(List<Ticket> tickets);
 }

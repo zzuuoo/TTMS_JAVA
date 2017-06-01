@@ -190,10 +190,20 @@ public class SelectTicketUI extends MainUITmpl{
 					handler.removeTicket(ticketArray[i][j]);
 					detail.setText(handler.getInfo());
 				}else if (ticketArray[i][j].getStatus()==9){
-//					JOptionPane.showOptionDialog(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-					JOptionPane.showMessageDialog(null, "正在测试");	
-//					ticketArray[i][j].setStatus(0);
-					System.out.println("已售票");
+					
+					int isDelete = JOptionPane.showConfirmDialog(null, "是否确定退票？","Tips", JOptionPane.YES_NO_OPTION); 
+
+			//如果这个整数等于JOptionPane.YES_OPTION，则说明你点击的是“确定”按钮，则允许继续操作，否则结束
+					if(isDelete == JOptionPane.YES_OPTION){
+						ticketArray[i][j].setStatus(0);
+						ticketArray[i][j].setLocked_time(null);
+						new TicketSrv().modify(ticketArray[i][j]);
+						site.setIcon(siteimgwhite);
+						ticketArray[i][j].setStatus(0);
+						JOptionPane.showMessageDialog(null, "退票成功");	
+					}
+					
+					System.out.println("已退票");
 				}
 			}
 		};

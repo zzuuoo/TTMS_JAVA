@@ -2,11 +2,11 @@ package xupt.se.ttms.model;
 
 public class Play {
 	private int id;
-//	private int typeId;
-//	private int langId;
+	private int typeId;
+	private int langId;
 	private String name;
 	private String introduction;
-	private int[] image;
+	private String image;
 	private int length;
 	private float ticketPrice;
 	private int status;  // 0：待安排演出    1：已安排演出    -1：下线
@@ -15,22 +15,22 @@ public class Play {
 		
 	}
 	
-//	public Play(int id, int typeId, int langId, String name,
-//			String introduction, int[] image, int length, float ticketPrice,
-//			int status) {
-//		super();
-//		this.id = id;
-//		this.typeId = typeId;
-//		this.langId = langId;
-//		this.name = name;
-//		this.introduction = introduction;
-//		this.image = image;
-//		this.length = length;
-//		this.ticketPrice = ticketPrice;
-//		this.status = status;
-//	}
+	public Play(int id, int typeId, int langId, String name,
+			String introduction, String image, int length, float ticketPrice,
+			int status) {
+		super();
+		this.id = id;
+		this.typeId = typeId;
+		this.langId = langId;
+		this.name = name;
+		this.introduction = introduction;
+		this.image = image;
+		this.length = length;
+		this.ticketPrice = ticketPrice;
+		this.status = status;
+	}
 	public Play(int id, String name,
-			String introduction, int[] image, int length, float ticketPrice,
+			String introduction, String image, int length, float ticketPrice,
 			int status) {
 		super();
 		this.id = id;
@@ -52,21 +52,21 @@ public class Play {
 		this.id = id;
 	}
 
-//	public int getTypeId() {
-//		return typeId;
-//	}
-//
-//	public void setTypeId(int typeId) {
-//		this.typeId = typeId;
-//	}
-//
-//	public int getLangId() {
-//		return langId;
-//	}
-//
-//	public void setLangId(int langId) {
-//		this.langId = langId;
-//	}
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+
+	public int getLangId() {
+		return langId;
+	}
+
+	public void setLangId(int langId) {
+		this.langId = langId;
+	}
 
 	public String getName() {
 		return name;
@@ -84,11 +84,11 @@ public class Play {
 		this.introduction = introduction;
 	}
 
-	public int[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(int[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
