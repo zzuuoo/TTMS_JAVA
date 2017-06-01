@@ -5,10 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import xupt.se.ttms.idao.iSaleDAO;
+import xupt.se.ttms.model.GlobalVariable;
+import xupt.se.ttms.model.Sale;
+import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Ticket;
 import xupt.se.util.DBUtil;
 
@@ -30,7 +35,7 @@ public class SaleDAO implements iSaleDAO {
 				n=tickets.get(0).getPrice();
 			}
 			double payment = tickets.size()*n;
-	        String sql = "insert into sale(sale_time, sale_payment,sale_type, sale_status) VALUES(?,"+payment+",1,1)";  
+	        String sql = "insert into sale(sale_time, emp_id,sale_payment,sale_type, sale_status) VALUES(?,"+GlobalVariable.emp_id+","+payment+",1,1)";  
 	        PreparedStatement prep = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);  
 	        prep.setTimestamp(1, new Timestamp(new Date().getTime()));  
 	        prep.executeUpdate();  
@@ -135,5 +140,46 @@ public class SaleDAO implements iSaleDAO {
 			}
 		}
 		return true;
+	}
+
+
+	@Override
+	public List<Sale> select(String condt) {
+		List<Sale> stuList = null;
+//		SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
+		stuList = new LinkedList<Sale>();
+		try {
+			String sql = "select sale_ID, emp_id,sale_time, sale_payment, sale_change,sale_type,sale_status from sale ";
+			condt.trim();
+			if (!condt.isEmpty())
+				sql += " where " + condt;
+			DBUtil db = new DBUtil();
+			if (!db.openConnection()) {
+				System.out.print("fail to connect database");
+				return null;
+			}
+			ResultSet rst = db.execQuery(sql);
+			if (rst != null) {
+				while (rst.next()) {
+					Sale stu = new Sale();
+					stu.setId(rst.getInt("sale_ID"));
+					stu.setEmpId(rst.getInt("emp_id"));
+					stu.setTime(rst.getTimestamp("sale_time"));
+					stu.setPayment(rst.getFloat("sale_payment"));
+					stu.setChange(rst.getFloat("sale_change"));
+					stu.setType(rst.getInt("sale_type"));
+					stu.setStatus(rst.getInt("sale_status"));
+					stuList.add(stu);
+				}
+			}
+			db.close(rst);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return stuList;
 	}
 }

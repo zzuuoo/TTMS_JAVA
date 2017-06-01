@@ -220,7 +220,7 @@ public class DataDictMgrUI extends MainUITmpl {
  
                 Object object = node.getUserObject();
                 if (node.isRoot()) {
-                	new DataDictSrv().findAllSonByID(leafList, 1);
+                	new DataDictSrv().findAllSonByID(leafList, 0);
                     showAllLeafTable(leafList);
                     System.out.println("你选择了：" +"叶子节点");
                 }

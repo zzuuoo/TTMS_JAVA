@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import xupt.se.ttms.model.GlobalVariable;
 import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Seat;
@@ -174,6 +175,7 @@ public class SelectTicketUI extends MainUITmpl{
 
 			public void actionPerformed(ActionEvent e) {
 //				System.out.println("dianle");
+				if(GlobalVariable.emp_id!=0){
 				JButton site = (JButton) e.getSource();
 				String name = site.getName();
 				String tmp[] = name.split(",");
@@ -205,7 +207,11 @@ public class SelectTicketUI extends MainUITmpl{
 					
 					System.out.println("已退票");
 				}
+			}else{
+				JOptionPane.showMessageDialog(null, "你木有权限操作");
 			}
+			}
+				
 		};
 
 		// 座位标示   -1:无座, 0:待销售   1:锁定   2:已选   9:卖出

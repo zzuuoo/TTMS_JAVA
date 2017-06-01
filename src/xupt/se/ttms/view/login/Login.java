@@ -198,9 +198,7 @@ public class Login extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(null, "账号或密码错误");	
 					}
 					System.out.println("账号："+account.getText().replaceAll("\n", "")+"\n密码："+new String(password.getPassword()));
-//					Manager  mgr = new Manager();
-//					mgr.setVisible(true);
-//					this.dispose();
+
 				}
 				else if(who.compareTo("系统管理者")==0){
 					Loginde  lg2 = new Loginde(account.getText().replaceAll("\n", ""),new String(password.getPassword()),"系统管理者");
@@ -215,9 +213,7 @@ public class Login extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(null, "账号或密码错误");	
 					}
 					System.out.println("账号："+account.getText().replaceAll("\n", "")+"\n密码："+new String(password.getPassword()));
-//					SystemMgUI  smg = new SystemMgUI();
-//					smg.setVisible(true);
-//					this.dispose();
+
 				}
 				else if (who.compareTo("售票员")==0){
 					Loginde  lg3 = new Loginde(account.getText().replaceAll("\n", ""),new String(password.getPassword()),"售票员");
@@ -232,9 +228,6 @@ public class Login extends JFrame implements ActionListener{
 						JOptionPane.showMessageDialog(null, "账号或密码错误");	
 					}
 					System.out.println("账号："+account.getText().replaceAll("\n", "")+"\n密码："+new String(password.getPassword()));
-//					Seller se = new Seller();
-//					se.setVisible(true);
-//					this.dispose();
 				}
 				break;
 			case "注册":

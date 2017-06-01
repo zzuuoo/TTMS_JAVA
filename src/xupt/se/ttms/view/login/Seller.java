@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import xupt.se.ttms.view.datasale.PersonalDataSale;
 import xupt.se.ttms.view.sellticket.SellTicketMgUI;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 
@@ -64,7 +65,9 @@ public class Seller extends MainUITmpl{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-//				Seller.this.dispose();
+				PersonalDataSale pds = new PersonalDataSale();
+				pds.setVisible(true);
+				Seller.this.dispose();
 				
 			}
 		});
