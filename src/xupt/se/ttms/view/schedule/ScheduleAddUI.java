@@ -3,10 +3,13 @@ package xupt.se.ttms.view.schedule;
 import javax.swing.JDialog;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
+import javax.swing.ProgressMonitor;
+import javax.swing.SwingWorker;
 
 import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
@@ -35,7 +39,7 @@ import xupt.se.ttms.service.StudioSrv;
 import xupt.se.ttms.service.TicketSrv;
 import xupt.se.ttms.view.tmpl.*;
 
-public class ScheduleAddUI extends PopUITmpl implements ActionListener {
+public class ScheduleAddUI extends PopUITmpl implements ActionListener,PropertyChangeListener {
 
 	private JButton btnCancel, btnSave; 	//取消，保存按鈕
 
@@ -49,6 +53,14 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	//可供选择的演出厅和剧目
 	List<Studio> Lstudio;
 	List<Play> Lplay;
+	
+	private Schedule sc=null;
+	
+	//进度
+		private ProgressMonitor progressMonitor;
+		int n=1;
+		 private Task task;
+		 //内部类，添加座位
 
 	public ScheduleAddUI() {
 		
@@ -225,25 +237,35 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 
 			int scheduleID = stuSrv.add(sch);
 			if(scheduleID!= 0 ){
-				PlaySrv ps = new PlaySrv();
-				Play p  = ps.FetchOneById(" play_id = "+sch.getPlay_id());
-				p.setStatus(1);
-				ps.modify(p);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//				PlaySrv ps = new PlaySrv();
+//				Play p  = ps.FetchOneById(" play_id = "+sch.getPlay_id());
+//				p.setStatus(1);
+//				ps.modify(p);
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 				ScheduleSrv schSrv = new ScheduleSrv();
-				Schedule sc = schSrv.FetchOne(" sched_id = "+scheduleID);
+				sc = schSrv.FetchOne(" sched_id = "+scheduleID);
 				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+sc.getStudio_id());
-				TicketSrv ts = new TicketSrv();
-				for(int i=0;i<Ls.size();i++){
-					Ticket t = new Ticket();
-					t.setPrice(sc.getSched_ticket_price());
-					t.setScheduleId(sc.getSched_id());
-					t.setSeatId(Ls.get(i).getId());
-					t.setStatus(0);
-					ts.add(t);
-				}
-				this.setVisible(false);
-				rst=true;
+//				TicketSrv ts = new TicketSrv();
+//				for(int i=0;i<Ls.size();i++){
+//					Ticket t = new Ticket();
+//					t.setPrice(sc.getSched_ticket_price());
+//					t.setScheduleId(sc.getSched_id());
+//					t.setSeatId(Ls.get(i).getId());
+//					t.setStatus(0);
+//					ts.add(t);
+//				}
+//				this.setVisible(false);
+//				rst=true;
+				
+				
+				 progressMonitor = new ProgressMonitor(	this,
+	                     "正在添加数据，请耐心等待！",
+	                     "", 0, Ls.size());
+				 
+				 progressMonitor.setProgress(0);
+				 task = new Task();
+				 task.addPropertyChangeListener(this);
+				 task.execute();
 			}
 		} else {
 			
@@ -264,4 +286,75 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	protected void onWindowClosing(){
 		this.dispose();
 }
+	
+	class Task extends SwingWorker<Void, Void> {
+        @Override
+        public Void doInBackground() {
+//            Random random = new Random();
+            int progress = 0;
+            setProgress(0);
+            PlaySrv ps = new PlaySrv();
+			Play p  = ps.FetchOneById(" play_id = "+sc.getPlay_id());
+			p.setStatus(1);
+			ps.modify(p);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			ScheduleSrv schSrv = new ScheduleSrv();
+			List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+sc.getStudio_id());
+			TicketSrv ts = new TicketSrv();
+			for(int i=0;i<Ls.size();i++){
+				Ticket t = new Ticket();
+				t.setPrice(sc.getSched_ticket_price());
+				t.setScheduleId(sc.getSched_id());
+				t.setSeatId(Ls.get(i).getId());
+				t.setStatus(0);
+				ts.add(t);
+				if(progress>98){
+					progress--;
+				}else{
+					progress++;
+				}
+				setProgress(progress);
+			}
+			
+			setProgress(100);
+			ScheduleAddUI.this.setVisible(false);
+			rst=true;
+		
+            return null;
+        }
+ 
+        @Override
+        public void done() {
+//            Toolkit.getDefaultToolkit().beep();
+//            JOptionPane.showMessageDialog(null, "已完成");
+            progressMonitor.setProgress(0);
+            progressMonitor.close();
+        }
+    }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		 if ("progress" == evt.getPropertyName() ) {
+//	            int progress = (Integer) evt.getNewValue();
+	            progressMonitor.setProgress(n);
+	            n++;
+//	            progressMonitor.setNote(message);
+	            if (progressMonitor.isCanceled() || task.isDone()) {
+	                Toolkit.getDefaultToolkit().beep();
+	                if (progressMonitor.isCanceled()) {
+	                    task.cancel(true);
+	                    JOptionPane.showMessageDialog(null, "已取消");
+	                   
+	                } else {
+	                   
+	                    JOptionPane.showMessageDialog(null, "添加成功");
+	                }
+	                
+	            }
+	        }
+	}
+
+	
+	
 }

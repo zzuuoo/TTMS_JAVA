@@ -1,23 +1,24 @@
 package xupt.se.ttms.view.studio;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+import javax.swing.ProgressMonitor;
+import javax.swing.SwingWorker;
 import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.StudioSrv;
-import xupt.se.ttms.view.dialog.StudioAddDialog;
 import xupt.se.ttms.view.tmpl.*;
 
-public class StudioAddUI extends PopUITmpl implements ActionListener {
+public class StudioAddUI extends PopUITmpl implements ActionListener,PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,11 +29,25 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 	protected JTextField txtName, txtRow, txtColumn;
 	protected JTextArea txtIntro;
 	
+	
+	//方便添加座位而加的数据
+	private int studioID=0,row=-1,col=-1;
+	int n=0;
+	 
+
+	//进度
+	private ProgressMonitor progressMonitor;
+	
+	 private Task task;
+	 //内部类，添加座位
+	
 
 	@Override
 	protected void initContent(){
 		this.setTitle("添加演出厅");
 
+		
+		
 		lblName = new JLabel("演出厅名称:");
 		lblName.setBounds(60, 30, 80, 30);
 		contPan.add(lblName);
@@ -98,31 +113,89 @@ public class StudioAddUI extends PopUITmpl implements ActionListener {
 			stu.setColCount(Integer.parseInt(txtColumn.getText()));
 			stu.setIntroduction(txtIntro.getText());
 			
-			int studioID = stuSrv.add(stu);
+			studioID = stuSrv.add(stu);
 			System.out.println("演出厅ID："+studioID);
-//			if(studioID!=0){
-//				this.setVisible(false);
-//				rst=true;
-//			new StudioAddDialog(studioID,stu.getRowCount(),stu.getColCount());
-//			}
+			row = stu.getRowCount();
+			col = stu.getColCount();
 			if(studioID!=0){
-				SeatSrv seatsrv = new SeatSrv();
-				for(int i=0;i<stu.getRowCount();i++){
-					for(int j = 0;j<stu.getColCount();j++){
-						seatsrv.add(new Seat(studioID,i,j));	
-					}
-				}
 				this.setVisible(false);
-				rst=true;
+				rst=true;				
+				 progressMonitor = new ProgressMonitor(	this,
+	                     "正在添加数据，请耐心等待！",
+	                     "", 0, row*col);
+				 
+				 progressMonitor.setProgress(0);
+				 task = new Task();
+				 task.addPropertyChangeListener(this);
+				 task.execute();
+				
+				
 			}
-			else{
-				JOptionPane.showMessageDialog(null, "数据添加失败");
-			}
-			
-		} else {
+		} 
+		else {
 			JOptionPane.showMessageDialog(null, "数据不完整");
 		}		
 		
+	}
+	
+	
+	
+	class Task extends SwingWorker<Void, Void> {
+        @Override
+        public Void doInBackground() {
+//            Random random = new Random();
+            int progress = 0;
+            setProgress(0);
+			SeatSrv seatsrv = new SeatSrv();
+			for(int i=0;i<row;i++){
+				for(int j = 0;j<col;j++){
+					seatsrv.add(new Seat(studioID,i,j));	
+					if(progress>98){
+						progress--;
+					}else{
+						progress++;
+					}
+					setProgress(progress);
+				}
+			}
+			setProgress(100);
+			StudioAddUI.this.setVisible(false);
+			rst=true;
+		
+            return null;
+        }
+ 
+        @Override
+        public void done() {
+//            Toolkit.getDefaultToolkit().beep();
+//            JOptionPane.showMessageDialog(null, "已完成");
+            progressMonitor.setProgress(0);
+            progressMonitor.close();
+        }
+    }
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+		 if ("progress" == evt.getPropertyName() ) {
+//	            int progress = (Integer) evt.getNewValue();
+	            progressMonitor.setProgress(n);
+	            n+=1;
+//	            progressMonitor.setNote(message);
+	            if (progressMonitor.isCanceled() || task.isDone()) {
+	                Toolkit.getDefaultToolkit().beep();
+	                if (progressMonitor.isCanceled()) {
+	                    task.cancel(true);
+	                    JOptionPane.showMessageDialog(null, "已取消");
+	                   
+	                } else {
+	                   
+	                    JOptionPane.showMessageDialog(null, "已完成");
+	                }
+	                
+	            }
+	        }
 	}
 
 }
