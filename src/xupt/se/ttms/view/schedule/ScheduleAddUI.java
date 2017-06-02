@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 
 import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
@@ -39,18 +41,30 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 
 	protected boolean rst=false; 				//操作结果
 	private JLabel studioid, playid, playtime,playprice;
-	protected JTextField pt,pprice;
+	protected JTextField pprice;
 	protected JComboBox jstudioID,jplayID;//剧目和演出厅的选择器
-	
+	protected JComboBox year,month,day,minute,hour;
+	protected JLabel year1,month1,day1,minute1,hour1;
+//	protected JCalendarChooser jc;
 	//可供选择的演出厅和剧目
 	List<Studio> Lstudio;
 	List<Play> Lplay;
 
 	public ScheduleAddUI() {
-	
 		
 	}
 
+	public int getDayCount(int year,int month){
+		Calendar a = Calendar.getInstance();  
+        a.set(Calendar.YEAR, year);  
+        a.set(Calendar.MONTH, month - 1);  
+        a.set(Calendar.DATE, 1);  
+        a.roll(Calendar.DATE, -1);  
+        int maxDate = a.get(Calendar.DATE);  
+        return maxDate;  
+//		return d;
+	}
+	
 	@Override
 	protected void initContent(){
 		this.setTitle("添加演出计划");
@@ -68,6 +82,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 		studioid.setBounds(60, 30, 80, 30);
 		contPan.add(studioid);
 		jstudioID = new JComboBox(studioName);
+//		jstudioID.setf
 		jstudioID.setBounds(150, 30, 200, 30);
 		contPan.add(jstudioID);
 		
@@ -81,9 +96,61 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 		playtime = new JLabel("演出时间：");
 		playtime.setBounds(60, 130, 90, 30);
 		contPan.add(playtime);
-		pt = new JTextField();
-		pt.setBounds(150, 130, 120, 30);
-		contPan.add(pt);
+//		pt = new JTextField();
+//		protected JComboBox year,month,day,minute,hour;
+		Calendar now = Calendar.getInstance();
+		int y = now.get(Calendar.YEAR);
+		Integer [] intYear = new Integer[100];
+		for(int i=y,j=0;i<y+100;i++){
+			intYear[j]=i;
+			j++;
+		}
+//		for()
+		year = new JComboBox(intYear);
+		year.setBounds(150, 130, 80, 30);
+		year1 = new JLabel("年");
+		year1.setBounds(250, 130, 20, 30);
+		
+		Integer [] intMonth={1,2,3,4,5,6,7,8,9,10,11,12};
+		month = new JComboBox(intMonth);
+		month.setBounds(290, 130, 60, 30);
+		month1 = new JLabel("月");
+		month1.setBounds(370, 130, 20, 30);
+		
+		Integer [] intDay={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,
+				18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+		day = new JComboBox(intDay);
+		day.setBounds(390, 130, 60, 30);
+		day1 = new JLabel("日");
+		day1.setBounds(470, 130, 20, 30);
+		
+		Integer [] intHour={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,
+				18,19,20,21,22,23};
+		hour = new JComboBox(intHour);
+		hour.setBounds(510, 130, 60, 30);
+		hour1 = new JLabel("时");
+		hour1.setBounds(590, 130, 20, 30);
+		
+		Integer [] intMinute={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,
+				18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,
+				37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,
+				58,59};
+		minute = new JComboBox(intMinute);
+		minute.setBounds(630, 130, 60, 30);
+		minute1 = new JLabel("分");
+		minute1.setBounds(710, 130, 20, 30);
+//		pt.setBounds(150, 130, 120, 30);
+//		contPan.add(pt);
+		contPan.add(year);
+		contPan.add(year1);
+		contPan.add(month);
+		contPan.add(month1);
+		contPan.add(day);
+		contPan.add(hour);
+		contPan.add(minute);
+		contPan.add(day1);
+		contPan.add(hour1);
+		contPan.add(minute1);
 		
 		playprice = new JLabel("剧目票价：");
 		playprice.setBounds(60, 180, 90, 30);
@@ -126,7 +193,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 	
 	protected void btnSaveClicked(){
 		if (jstudioID!=null&& jplayID != null
-				&& pt.getText() != null&&pprice.getText()!=null) {
+				&&pprice.getText()!=null) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule sch=new Schedule();
 			int pid=0,sid=0;
@@ -137,8 +204,18 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener {
 			sch.setSched_ticket_price(new Double(pprice.getText()));
 			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
+			String time = year.getSelectedItem()+"-"
+					+month.getSelectedItem()+"-"+day.getSelectedItem()+" "
+					+hour.getSelectedItem()+":"+minute.getSelectedItem();
+			int dayCount = getDayCount(Integer.parseInt(year.getSelectedItem()+""),Integer.parseInt(month.getSelectedItem()+""));
+			if(Integer.parseInt(day.getSelectedItem()+"")>dayCount){
+				JOptionPane.showMessageDialog(null, "日期天数超出当月范围");
+				System.out.println("日期天数超出当月范围");
+				return ;
+			}
 			try {
-				sch.setSched_time(DF.parse(pt.getText()));
+//				sch.setSched_time(DF.parse(pt.getText()));
+				sch.setSched_time(DF.parse(time));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

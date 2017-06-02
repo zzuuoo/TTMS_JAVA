@@ -2,6 +2,7 @@ package xupt.se.ttms.view.schedule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -52,7 +53,14 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			}
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
-		pt.setText(sdf.format(stu.getSched_time()));
+//		pt.setText(sdf.format(stu.getSched_time()));
+		Calendar c =  Calendar.getInstance();
+		c.setTime(stu.getSched_time());
+		year.setSelectedItem(c.get(Calendar.YEAR));
+		month.setSelectedItem(c.get(Calendar.MONTH)+1);
+		day.setSelectedItem(c.get(Calendar.DAY_OF_MONTH));
+		hour.setSelectedItem(c.get(Calendar.HOUR_OF_DAY));
+		minute.setSelectedItem(c.get(Calendar.MINUTE));
 		pprice.setText(stu.getSched_ticket_price()+"");
 		stud=stu;
 		this.invalidate();
@@ -61,15 +69,31 @@ public class ScheduleEditUI extends ScheduleAddUI{
 	@Override
 	protected void btnSaveClicked(){
 		if (jstudioID!= null && jplayID!= null
-				&& pt.getText() != null&&pprice.getText()!=null) {
+				&&pprice.getText()!=null) {
 			ScheduleSrv stuSrv = new ScheduleSrv();
 			Schedule stu= stud;
 			stu.setPlay_id((new PlaySrv().FetchOneById("play_name = '"+jplayID.getSelectedItem()+"'")).getId());
 			stu.setSched_ticket_price(Double.parseDouble(pprice.getText()));
 			stu.setStudio_id((new StudioSrv().FetchOneById("studio_name = '"+jstudioID.getSelectedItem()+"'")).getID());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+//			try {
+////				stu.setSched_time(sdf.parse(pt.getText()));
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			String time = year.getSelectedItem()+"-"
+					+month.getSelectedItem()+"-"+day.getSelectedItem()+" "
+					+hour.getSelectedItem()+":"+minute.getSelectedItem();
+			int dayCount = getDayCount(Integer.parseInt(year.getSelectedItem()+""),Integer.parseInt(month.getSelectedItem()+""));
+			if(Integer.parseInt(day.getSelectedItem()+"")>dayCount){
+				JOptionPane.showMessageDialog(null, "日期天数超出当月范围");
+				System.out.println("日期天数超出当月范围");
+				return ;
+			}
 			try {
-				stu.setSched_time(sdf.parse(pt.getText()));
+//				sch.setSched_time(DF.parse(pt.getText()));
+				stu.setSched_time(sdf.parse(time));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
