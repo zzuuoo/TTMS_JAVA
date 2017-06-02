@@ -14,6 +14,10 @@ public class SaleSrv {
 		return stuDAO.doSale(tickets);
 	}
 	
+	public boolean refund(Ticket tickets){
+		return stuDAO.refund(tickets);
+	}
+	
 	public List<Sale> FetchAll(){
 		return stuDAO.select("");
 	}

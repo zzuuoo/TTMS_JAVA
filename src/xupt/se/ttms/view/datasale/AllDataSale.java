@@ -37,6 +37,7 @@ import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Sale;
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.EmployeeSrv;
 import xupt.se.ttms.service.PlaySrv;
 import xupt.se.ttms.service.SaleSrv;
 import xupt.se.ttms.service.ScheduleSrv;
@@ -46,14 +47,14 @@ import xupt.se.ttms.view.login.Seller;
 import xupt.se.ttms.view.login.SystemMgUI;
 import xupt.se.ttms.view.tmpl.*;
 
-class PersonDataSaleTable {
+class AllDataSaleTable {
 	/**
 	 * 剧目表格绘制
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jt;
 
-	public PersonDataSaleTable(JScrollPane jp) {
+	public AllDataSaleTable(JScrollPane jp) {
 		
 		DefaultTableModel tabModel=new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -205,8 +206,6 @@ class PersonDataSaleTable {
 //			tabModel.addColumn("状态");
 //			private int type;  // 1：销售单  -1：退款单
 //			private int status;  // 0：待付款   1：已付款 2：已退款
-			if(stuList==null)
-				return ;
 			Iterator<Sale> itr = stuList.iterator();
 			while (itr.hasNext()) {
 				Sale stu = itr.next();
@@ -240,7 +239,7 @@ class PersonDataSaleTable {
 	}
 }
 
-public class PersonalDataSale extends MainUITmpl {
+public class AllDataSale extends MainUITmpl {
 	/**
 	 * author 剧目管理
 	 */
@@ -258,7 +257,7 @@ public class PersonalDataSale extends MainUITmpl {
 	PersonDataSaleTable tms; //显示演出厅列表
 
 
-	public PersonalDataSale() {
+	public AllDataSale() {
 		
 	}
 
@@ -267,7 +266,7 @@ public class PersonalDataSale extends MainUITmpl {
 	protected void initContent() {
 		Rectangle rect = contPan.getBounds();
 
-		ca1 = new JLabel("个人销售数据", JLabel.CENTER);
+		ca1 = new JLabel("销售数据", JLabel.CENTER);
 		ca1.setBounds(0, 5, rect.width, 30);
 		ca1.setFont(new java.awt.Font("宋体", 1, 20));
 		ca1.setForeground(Color.blue);
@@ -286,7 +285,7 @@ public class PersonalDataSale extends MainUITmpl {
 		input.setBounds(220, rect.height - 50, 200, 30);
 		contPan.add(input);
 
-		String [] inqueryType = {"按单据查找","按状态查找","按收款查找"};
+		String [] inqueryType = {"按单据查找","按状态查找","按售票员查找"};
 		inquery = new JComboBox(inqueryType);
 		inquery.setBounds(440, rect.height - 50, 130, 30);
 		contPan.add(inquery);
@@ -327,7 +326,7 @@ public class PersonalDataSale extends MainUITmpl {
 			return; 
 		}	
 		
-		new ItemSale(stud).setVisible(true);
+		new ItemOfSale(stud).setVisible(true);
 		this.dispose();
 
 	}
@@ -335,6 +334,35 @@ public class PersonalDataSale extends MainUITmpl {
 
 	private void btnQueryClicked() {
 		if (!input.getText().equals("")) {
+//			 {"按单据查找","按状态查找","按售票员查找"};
+			//请自行补充
+			List<Sale> slist=null;
+			if(inquery.getSelectedIndex()==0){//按单据查询
+				//play_id
+				if(input.getText().equals("销售单")){
+				slist = new SaleSrv().Fetch(" sale_type = 1");
+				}else if(input.getText().equals("退款单")){
+					slist = new SaleSrv().Fetch(" sale_type = -1");
+				}
+				tms.showPlayList(slist);
+			}
+			else if(inquery.getSelectedIndex()==1){//按状态查询
+				if(input.getText().equals("待付款")){
+					slist = new SaleSrv().Fetch(" sale_status = 0");
+					}else if(input.getText().equals("已付款")){
+						slist = new SaleSrv().Fetch(" sale_status = 1");
+					}else  if(input.getText().equals("已退款")){
+						slist = new SaleSrv().Fetch(" sale_status = 2");
+					}else{
+						slist=null;
+					}
+					tms.showPlayList(slist);
+			}else {//按售票员查询
+
+//				new EmployeeSrv().FetchOne(" emp_name = "+ input.getText());
+				slist = new SaleSrv().Fetch(" emp_id = "+new EmployeeSrv().FetchOne(" emp_name = "+ input.getText()).getEmp_id());
+				tms.showPlayList(slist);
+			}
 //			//请自行补充
 		} else {
 			JOptionPane.showMessageDialog(null, "请输入检索条件");
@@ -343,7 +371,7 @@ public class PersonalDataSale extends MainUITmpl {
 	}
 
 	private void showTable() {
-		List<Sale> stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id);
+		List<Sale> stuList = new SaleSrv().FetchAll();
 		tms.showPlayList(stuList);
 	}
 	
@@ -354,7 +382,7 @@ public class PersonalDataSale extends MainUITmpl {
 	}
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
-		new Seller().setVisible(true);
+		new Manager().setVisible(true);
 //		System.out.println(GlobalVariable.emp_id);
 		this.dispose();
 		

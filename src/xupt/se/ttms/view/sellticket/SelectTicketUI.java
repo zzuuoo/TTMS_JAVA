@@ -27,6 +27,7 @@ import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.model.Ticket;
 import xupt.se.ttms.service.PlaySrv;
+import xupt.se.ttms.service.SaleSrv;
 import xupt.se.ttms.service.SeatSrv;
 import xupt.se.ttms.service.SellTicketHandler;
 import xupt.se.ttms.service.StudioSrv;
@@ -199,9 +200,9 @@ public class SelectTicketUI extends MainUITmpl{
 					if(isDelete == JOptionPane.YES_OPTION){
 						ticketArray[i][j].setStatus(0);
 						ticketArray[i][j].setLocked_time(null);
-						new TicketSrv().modify(ticketArray[i][j]);
+//						new TicketSrv().modify(ticketArray[i][j]);			
 						site.setIcon(siteimgwhite);
-						ticketArray[i][j].setStatus(0);
+						new SaleSrv().refund(ticketArray[i][j]);
 						JOptionPane.showMessageDialog(null, "退票成功");	
 					}
 					

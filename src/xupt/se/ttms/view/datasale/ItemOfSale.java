@@ -3,16 +3,10 @@ package xupt.se.ttms.view.datasale;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Label;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-import javax.lang.model.type.TypeKind;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -27,33 +21,22 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
 import java.util.List;
-import java.util.Date;
 import java.util.Iterator;
-
 import xupt.se.ttms.model.GlobalVariable;
-import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Sale;
-import xupt.se.ttms.model.Schedule;
-import xupt.se.ttms.model.Studio;
-import xupt.se.ttms.service.PlaySrv;
-import xupt.se.ttms.service.SaleSrv;
-import xupt.se.ttms.service.ScheduleSrv;
-import xupt.se.ttms.service.StudioSrv;
-import xupt.se.ttms.view.login.Manager;
-import xupt.se.ttms.view.login.Seller;
-import xupt.se.ttms.view.login.SystemMgUI;
+import xupt.se.ttms.model.SaleItem;
+import xupt.se.ttms.service.SaleItemSrv;
 import xupt.se.ttms.view.tmpl.*;
 
-class PersonDataSaleTable {
+class AllItemSaleTable {
 	/**
-	 * 剧目表格绘制
+	 * 表格绘制
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jt;
 
-	public PersonDataSaleTable(JScrollPane jp) {
+	public AllItemSaleTable(JScrollPane jp) {
 		
 		DefaultTableModel tabModel=new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -64,19 +47,13 @@ class PersonDataSaleTable {
 			};
 		};
 //		private int id;
-//		private int empId;
-//		private Date time ; 
-//		private float payment;
-//		private float change;
-//		private int type;  // 1：销售单  -1：退款单
-//		private int status;  // 0：待付款   1：已付款
+//		private int ticketId;
+//		private int saleId;
+//		private float price;
 		tabModel.addColumn("ID");
-		tabModel.addColumn("empID");
-		tabModel.addColumn("时间");
-		tabModel.addColumn("收款");
-		tabModel.addColumn("找零");
-		tabModel.addColumn("单据");
-		tabModel.addColumn("状态");
+		tabModel.addColumn("ticketId");
+		tabModel.addColumn("saleId");
+		tabModel.addColumn("Price");
 		
 		
 		//初始化列明
@@ -91,37 +68,34 @@ class PersonDataSaleTable {
 	       render.setHorizontalAlignment(SwingConstants.CENTER);
 	       
 	       jt.getColumn("ID").setCellRenderer(render);
-	       jt.getColumn("empID").setCellRenderer(render);
-	       jt.getColumn("时间").setCellRenderer(render);
-	       jt.getColumn("收款").setCellRenderer(render);
-	       jt.getColumn("找零").setCellRenderer(render);
-	       jt.getColumn("单据").setCellRenderer(render);
-	       jt.getColumn("状态").setCellRenderer(render);
+	       jt.getColumn("ticketId").setCellRenderer(render);
+	       jt.getColumn("saleId").setCellRenderer(render);
+	       jt.getColumn("Price").setCellRenderer(render);
 		
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();
 	    
 	    //隐藏ID这一列
         TableColumn column = columnModel.getColumn(0);
-        column.setMinWidth(0);
-        column.setMaxWidth(0);
-        column.setWidth(0);
-//        column.setPreferredWidth(10);
+//        column.setMinWidth(0);
+//        column.setMaxWidth(0);
+//        column.setWidth(0);
+        column.setPreferredWidth(10);
         
         
 
         column = columnModel.getColumn(1);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(2);
-        column.setPreferredWidth(100);
+        column.setPreferredWidth(10);
         column = columnModel.getColumn(3);
         column.setPreferredWidth(10);
-        column = columnModel.getColumn(4);
-        column.setPreferredWidth(10);    
-        column = columnModel.getColumn(5);
-        column.setPreferredWidth(10);
-        column = columnModel.getColumn(6);
-        column.setPreferredWidth(10);
+//        column = columnModel.getColumn(4);
+//        column.setPreferredWidth(10);    
+//        column = columnModel.getColumn(5);
+//        column.setPreferredWidth(10);
+//        column = columnModel.getColumn(6);
+//        column.setPreferredWidth(10);
 //        column = columnModel.getColumn(7);
 //        column.setPreferredWidth(300);       
 
@@ -130,55 +104,31 @@ class PersonDataSaleTable {
 		jp.setViewportView(jt);
 		
 	}
-//	tabModel.addColumn("ID");
-//	tabModel.addColumn("empID");
-//	tabModel.addColumn("时间");
-//	tabModel.addColumn("收款");
-//	tabModel.addColumn("change");
-//	tabModel.addColumn("单据");
-//	tabModel.addColumn("状态");
-	
-	public Sale getSale() {
+
+//	private int id;
+//	private int ticketId;
+//	private int saleId;
+//	private float price;
+	public SaleItem getSaleItem() {
 		int rowSel=jt.getSelectedRow();
 //		System.out.println(rowSel);
-		SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
+//		SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd HH:mm");
 		if(rowSel>=0){
-			
-//			if(stu.getType()==1){
-//				data[5]="销售单";
-//			}else{
-//				data[5]="退款单";
-//			}
-////			data[6] = stu.getStatus();
-//			if(stu.getStatus()==0){
-//				data[6]="待付款";
-//			}else{
-//				data[6]="已付款";
-//			}
-			Sale stud = new Sale();
+			SaleItem stud = new SaleItem();
 			stud.setId(Integer.parseInt(jt.getValueAt(rowSel, 0).toString()));
-			stud.setEmpId(Integer.parseInt(jt.getValueAt(rowSel,1).toString()));
-			try {
-				stud.setTime(sdf.parse(jt.getValueAt(rowSel, 2).toString()));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				stud.setTime(null);
-			}
-			stud.setPayment(Float.parseFloat(jt.getValueAt(rowSel, 3).toString()));
-			stud.setChange(Float.parseFloat(jt.getValueAt(rowSel, 4).toString()));
-			if(jt.getValueAt(rowSel, 5).toString().equals("销售单")){
-				stud.setType(1);
-			}else{
-				stud.setType(-1);
-			}
-			if(jt.getValueAt(rowSel, 6).toString().equals("待付款")){
-				stud.setType(0);
-			}else if(jt.getValueAt(rowSel, 6).toString().equals("已付款")){
-				stud.setType(1);
-			}else if(jt.getValueAt(rowSel, 6).toString().equals("已退款")){
-				stud.setType(2);
-			}
+			stud.setTicketId(Integer.parseInt(jt.getValueAt(rowSel,1).toString()));
+			stud.setSaleId(Integer.parseInt(jt.getValueAt(rowSel,2).toString()));
+			stud.setPrice(Float.parseFloat(jt.getValueAt(rowSel, 3).toString()));
+//			stud.setEmpId(Integer.parseInt(jt.getValueAt(rowSel,1).toString()));
+//			try {
+//				stud.setTime(sdf.parse(jt.getValueAt(rowSel, 2).toString()));
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				stud.setTime(null);
+//			}
+//			stud.setPayment(Float.parseFloat(jt.getValueAt(rowSel, 3).toString()));
+//			stud.setChange(Float.parseFloat(jt.getValueAt(rowSel, 4).toString()));
 //			stud.setType(Integer.parseInt(jt.getValueAt(rowSel, 5).toString()));
 //			stud.setStatus(Integer.parseInt(jt.getValueAt(rowSel, 6).toString()));
 		
@@ -191,8 +141,8 @@ class PersonDataSaleTable {
 	}
 	
 	// 创建JTable
-	public void showPlayList(List<Sale> stuList) {
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+	public void showSaleItemList(List<SaleItem> stuList) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 		try {
 			DefaultTableModel tabModel = (DefaultTableModel) jt.getModel();
 			tabModel.setRowCount(0);
@@ -204,32 +154,32 @@ class PersonDataSaleTable {
 //			tabModel.addColumn("单据");
 //			tabModel.addColumn("状态");
 //			private int type;  // 1：销售单  -1：退款单
-//			private int status;  // 0：待付款   1：已付款 2：已退款
-			if(stuList==null)
-				return ;
-			Iterator<Sale> itr = stuList.iterator();
+//			private int status;  // 0：待付款   1：已付款
+			Iterator<SaleItem> itr = stuList.iterator();
 			while (itr.hasNext()) {
-				Sale stu = itr.next();
-				Object data[] = new Object[7];
-				data[0] = Integer.toString(stu.getId());
-				data[1] = stu.getEmpId();
-				data[2] = sdf.format(stu.getTime());
-				data[3] = stu.getPayment();
-				data[4] = stu.getChange();
-//				data[5] = stu.getType();
-				if(stu.getType()==1){
-					data[5]="销售单";
-				}else{
-					data[5]="退款单";
-				}
-//				data[6] = stu.getStatus();
-				if(stu.getStatus()==0){
-					data[6]="待付款";
-				}else if(stu.getStatus()==1){
-					data[6]="已付款";
-				}else if(stu.getStatus()==2){
-					data[6]="已退款";
-				}
+				SaleItem stu = itr.next();
+				Object data[] = new Object[4];
+				data[0] = stu.getId();
+				data[1] = stu.getTicketId();
+				data[2] =stu.getSaleId();
+				data[3] = stu.getPrice();
+//				data[0] = Integer.toString(stu.getId());
+//				data[1] = stu.getEmpId();
+//				data[2] = sdf.format(stu.getTime());
+//				data[3] = stu.getPayment();
+//				data[4] = stu.getChange();
+////				data[5] = stu.getType();
+//				if(stu.getType()==1){
+//					data[5]="销售单";
+//				}else{
+//					data[5]="退款单";
+//				}
+////				data[6] = stu.getStatus();
+//				if(stu.getStatus()==0){
+//					data[6]="待付款";
+//				}else{
+//					data[6]="已付款";
+//				}
 				tabModel.addRow(data);;
 			}
 			jt.invalidate();
@@ -240,7 +190,7 @@ class PersonDataSaleTable {
 	}
 }
 
-public class PersonalDataSale extends MainUITmpl {
+public class ItemOfSale extends MainUITmpl {
 	/**
 	 * author 剧目管理
 	 */
@@ -254,12 +204,19 @@ public class PersonalDataSale extends MainUITmpl {
 	protected JComboBox inquery;
 	// 查找，编辑和删除按钮
 	private JButton  btnEdit, btnQuery;
+	private Sale sale = null;
 	
-	PersonDataSaleTable tms; //显示演出厅列表
+	ItemSaleTable tms; //显示演出厅列表
 
 
-	public PersonalDataSale() {
+	public ItemOfSale() {
 		
+	}
+	
+	public ItemOfSale(Sale sale) {
+		this.sale=sale;
+		showTable();
+		System.out.println(sale.getId());
 	}
 
 	// To be override by the detailed business block interface
@@ -267,7 +224,7 @@ public class PersonalDataSale extends MainUITmpl {
 	protected void initContent() {
 		Rectangle rect = contPan.getBounds();
 
-		ca1 = new JLabel("个人销售数据", JLabel.CENTER);
+		ca1 = new JLabel("详细销售数据", JLabel.CENTER);
 		ca1.setBounds(0, 5, rect.width, 30);
 		ca1.setFont(new java.awt.Font("宋体", 1, 20));
 		ca1.setForeground(Color.blue);
@@ -301,36 +258,35 @@ public class PersonalDataSale extends MainUITmpl {
 		});
 		contPan.add(btnQuery);
 
-
-		btnEdit = new JButton("查看详细账单");
-		btnEdit.setBounds(rect.width - 200, rect.height - 50, 120, 30);
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent Event) {
-				btnModClicked();
-			}
-		});
-		contPan.add(btnEdit);
+//
+//		btnEdit = new JButton("查看详细账单");
+//		btnEdit.setBounds(rect.width - 200, rect.height - 50, 120, 30);
+//		btnEdit.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent Event) {
+//				btnModClicked();
+//			}
+//		});
+//		contPan.add(btnEdit);
 
 		
-		tms = new PersonDataSaleTable(jsc);
+		tms = new ItemSaleTable(jsc);
 		
 		showTable();
 	}
 
 	
 
-	private void btnModClicked() {
-		
-		Sale stud = tms.getSale();
-		if(null== stud){
-			JOptionPane.showMessageDialog(null, "请选择要查看的账单");
-			return; 
-		}	
-		
-		new ItemSale(stud).setVisible(true);
-		this.dispose();
-
-	}
+//	private void btnModClicked() {
+//		
+//		SaleItem stud = tms.getSaleItem();
+//		if(null== stud){
+//			JOptionPane.showMessageDialog(null, "请选择要查看的账单");
+//			return; 
+//		}	
+//		
+//		
+//
+//	}
 
 
 	private void btnQueryClicked() {
@@ -338,27 +294,27 @@ public class PersonalDataSale extends MainUITmpl {
 //			//请自行补充
 		} else {
 			JOptionPane.showMessageDialog(null, "请输入检索条件");
-//			showTable();
+			showTable();
 		}
 	}
 
 	private void showTable() {
-		List<Sale> stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id);
-		tms.showPlayList(stuList);
+		if(sale!=null){
+			List<SaleItem> stuList = new SaleItemSrv().Fetch(" sale_ID = "+sale.getId());
+		tms.showSaleItemList(stuList);
+		}
 	}
 	
 
 	public static void main(String[] args) {
-		PersonalDataSale frmStuMgr = new PersonalDataSale();
+		ItemSale frmStuMgr = new ItemSale();
 		frmStuMgr.setVisible(true);
 	}
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
-		new Seller().setVisible(true);
+		new AllDataSale().setVisible(true);
 //		System.out.println(GlobalVariable.emp_id);
 		this.dispose();
 		
 	}	
 }
-
-

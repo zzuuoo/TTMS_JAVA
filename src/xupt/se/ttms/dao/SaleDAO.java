@@ -83,7 +83,7 @@ public class SaleDAO implements iSaleDAO {
 
 
 	@Override
-	public boolean refund(List<Ticket> tickets) {
+	public boolean refund(Ticket tickets) {
 		try {
 			int id = -1;
 			db = new DBUtil();
@@ -92,11 +92,16 @@ public class SaleDAO implements iSaleDAO {
 			con.setAutoCommit(false);
 
 			double n=0;
-			if(!tickets.isEmpty()){
-				n=tickets.get(0).getPrice();
+//			if(!tickets.isEmpty()){
+//				n=tickets.get(0).getPrice();
+//			}
+			if(tickets!=null){
+				n=tickets.getPrice();
 			}
-			double payment = tickets.size()*n;
-	        String sql = "insert into sale(sale_time, sale_payment,sale_type, sale_status) VALUES(?,"+payment+",-1,1)";  
+//			private int type;  // 1：销售单  -1：退款单
+//			private int status;  // 0：待付款   1：已付款 2:已退款
+			double payment = n;
+	        String sql = "insert into sale(sale_time, emp_id,sale_payment,sale_type, sale_status) VALUES(?,"+ GlobalVariable.emp_id+","+payment+",-1,2)";  
 	        PreparedStatement prep = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);  
 	        prep.setTimestamp(1, new Timestamp(new Date().getTime()));  
 	        prep.executeUpdate();  
@@ -105,20 +110,21 @@ public class SaleDAO implements iSaleDAO {
 	            id = rs.getInt(1);  
 	        }
 	        if(id>0){
-	        	for(Ticket t : tickets){
-		        	double price = t.getSchedule().getSched_ticket_price();
+//	        	for(Ticket t : tickets){
+		        	double price = tickets.getSchedule().getSched_ticket_price();
 			        String sql2 = "insert into sale_item(ticket_id, sale_ID, sale_item_price) VALUES(" +
-		        	t.getId() + ", " + id + ", " + price + ")";  
+			        		tickets.getId() + ", " + id + ", " + price + ")";  
 		        	int flag = db.execCommand(sql2);
 		        	if(flag==1){
-				        String sql3 = "update ticket set ticket_status=0 where ticket_id = " + t.getId();
+//		        		 String sql4 = "update ticket set ticket_locked_time = NULL where ticket_id = " + tickets.getId();
+				        String sql3 = "update ticket set ticket_status=0,ticket_locked_time = NULL where ticket_id = " + tickets.getId();
 			        	int flag2 = db.execCommand(sql3);
 			        	if(flag2!=1){
-			        		return false;
+			        		return false;	
 			        	}
 		        	}else
 		        		return false;
-	        	}
+//	        	}
 	        }
 			con.commit();
 		} catch (Exception e) {

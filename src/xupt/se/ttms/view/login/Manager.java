@@ -16,6 +16,7 @@ import javax.xml.bind.JAXBElement.GlobalScope;
 import xupt.se.ttms.model.Employee;
 import xupt.se.ttms.model.GlobalVariable;
 import xupt.se.ttms.service.EmployeeSrv;
+import xupt.se.ttms.view.datasale.AllDataSale;
 import xupt.se.ttms.view.play.PlayMgrUI;
 import xupt.se.ttms.view.schedule.ScheduleMgUI;
 import xupt.se.ttms.view.sellticket.SellTicketUI;
@@ -88,7 +89,8 @@ public class Manager extends MainUITmpl{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				new AllDataSale().setVisible(true);
+				Manager.this.dispose();
 			}
 		});
 		
