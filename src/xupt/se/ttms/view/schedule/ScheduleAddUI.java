@@ -263,7 +263,6 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener,PropertyC
 
 			sch.setSched_time(t);
 
-
 			int scheduleID = stuSrv.add(sch);
 			if(scheduleID!= 0 ){
 				ScheduleSrv schSrv = new ScheduleSrv();

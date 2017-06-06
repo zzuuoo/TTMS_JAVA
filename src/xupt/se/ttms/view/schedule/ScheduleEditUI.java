@@ -162,22 +162,7 @@ public class ScheduleEditUI extends ScheduleAddUI{
 			 task.addPropertyChangeListener(this);
 			 task.execute();
 
-			
-//			if(fstudioID != stu.getStudio_id()){
-//				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+stu.getStudio_id());
-//				TicketSrv ts = new TicketSrv();
-//				ts.delete(" sched_id = "+stu.getSched_id());
-//				for(int i=0;i<Ls.size();i++){
-//					Ticket t = new Ticket();
-//					t.setPrice(stu.getSched_ticket_price());
-//					t.setScheduleId(stu.getSched_id());
-//					t.setSeatId(Ls.get(i).getId());
-//					t.setStatus(0);
-//					ts.add(t);
-//				}
-//			}
-//			this.setVisible(false);
-//			rst=true;
+
 			
 		} else {
 			JOptionPane.showMessageDialog(null, "数据不完整");

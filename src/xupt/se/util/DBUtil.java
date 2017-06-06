@@ -84,10 +84,8 @@ public class DBUtil {
 			try {
 				if(null==conn)
 					throw new Exception("Database not connected!");
-				
-//				Statement stmt = conn.createStatement();
+
 				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-				stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
 				stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
 				rst = stmt.getGeneratedKeys();
 				
