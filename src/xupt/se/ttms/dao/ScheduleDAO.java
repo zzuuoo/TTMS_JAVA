@@ -82,6 +82,7 @@ public class ScheduleDAO implements iScheduleDAO {
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 		return rtn;
 	}

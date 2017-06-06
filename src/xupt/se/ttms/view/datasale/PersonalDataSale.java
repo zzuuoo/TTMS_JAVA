@@ -49,6 +49,8 @@ import xupt.se.ttms.view.tmpl.*;
 class PersonDataSaleTable {
 	/**
 	 * 剧目表格绘制
+	 * table.getTableHeader().setReorderingAllowed(false);   //不可整列移动   
+  	table.getTableHeader().setResizingAllowed(false);   //不可拉动表格
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jt;
@@ -83,10 +85,10 @@ class PersonDataSaleTable {
 		jt=new JTable(tabModel);	
 		jt.setSelectionBackground(Color.green);
 		JTableHeader th = jt.getTableHeader();
-		th.setFont(new Font("宋体",3,15));
+		th.setFont(new Font("宋体",3,20));
 		th.setPreferredSize(new Dimension(jt.getWidth(), 30));
 		jt.setRowHeight(20);
-		jt.setFont(new Font("宋体",1,12));
+		jt.setFont(new Font("宋体",1,16));
 		DefaultTableCellRenderer render = new DefaultTableCellRenderer();
 	       render.setHorizontalAlignment(SwingConstants.CENTER);
 	       
@@ -97,7 +99,10 @@ class PersonDataSaleTable {
 	       jt.getColumn("找零").setCellRenderer(render);
 	       jt.getColumn("单据").setCellRenderer(render);
 	       jt.getColumn("状态").setCellRenderer(render);
-		
+	       
+	       
+	       jt.getTableHeader().setReorderingAllowed(false);
+	       jt.getTableHeader().setResizingAllowed(false); 
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();
 	    

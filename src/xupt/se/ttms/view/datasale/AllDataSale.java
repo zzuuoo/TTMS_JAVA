@@ -98,7 +98,9 @@ class AllDataSaleTable {
 	       jt.getColumn("找零").setCellRenderer(render);
 	       jt.getColumn("单据").setCellRenderer(render);
 	       jt.getColumn("状态").setCellRenderer(render);
-		
+	       
+	       jt.getTableHeader().setReorderingAllowed(false);
+	       jt.getTableHeader().setResizingAllowed(false); 
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();
 	    

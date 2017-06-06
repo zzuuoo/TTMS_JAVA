@@ -53,7 +53,8 @@ public class Login extends JFrame implements ActionListener{
 	JRadioButton jrb1 = new JRadioButton("经理",true);
 	JRadioButton jrb2 = new JRadioButton("系统管理者");
 	JRadioButton jrb3 = new JRadioButton("售票员");
-	ButtonGroup bg = new ButtonGroup();
+	
+	ButtonGroup bg = new ButtonGroup();//角色选择按钮
 
 	public Login(){
 		super("TTMS");

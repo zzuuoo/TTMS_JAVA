@@ -182,7 +182,7 @@ public class TicketDAO implements iTicketDAO {
 	public int unlockTicket(int ID) {
 		int rtn=0;
 		try {
-			String sql = "update ticket set ticket_status=0";
+			String sql = "update ticket set ticket_status=0,ticket_locked_time = NULL ";
 			sql += " where ticket_id = " + ID;
 			DBUtil db = new DBUtil();
 			db.openConnection();

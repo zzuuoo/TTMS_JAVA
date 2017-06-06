@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -100,17 +101,47 @@ public class ScheduleEditUI extends ScheduleAddUI{
 				System.out.println("日期天数超出当月范围");
 				return ;
 			}
+			Date t=null;
 			try {
 //				sch.setSched_time(DF.parse(pt.getText()));
-				stu.setSched_time(sdf.parse(time));
+				t = sdf.parse(time)
+;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
-			stuSrv.modify(stu);
+			if(t.getTime()<new Date().getTime()){
+				JOptionPane.showMessageDialog(null, "不能用过去的时间");
+				return;
+			}
 			
 			PlaySrv ps = new PlaySrv();
+			long start =  t.getTime();
+			long end = start + (ps.FetchOneById(" play_id = "+stu.getPlay_id()).getLength())*60*1000;
+			
+			
+			List<Schedule> scheList = new ScheduleSrv().Fetch(" studio_id = "+stu.getStudio_id());
+			for(Schedule s:scheList){
+		
+				if(s.getSched_id()==stu.getSched_id()){
+					continue;
+				}
+				long PlayTime = ps.FetchOneById(" play_id = "+stu.getPlay_id()).getLength()*60*1000;
+				long startTime = s.getSched_time().getTime();
+				long endTime = startTime+PlayTime;
+				
+				
+				if(((startTime<=start) && (endTime>=start))||((startTime>=start)
+						&& (startTime<=endTime))){
+					JOptionPane.showMessageDialog(null, "这时间段已被安排");
+					return ;
+					}
+			}
+			
+
+			stu.setSched_time(t);
+		
+			stuSrv.modify(stu);
 			Play p  = ps.FetchOneById(" play_id = "+stu.getPlay_id());
 			p.setStatus(1);
 			ps.modify(p);

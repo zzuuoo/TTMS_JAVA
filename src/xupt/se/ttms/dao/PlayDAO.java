@@ -13,24 +13,7 @@ public class PlayDAO implements iPlayDAO {
 	public int insert(Play stu) {
 
 		try {
-//			String sql = "insert into play(play_id, play_type_id, play_lang_id, play_name,play_introduction,play_image,play_length,play_ticket_price,play_status )"
-//					+ " values("
-//					+ stu.getId()
-//					+ ", "
-//					+ stu.getTypeId()
-//					+ ", " + stu.getLangId()
-//					+",'"
-//					+stu.getName()
-//					+"','"
-//					+stu.getIntroduction()
-//					+"','"
-//					+stu.getImage()
-//					+"',"
-//					+stu.getLength()
-//					+","
-//					+stu.getTicketPrice()
-//					+ ", " + stu.getStatus()
-//					+ ")";
+
 			String sql = "insert into play(play_name,play_introduction,play_image,play_length,play_ticket_price,play_status )"
 					+ " values( '"
 					+stu.getName()
@@ -73,15 +56,7 @@ public class PlayDAO implements iPlayDAO {
 	public int update(Play stu) {
 		int rtn = 0;
 		try {
-//			String sql = "update play set " + " play_type_id ="
-//					+ stu.getTypeId() + ", " + " play_lang_id = "
-//					+ stu.getLangId() + ", "  + " play_name = '"
-//					+ stu.getName() + "' ,"+"play_introtuction = '"
-//					+stu.getIntroduction()+"',"+"play_image='"
-//					+stu.getImage()+"',"+"play_length="
-//					+stu.getLength()+","+"play_ticket_price="
-//					+stu.getTicketPrice()+","+"play_status="
-//					+stu.getStatus();
+
 			String sql = "update play set "  + " play_name = '"
 					+ stu.getName() + "' ,"+"play_introduction = '"
 					+stu.getIntroduction()+"',"+"play_image='"

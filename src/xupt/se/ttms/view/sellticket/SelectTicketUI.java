@@ -76,6 +76,16 @@ public class SelectTicketUI extends MainUITmpl{
 //				t.setPrice(schedule.getSched_ticket_price());
 				t.setPlayName(play.getName());
 				t.setSchedule(sched);
+				System.out.println("1");
+				if(t.getLocked_time()!=null){
+					
+					if(t.getStatus()==1&&(new Date().getTime()-t.getLocked_time().getTime())/60>2){
+						t.setStatus(0);
+						TicketSrv ticketSrv = new TicketSrv();
+				    	ticketSrv.unlockTicket(t.getId());
+				    	System.out.println(0+"status");
+					}
+				}
 				for(Seat s:sList){
 					if(t.getSeatId()==s.getId()){
 						t.setSeat(s);
@@ -84,6 +94,7 @@ public class SelectTicketUI extends MainUITmpl{
 				if(handler.isTicketSelected(t)){
     				t.setStatus(2);
     			}
+				
 				
 			}
         	setMiddlePanel(studio.getRowCount(), studio.getColCount(), tList); 
@@ -104,9 +115,18 @@ public class SelectTicketUI extends MainUITmpl{
 			sList = new SeatSrv().Fetch(" studio_id = "+studio.getID());
 			
 			for(Ticket t:tList){
-//				t.setPrice(sched.getSched_ticket_price());
+//				t.setPrice(schedule.getSched_ticket_price());
 				t.setPlayName(play.getName());
 				t.setSchedule(sched);
+				if(t.getLocked_time()!=null){
+				
+					if(t.getStatus()==1&&(new Date().getTime()-t.getLocked_time().getTime())/60>2){
+						t.setStatus(0);
+						TicketSrv ticketSrv = new TicketSrv();
+				    	ticketSrv.unlockTicket(t.getId());
+				    	System.out.println(0+"status");
+					}
+				}
 				for(Seat s:sList){
 					if(t.getSeatId()==s.getId()){
 						t.setSeat(s);
@@ -133,8 +153,14 @@ public class SelectTicketUI extends MainUITmpl{
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
 		new SellTicketMgUI().setVisible(true);
+		handler.clearSale();
 		this.dispose();
 	}	
+	//To be override by the detailed business block interface 
+		protected void onWindowClosing(){
+			handler.clearSale();
+			System.exit(0);
+		}
 	
 	private void setUpPanel() {
 		
@@ -170,6 +196,7 @@ public class SelectTicketUI extends MainUITmpl{
 		final ImageIcon siteimgwhite = new ImageIcon("resource/image/white.png");
 		final ImageIcon siteimggreen = new ImageIcon("resource/image/green.png");
 		final ImageIcon siteimgred = new ImageIcon("resource/image/red.jpg");
+		final ImageIcon siteimglock = new ImageIcon("resource/image/lock.png");
 
 		Action act = new AbstractAction() {
 			private static final long serialVersionUID = -144569051730123316L;
@@ -182,7 +209,9 @@ public class SelectTicketUI extends MainUITmpl{
 				String tmp[] = name.split(",");
 				int i = Integer.valueOf(tmp[0]);
 				int j = Integer.valueOf(tmp[1]);
+				TicketSrv tsrv = new TicketSrv();
 				if (ticketArray[i][j].getStatus()==0) {
+						
 					ticketArray[i][j].setStatus(2);
 					site.setIcon(siteimggreen);
 					handler.addTicket(ticketArray[i][j]);
@@ -206,7 +235,10 @@ public class SelectTicketUI extends MainUITmpl{
 						JOptionPane.showMessageDialog(null, "退票成功");	
 					}
 					
-					System.out.println("已退票");
+//					System.out.println("已退票");
+				}
+				else if (ticketArray[i][j].getStatus()==1){
+					getTickets(sched);
 				}
 			}else{
 				JOptionPane.showMessageDialog(null, "你木有权限操作");
@@ -250,18 +282,39 @@ public class SelectTicketUI extends MainUITmpl{
 						site.setName(i+","+j);
 						sites.add(site);
 					} else if (seats[i][j] == 2) {
-						JButton site = new JButton(act);
-						site.setBackground(Color.WHITE);
-						site.setIcon(siteimggreen);
-						site.setName(i+","+j);
-						sites.add(site);
-					} else if (seats[i][j] == 9) {
+						
+//						
+//						long lm = (new Date().getTime()-ticketArray[i][j].getLocked_time().getTime())/60;
+//						if(lm>=2){
+							JButton site = new JButton(act);
+							site.setBackground(Color.WHITE);
+							site.setIcon(siteimgwhite);
+							site.setName(i+","+j);
+							sites.add(site);
+//							ticketArray[i][j].setStatus(0);
+//							seats[i][j]=0;
+//						}else{
+//						JButton site = new JButton(act);
+//						site.setBackground(Color.WHITE);
+////						site.setIcon(siteimggreen);
+//						site.setIcon(siteimglock);
+//						site.setName(i+","+j);
+//						sites.add(site);
+//						}
+					} else   {
 						JButton site = new JButton(act);
 						site.setBackground(Color.WHITE);
 						site.setIcon(siteimgred);
 						site.setName(i+","+j);
 						sites.add(site);
 					}
+//					else if(seats[i][j]==1){
+//						JButton site = new JButton(act);
+//						site.setBackground(Color.WHITE);
+//						site.setIcon(siteimglock);
+//						site.setName(i+","+j);
+//						sites.add(site);
+//					}
 				}
 			}
 		}

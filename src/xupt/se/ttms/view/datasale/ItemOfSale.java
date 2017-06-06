@@ -71,7 +71,9 @@ class AllItemSaleTable {
 	       jt.getColumn("ticketId").setCellRenderer(render);
 	       jt.getColumn("saleId").setCellRenderer(render);
 	       jt.getColumn("Price").setCellRenderer(render);
-		
+	       
+	       jt.getTableHeader().setReorderingAllowed(false);
+	       jt.getTableHeader().setResizingAllowed(false); 
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();
 	    

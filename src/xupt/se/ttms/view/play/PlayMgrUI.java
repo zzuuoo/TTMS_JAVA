@@ -85,6 +85,10 @@ class PlayTable {
 	       jt.getColumn("票价").setCellRenderer(render);
 	       jt.getColumn("状态").setCellRenderer(render);
 	       jt.getColumn("简介").setCellRenderer(render);
+	       jt.getTableHeader().setReorderingAllowed(false); 
+	       jt.getTableHeader().setResizingAllowed(false); 
+//	        table.getTableHeader().setReorderingAllowed(false);   //不可整列移动   
+//	     	table.getTableHeader().setResizingAllowed(false);   //不可拉动表格
 		
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();

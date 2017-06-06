@@ -84,6 +84,9 @@ class ScheduleTable {
 	       jt.getColumn("剧目").setCellRenderer(render);
 	       jt.getColumn("演出时间").setCellRenderer(render);
 	       jt.getColumn("票价").setCellRenderer(render);
+	       //不可拖动
+	       jt.getTableHeader().setReorderingAllowed(false); 
+	       jt.getTableHeader().setResizingAllowed(false); 
 		
 		//设置各列的宽度
 	    TableColumnModel columnModel = jt.getColumnModel();

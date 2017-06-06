@@ -19,7 +19,6 @@ import xupt.se.ttms.service.EmployeeSrv;
 import xupt.se.ttms.view.datasale.AllDataSale;
 import xupt.se.ttms.view.play.PlayMgrUI;
 import xupt.se.ttms.view.schedule.ScheduleMgUI;
-import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.studio.StudioSeat;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 /**

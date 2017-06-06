@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -225,39 +226,51 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener,PropertyC
 				System.out.println("日期天数超出当月范围");
 				return ;
 			}
+			Date t=null;
 			try {
 //				sch.setSched_time(DF.parse(pt.getText()));
-				sch.setSched_time(DF.parse(time));
+				t = DF.parse(time)
+;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			if(t.getTime()<new Date().getTime()){
+				JOptionPane.showMessageDialog(null, "不能用过去的时间");
+				return;
+			}
 			
+			PlaySrv ps = new PlaySrv();
+			long start =  t.getTime();
+			long end = start + (ps.FetchOneById(" play_id = "+sch.getPlay_id()).getLength())*60*1000;
+			
+			
+			List<Schedule> scheList = new ScheduleSrv().Fetch(" studio_id = "+sch.getStudio_id());
+			for(Schedule s:scheList){
+		
+				long PlayTime = ps.FetchOneById(" play_id = "+sch.getPlay_id()).getLength()*60*1000;
+				long startTime = s.getSched_time().getTime();
+				long endTime = startTime+PlayTime;
+				
+				
+				if(((startTime<=start) && (endTime>=start))||((startTime>=start)
+						&& (startTime<=endTime))){
+					JOptionPane.showMessageDialog(null, "这时间段已被安排");
+					return ;
+					}
+			}
+			
+
+			sch.setSched_time(t);
+
 
 			int scheduleID = stuSrv.add(sch);
 			if(scheduleID!= 0 ){
-//				PlaySrv ps = new PlaySrv();
-//				Play p  = ps.FetchOneById(" play_id = "+sch.getPlay_id());
-//				p.setStatus(1);
-//				ps.modify(p);
-//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 				ScheduleSrv schSrv = new ScheduleSrv();
 				sc = schSrv.FetchOne(" sched_id = "+scheduleID);
 				List<Seat> Ls = new SeatSrv().Fetch(" studio_id = "+sc.getStudio_id());
-//				TicketSrv ts = new TicketSrv();
-//				for(int i=0;i<Ls.size();i++){
-//					Ticket t = new Ticket();
-//					t.setPrice(sc.getSched_ticket_price());
-//					t.setScheduleId(sc.getSched_id());
-//					t.setSeatId(Ls.get(i).getId());
-//					t.setStatus(0);
-//					ts.add(t);
-//				}
-//				this.setVisible(false);
-//				rst=true;
-				
-				
+
+					
 				 progressMonitor = new ProgressMonitor(	this,
 	                     "正在添加数据，请耐心等待！",
 	                     "", 0, Ls.size());
@@ -329,6 +342,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener,PropertyC
 //            JOptionPane.showMessageDialog(null, "已完成");
             progressMonitor.setProgress(0);
             progressMonitor.close();
+            
         }
     }
 

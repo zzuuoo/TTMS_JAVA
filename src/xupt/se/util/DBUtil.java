@@ -3,10 +3,13 @@
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties; 
+import java.util.Properties;
+
+import javax.swing.JOptionPane; 
 
 public class DBUtil {
 	private final String dbConnFile = "resource/database/jdbc.properties";
@@ -76,22 +79,48 @@ public class DBUtil {
 	}
 
 	// 插入一条新纪录，并获取标识列的值
-	public ResultSet getInsertObjectIDs(String insertSql) throws Exception{
-		ResultSet rst = null;
-		try {
-			if(null==conn)
-				throw new Exception("Database not connected!");
-			
-			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			
-			stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
-			rst = stmt.getGeneratedKeys();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		public ResultSet getInsertObjectIDs(String insertSql) throws Exception{
+			ResultSet rst = null;
+			try {
+				if(null==conn)
+					throw new Exception("Database not connected!");
+				
+//				Statement stmt = conn.createStatement();
+				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+				stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
+				stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
+				rst = stmt.getGeneratedKeys();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "不能添加已存在的");
+			}
+			return rst;
 		}
-		return rst;
-	}
+		
+		//以参数SQL模式插入新纪录，并获取标识列的值
+		public ResultSet getInsertObjectIDs(String insertSql, Object[] params) throws Exception {
+			ResultSet rst = null;
+			PreparedStatement pstmt = null ;
+			try {
+				if (null == conn)
+					throw new Exception("Database not connected!");
+				pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+				
+				if(null != params){  
+		            for (int i = 0; i < params.length; i++) {  
+		            	pstmt.setObject(i + 1, params[i]);  
+		            }  
+		        }
+				pstmt.executeUpdate();
+				rst = pstmt.getGeneratedKeys();			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return rst;
+		}
+		
+		
 
 	// 插入、更新、删除
 	public int execCommand(String sql) throws Exception{
@@ -110,6 +139,8 @@ public class DBUtil {
 		return flag;
 	}
 
+
+	
 	// 释放资源
 	public void close(ResultSet rst) throws Exception {
 		try {
