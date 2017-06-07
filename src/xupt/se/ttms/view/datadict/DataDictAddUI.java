@@ -104,7 +104,7 @@ public class DataDictAddUI extends PopUITmpl implements ActionListener {
 				&& txtValue.getText() != null) {
 			DataDictSrv dictSrv = new DataDictSrv();
 			DataDict ddict=new DataDict();
-			ddict.setSuperId(0);
+			ddict.setSuperId(6);
 			ddict.setIndex(Integer.parseInt(txtIndex.getText()));
 			ddict.setName(txtName.getText());
 			ddict.setValue(txtValue.getText());

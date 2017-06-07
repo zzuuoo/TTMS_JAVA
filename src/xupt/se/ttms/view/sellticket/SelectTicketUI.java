@@ -56,6 +56,11 @@ public class SelectTicketUI extends MainUITmpl{
 	private List<Ticket> tList;
 	private List<Seat> sList;
 	
+	private int LOCK_TIME = 2;//2分钟只能不出票则已选票无效
+	
+	private Date StartTime;
+	//记录开始选票时间，若超时则选票作废
+	
 	public SelectTicketUI(Schedule s){
 		this.sched=s;
 		initContent();
@@ -76,10 +81,9 @@ public class SelectTicketUI extends MainUITmpl{
 //				t.setPrice(schedule.getSched_ticket_price());
 				t.setPlayName(play.getName());
 				t.setSchedule(sched);
-				System.out.println("1");
 				if(t.getLocked_time()!=null){
 					
-					if(t.getStatus()==1&&(new Date().getTime()-t.getLocked_time().getTime())/60>2){
+					if(t.getStatus()==1&&(new Date().getTime()-t.getLocked_time().getTime())/60>LOCK_TIME){
 						t.setStatus(0);
 						TicketSrv ticketSrv = new TicketSrv();
 				    	ticketSrv.unlockTicket(t.getId());
@@ -102,7 +106,9 @@ public class SelectTicketUI extends MainUITmpl{
 	}
 	
 	protected void initContent(){
+		
 
+		StartTime = new Date();
 		contPan.setLayout(new BorderLayout());
 		handler = new SellTicketHandler();
 		handler.makeNewSale();
@@ -149,14 +155,13 @@ public class SelectTicketUI extends MainUITmpl{
 
 		contPan.validate();
 	}
-	
-	//To be override by the detailed business block interface 
+	//override
 	protected void btnExitClicked(ActionEvent Event){
 		new SellTicketMgUI().setVisible(true);
 		handler.clearSale();
 		this.dispose();
 	}	
-	//To be override by the detailed business block interface 
+	//override
 		protected void onWindowClosing(){
 			handler.clearSale();
 			System.exit(0);
@@ -196,7 +201,6 @@ public class SelectTicketUI extends MainUITmpl{
 		final ImageIcon siteimgwhite = new ImageIcon("resource/image/white.png");
 		final ImageIcon siteimggreen = new ImageIcon("resource/image/green.png");
 		final ImageIcon siteimgred = new ImageIcon("resource/image/red.jpg");
-		final ImageIcon siteimglock = new ImageIcon("resource/image/lock.png");
 
 		Action act = new AbstractAction() {
 			private static final long serialVersionUID = -144569051730123316L;
@@ -211,11 +215,24 @@ public class SelectTicketUI extends MainUITmpl{
 				int j = Integer.valueOf(tmp[1]);
 				TicketSrv tsrv = new TicketSrv();
 				if (ticketArray[i][j].getStatus()==0) {
+						Ticket tt = tsrv.FetchOne(" ticket_id = "+ticketArray[i][j].getId());
+					if((tt.getStatus()==0)){
+						ticketArray[i][j].setStatus(2);
+						site.setIcon(siteimggreen);
+						handler.addTicket(ticketArray[i][j]);
+						detail.setText(handler.getInfo());
+					}else if(tt.getStatus()==1
+							&&(new Date().getTime()-tt.getLocked_time().getTime())/(1000*60)>=LOCK_TIME)
+					{
+						ticketArray[i][j].setStatus(2);
+						site.setIcon(siteimggreen);
+						handler.addTicket(ticketArray[i][j]);
+						detail.setText(handler.getInfo());
 						
-					ticketArray[i][j].setStatus(2);
-					site.setIcon(siteimggreen);
-					handler.addTicket(ticketArray[i][j]);
-					detail.setText(handler.getInfo());
+					}else{
+						JOptionPane.showMessageDialog(null, "抱歉，此票刚刚已售出");
+					}
+					
 				} else if (ticketArray[i][j].getStatus()==2) {
 					ticketArray[i][j].setStatus(0);
 					site.setIcon(siteimgwhite);
@@ -283,24 +300,13 @@ public class SelectTicketUI extends MainUITmpl{
 						sites.add(site);
 					} else if (seats[i][j] == 2) {
 						
-//						
-//						long lm = (new Date().getTime()-ticketArray[i][j].getLocked_time().getTime())/60;
-//						if(lm>=2){
+
 							JButton site = new JButton(act);
 							site.setBackground(Color.WHITE);
 							site.setIcon(siteimgwhite);
 							site.setName(i+","+j);
 							sites.add(site);
-//							ticketArray[i][j].setStatus(0);
-//							seats[i][j]=0;
-//						}else{
-//						JButton site = new JButton(act);
-//						site.setBackground(Color.WHITE);
-////						site.setIcon(siteimggreen);
-//						site.setIcon(siteimglock);
-//						site.setName(i+","+j);
-//						sites.add(site);
-//						}
+
 					} else   {
 						JButton site = new JButton(act);
 						site.setBackground(Color.WHITE);
@@ -308,13 +314,7 @@ public class SelectTicketUI extends MainUITmpl{
 						site.setName(i+","+j);
 						sites.add(site);
 					}
-//					else if(seats[i][j]==1){
-//						JButton site = new JButton(act);
-//						site.setBackground(Color.WHITE);
-//						site.setIcon(siteimglock);
-//						site.setName(i+","+j);
-//						sites.add(site);
-//					}
+
 				}
 			}
 		}
@@ -337,12 +337,29 @@ public class SelectTicketUI extends MainUITmpl{
 		JButton sale = new JButton("出票");
 		sale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(handler.doSale()){
-					detail.setText("");					
-					getTickets(sched);
-					JOptionPane.showMessageDialog(null, "出票成功。");
-				}else{
-					JOptionPane.showMessageDialog(null, "出现错误，请重试。");					
+				
+			
+				if((new Date().getTime()-StartTime.getTime())/(1000*60)<LOCK_TIME){
+					
+					if(handler.doSale()){
+						detail.setText("");					
+						getTickets(sched);
+						JOptionPane.showMessageDialog(null, "出票成功。");
+						StartTime = new Date();
+					}else{
+						JOptionPane.showMessageDialog(null, "出现错误，请重试。");					
+					}
+				
+				}else
+				{
+		
+					int isAgain = JOptionPane.showConfirmDialog(null, "抱歉，已超过有效时间，是否重新选票？","Tips", JOptionPane.YES_NO_OPTION); 
+					if(isAgain==JOptionPane.YES_OPTION){
+						handler.clearSale();
+						detail.setText("");
+						getTickets(sched);
+						StartTime = new Date();
+					}
 				}
 			}
 		});
@@ -352,6 +369,7 @@ public class SelectTicketUI extends MainUITmpl{
 				handler.clearSale();
 				detail.setText("");
 				getTickets(sched);
+				StartTime = new Date();
 			}
 		});
 		buttons.add(sale);

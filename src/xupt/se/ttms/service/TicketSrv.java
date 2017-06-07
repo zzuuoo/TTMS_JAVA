@@ -27,7 +27,9 @@ public class TicketSrv {
 	public List<Ticket> Fetch(String condt){
 		return stuDAO.select(condt);		
 	}
-	
+	public Ticket FetchOne(String condt){
+		return stuDAO.selectOne(condt);		
+	}
 	public List<Ticket> FetchAll(){
 		return stuDAO.select("");		
 	}

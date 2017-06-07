@@ -106,10 +106,10 @@ class DataDictTable {
 	        
 	        t.setDataVector(data, columnNames);
 	       
-	        //DefaultTableModel model = (DefaultTableModel)(jDictTable.getModel());
-	       // model.setDataVector(data, columnNames);
+	        DefaultTableModel model = (DefaultTableModel)(jDictTable.getModel());
+	        model.setDataVector(data, columnNames);
 	        jDictTable.repaint();   
-	        //jDictTable.setBounds(0, 0, 700, 450);
+	        jDictTable.setBounds(0, 0, 700, 450);
 
 			// 添加鼠标监听，监听到所选行
 			DataDictTableMouseListener tml = new  DataDictTableMouseListener(jDictTable, columnNames, ddict);
@@ -145,11 +145,11 @@ class DataDictTable {
 				i++;
 			}
   
-	        DefaultTableModel model = (DefaultTableModel)(jDictTable.getModel());
-	        model.setDataVector(data, columnNames);
+//	        DefaultTableModel model = (DefaultTableModel)(jDictTable.getModel());
+//	        model.setDataVector(data, columnNames);
 	        jDictTable.repaint();   
 	      
-			//jp.setViewportView(jDictTable);
+			jp.setViewportView(jDictTable);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,7 +206,7 @@ public class DataDictMgrUI extends MainUITmpl {
         left.setLayout(new BorderLayout());
         
         left.add(tree);
-        // 添加选择事件
+//         添加选择事件
         tree.addTreeSelectionListener(new TreeSelectionListener() {
  
             @Override
@@ -220,7 +220,7 @@ public class DataDictMgrUI extends MainUITmpl {
  
                 Object object = node.getUserObject();
                 if (node.isRoot()) {
-                	new DataDictSrv().findAllSonByID(leafList, 0);
+                	new DataDictSrv().findAllSonByID(leafList, 3);
                     showAllLeafTable(leafList);
                     System.out.println("你选择了：" +"叶子节点");
                 }
@@ -331,7 +331,7 @@ public class DataDictMgrUI extends MainUITmpl {
         DefaultTreeModel   treeModel   =   new   DefaultTreeModel(root); 
         JTree   tree   =   new   JTree(treeModel); 
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION); 
-        addTreeNode(root, 1); 
+        addTreeNode(root, 3); 
         tree.expandRow(0); 
         tree.setSelectionRow(0); 
        
@@ -342,6 +342,9 @@ public class DataDictMgrUI extends MainUITmpl {
     private   void   addTreeNode(DefaultMutableTreeNode  treeNode,int superID)   { 
     	DataDictDAO dictDAO = new DataDictDAO();
     	List<DataDict> list = dictDAO.findByID(superID);
+    	for(DataDict d:list){
+    		System.out.println(d.getId());
+    	}
     	
     	if(list.size()>0) {
              DefaultMutableTreeNode   node   =   null; 
@@ -410,9 +413,11 @@ public class DataDictMgrUI extends MainUITmpl {
 	public void showTable() {
 		DataDictTable tms = new DataDictTable(ddict);
 		Object[] in = { "id", "superid", "index", "name", "value" };
+//		DataDictSrv dds = new DataDictSrv();
 		List<DataDict> dictList = new LinkedList<DataDict>();
 		new DataDictSrv().findAllSonByID(dictList, 0);
-
+//		List<DataDict> dictList  = dds .FetchAll();
+//		List<DataDict> dictList  = dds .findAllSonByID(list, id);
 		
 		tms.showTable(jDictTable,jsc, in, dictList);
 		jsc.repaint();
@@ -457,7 +462,7 @@ class DataDictTreeCellRenderer extends DefaultTreeCellRenderer
        }  
          
        //得到每个节点的TreeNode  
-       DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;           
+//       DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;           
        //得到每个节点的text        
        this.setIcon(new ImageIcon("resource/image/dict.gif"));  
  

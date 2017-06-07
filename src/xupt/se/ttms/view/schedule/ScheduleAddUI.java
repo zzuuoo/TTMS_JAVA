@@ -320,6 +320,7 @@ public class ScheduleAddUI extends PopUITmpl implements ActionListener,PropertyC
 				t.setSeatId(Ls.get(i).getId());
 				t.setStatus(0);
 				ts.add(t);
+				System.out.println("添加票中.."+t.getScheduleId());
 				if(progress>98){
 					progress--;
 				}else{

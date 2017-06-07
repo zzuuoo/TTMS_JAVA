@@ -31,6 +31,7 @@ import javax.swing.table.TableColumnModel;
 import java.util.List;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import xupt.se.ttms.model.GlobalVariable;
 import xupt.se.ttms.model.Play;
@@ -339,8 +340,37 @@ public class PersonalDataSale extends MainUITmpl {
 
 
 	private void btnQueryClicked() {
+		List<Sale> stuList = new LinkedList<Sale>();
 		if (!input.getText().equals("")) {
-//			//请自行补充
+//			"按单据查找","按状态查找","按收款查找"
+//			private int type;  // 1：销售单  -1：退款单
+//			private int status;  // 0：待付款   1：已付款
+			if(inquery.getSelectedItem().equals("按单据查找")){
+				if(input.getText().equals("销售单")){
+					stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id
+							+" and sale_type = 1");
+		
+				}else if(input.getText().equals("退款单")){
+					stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id
+							+" and sale_type = -1");
+				}
+				
+			}
+			else if(inquery.getSelectedItem().equals("按状态查找")){
+				if(input.getText().equals("待付款")){
+					stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id
+							+" and sale_status = 0");
+				}else if(input.getText().equals("已付款")){
+					stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id
+							+" and sale_status = 1");
+				}
+			}else
+			{
+//				sale_payment
+				stuList = new SaleSrv().Fetch(" emp_id = "+GlobalVariable.emp_id
+						+" and sale_payment = "+input.getText());
+			}
+			tms.showPlayList(stuList);
 		} else {
 			JOptionPane.showMessageDialog(null, "请输入检索条件");
 //			showTable();

@@ -193,4 +193,40 @@ public class TicketDAO implements iTicketDAO {
 		}
 		return rtn;
 	}
+
+
+	@Override
+	public Ticket selectOne(String condt) {
+		Ticket stu = new Ticket();
+		try {
+			String sql = "select * from ticket ";
+			condt.trim();
+			if (!condt.isEmpty())
+				sql += " where " + condt;
+			DBUtil db = new DBUtil();
+			if (!db.openConnection()) {
+				System.out.print("fail to connect database");
+				return null;
+			}
+			ResultSet rst = db.execQuery(sql);
+			if (rst != null) {
+				while (rst.next()) {
+					stu.setId(rst.getInt("ticket_id"));
+					stu.setSeatId(rst.getInt("seat_id"));
+					stu.setScheduleId(rst.getInt("sched_id"));
+					stu.setPrice(rst.getFloat("ticket_price"));
+					stu.setStatus(rst.getInt("ticket_status"));
+					stu.setLocked_time(rst.getTimestamp("ticket_locked_time"));
+				}
+			}
+			db.close(rst);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return stu;
+	}
 }

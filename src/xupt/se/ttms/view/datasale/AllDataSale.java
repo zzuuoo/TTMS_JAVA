@@ -339,22 +339,23 @@ public class AllDataSale extends MainUITmpl {
 //			 {"按单据查找","按状态查找","按售票员查找"};
 			//请自行补充
 			List<Sale> slist=null;
+			SaleSrv ss = new SaleSrv();
 			if(inquery.getSelectedIndex()==0){//按单据查询
 				//play_id
 				if(input.getText().equals("销售单")){
-				slist = new SaleSrv().Fetch(" sale_type = 1");
+				slist = ss.Fetch(" sale_type = 1");
 				}else if(input.getText().equals("退款单")){
-					slist = new SaleSrv().Fetch(" sale_type = -1");
+					slist = ss.Fetch(" sale_type = -1");
 				}
 				tms.showPlayList(slist);
 			}
 			else if(inquery.getSelectedIndex()==1){//按状态查询
 				if(input.getText().equals("待付款")){
-					slist = new SaleSrv().Fetch(" sale_status = 0");
+					slist = ss.Fetch(" sale_status = 0");
 					}else if(input.getText().equals("已付款")){
-						slist = new SaleSrv().Fetch(" sale_status = 1");
+						slist = ss.Fetch(" sale_status = 1");
 					}else  if(input.getText().equals("已退款")){
-						slist = new SaleSrv().Fetch(" sale_status = 2");
+						slist = ss.Fetch(" sale_status = 2");
 					}else{
 						slist=null;
 					}
@@ -362,7 +363,8 @@ public class AllDataSale extends MainUITmpl {
 			}else {//按售票员查询
 
 //				new EmployeeSrv().FetchOne(" emp_name = "+ input.getText());
-				slist = new SaleSrv().Fetch(" emp_id = "+new EmployeeSrv().FetchOne(" emp_name = "+ input.getText()).getEmp_id());
+//				slist = new SaleSrv().Fetch(" emp_id = "+new EmployeeSrv().FetchOne(" emp_name = "+ input.getText()).getEmp_id());
+				slist = new SaleSrv().Fetch(" emp_id = "+input.getText());
 				tms.showPlayList(slist);
 			}
 //			//请自行补充

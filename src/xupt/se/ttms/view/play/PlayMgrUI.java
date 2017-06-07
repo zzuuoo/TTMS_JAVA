@@ -95,10 +95,10 @@ class PlayTable {
 	    
 	    //隐藏ID这一列
         TableColumn column = columnModel.getColumn(0);
-//        column.setMinWidth(0);
-//        column.setMaxWidth(0);
-//        column.setWidth(0);
-        column.setPreferredWidth(10);
+        column.setMinWidth(0);
+        column.setMaxWidth(0);
+        column.setWidth(0);
+//        column.setPreferredWidth(10);
         
         
 
