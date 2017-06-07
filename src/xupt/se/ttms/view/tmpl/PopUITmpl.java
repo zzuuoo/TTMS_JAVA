@@ -8,7 +8,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+/**
+ * 弹窗框架
+ * @author SHEEO
+ *
+ */
 
 
 public class PopUITmpl extends JDialog {

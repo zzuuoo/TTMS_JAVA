@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.sellticket;
-
+/*
+ * 买票前的选择演出计划界面
+ */
 
 import java.awt.Color;
 import java.awt.Dimension;

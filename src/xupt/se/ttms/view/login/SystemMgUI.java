@@ -12,9 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import xupt.se.ttms.view.studio.StudioMgrUI;
-import xupt.se.ttms.view.system.SysUserModUI;
 import xupt.se.ttms.view.tmpl.ImagePanel;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
+import xupt.se.ttms.view.user.ManagerManageUI;
+
 /**
  * 系统管理者UI
  * @author zuo
@@ -52,7 +53,8 @@ public class SystemMgUI extends MainUITmpl{
 		btnUserMg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 //				System.out.println("用户管理");
-				new SysUserModUI ().setVisible(true);
+//				new SysUserModUI ().setVisible(true);
+				new ManagerManageUI ().setVisible(true);
 				SystemMgUI.this.dispose();
 			}
 		});

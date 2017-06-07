@@ -1,6 +1,8 @@
 package xupt.se.ttms.view.schedule;
 
-
+/**
+ * 演出计划管理界面
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

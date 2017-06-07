@@ -1,7 +1,11 @@
 ﻿package xupt.se.util;
 
 import java.util.regex.Pattern;
-
+/**
+ * 日期匹配工具类
+ * @author SHEEO
+ *
+ */
 public class DateMatcher {
 	
 	public boolean matchDate(String input){

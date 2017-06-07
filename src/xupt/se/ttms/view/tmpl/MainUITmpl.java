@@ -2,7 +2,9 @@
  * 
  */
 package xupt.se.ttms.view.tmpl;
-
+/**
+ * 主框架
+ */
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -15,11 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Insets;
 
-import xupt.se.ttms.view.system.*;
 import xupt.se.ttms.model.Employee;
 import xupt.se.ttms.model.GlobalVariable;
 import xupt.se.ttms.service.EmployeeSrv;
 import xupt.se.ttms.service.LoginedUser;
+import xupt.se.ttms.view.user.*;
 
 /**
  * @author Administrator
@@ -132,6 +134,8 @@ public class MainUITmpl extends JFrame  {
 	
 	
 	protected void btnModUserClicked(){
+		
+		ChangePasswordUI cpui = new ChangePasswordUI();
 //		SysUserModUI dlgUserMod=new SysUserModUI();
 //		dlgUserMod.setModal(true);
 //		dlgUserMod.setVisible(true);
@@ -148,6 +152,9 @@ public class MainUITmpl extends JFrame  {
 			usrName.setText(name);		
 	}
 	
+//	protected void btnModUserClicked(){
+//		ChangePasswordUI cpui = new ChangePasswordUI();
+//	}
 	
 	//To be override by the detailed business block interface 
 	protected void onWindowClosing(){

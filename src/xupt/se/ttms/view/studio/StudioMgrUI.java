@@ -1,5 +1,7 @@
 ﻿package xupt.se.ttms.view.studio;
-
+/**
+ * 演出厅管理界面
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

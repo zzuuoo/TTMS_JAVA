@@ -1,5 +1,7 @@
 ﻿package xupt.se.ttms.view.studio;
-
+/**
+ * 有自定义背景图的JPanel
+ */
 import java.awt.*;
 
 import javax.swing.*;

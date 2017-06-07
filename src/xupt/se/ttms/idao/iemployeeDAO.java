@@ -10,5 +10,8 @@ public interface iemployeeDAO {
 		public int delete(int ID);
 		public Employee select(String condt); 
 		public List<Employee> selectAll(); 
+		
+		//zuo
+//		public List<Employee> selectConnect(String condt); 
 
 }

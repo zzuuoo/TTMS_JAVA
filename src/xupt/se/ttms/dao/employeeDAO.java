@@ -6,6 +6,7 @@ import java.util.List;
 
 import xupt.se.ttms.idao.iemployeeDAO;
 import xupt.se.ttms.model.Employee;
+import xupt.se.ttms.model.Loginde;
 import xupt.se.util.DBUtil;
 
 public class employeeDAO implements iemployeeDAO{
@@ -15,12 +16,11 @@ public class employeeDAO implements iemployeeDAO{
 		// TODO Auto-generated method stub
 		
 		try {
-			String sql = "insert into employee(emp_id, emp_name, emp_tel_num, emp_addr,emp_email )"
+			String sql = "insert into employee(emp_name, emp_tel_num, emp_addr,emp_email )"
 					+ " values("
-					+ emp.getEmp_id()
-					+ ",' "
+					+ "'"
 					+ emp.getEmp_name()
-					+ "',' " 
+					+ "','" 
 					+ emp.getEmp_tel_num()
 					+ "', '"
 					+ emp.getEmp_addr()
@@ -50,7 +50,7 @@ public class employeeDAO implements iemployeeDAO{
 		int rtn=0;
 		try {
 			String sql = "update employee set " 
-					+ " emp_id ="+ emp.getEmp_id() + ", " 
+	
 					+ " emp_name = '"+ emp.getEmp_name() + "', " 
 					+ " emp_tel_num = '"+ emp.getEmp_tel_num() + "', " 
 					+ " emp_addr = '"+ emp.getEmp_addr() + "' ,"
@@ -73,7 +73,7 @@ public class employeeDAO implements iemployeeDAO{
 		// TODO Auto-generated method stub
 		int rtn=0;		
 		try{
-			String sql = "delete from  emp_id ";
+			String sql = "delete from  employee ";
 			sql += " where emp_id = " + ID;
 			DBUtil db = new DBUtil();
 			db.openConnection();
@@ -126,6 +126,23 @@ public class employeeDAO implements iemployeeDAO{
 		finally{
 			
 		}
+		
+		
+		LogindeDAO logDAO = new LogindeDAO();
+		List<Loginde> log = null;
+		log = new LinkedList<Loginde>();
+		log = logDAO.select();
+		
+		
+		for(Loginde lg:log){
+			for(Employee em:empList){
+				if(lg.getEmp_id()==em.getEmp_id()){
+					em.setAccount(lg.getAccount());
+					em.setStatus(lg.getStatus());
+				}
+			}
+		}
+				
 		
 		return empList;
 	}

@@ -26,6 +26,9 @@ public class EmployeeSrv {
 	public List<Employee> FetchAll(){
 		return empDAO.selectAll();
 	}
+//	public List<Employee> FetchConnnection(String condt){
+//		return empDAO.selectConnect(condt);
+//	}
 	
 	public Employee FetchOne(String condt){
 		return empDAO.select(condt);

@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.schedule;
-
+/**
+ * 修改演出计划界面
+ */
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;

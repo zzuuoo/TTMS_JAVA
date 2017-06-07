@@ -1,7 +1,8 @@
-package xupt.se.ttms.view.play;
-/**
- * 剧目管理界面
- */
+package xupt.se.ttms.view.user;
+
+//public class ManagerManageUI {
+//
+//}
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,10 +32,13 @@ import javax.swing.table.TableColumnModel;
 
 import java.util.List;
 import java.util.Iterator;
+import java.util.LinkedList;
 
+import xupt.se.ttms.model.Employee;
 import xupt.se.ttms.model.Play;
 import xupt.se.ttms.model.Schedule;
 import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.service.EmployeeSrv;
 import xupt.se.ttms.service.PlaySrv;
 import xupt.se.ttms.service.ScheduleSrv;
 import xupt.se.ttms.service.StudioSrv;
@@ -42,14 +46,14 @@ import xupt.se.ttms.view.login.Manager;
 import xupt.se.ttms.view.login.SystemMgUI;
 import xupt.se.ttms.view.tmpl.*;
 
-class PlayTable {
+class ManagerTable {
 	/**
-	 * 剧目表格绘制
+	 * 经理表格绘制
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jt;
 
-	public PlayTable(JScrollPane jp) {
+	public ManagerTable(JScrollPane jp) {
 		
 		DefaultTableModel tabModel=new DefaultTableModel(){
 			private static final long serialVersionUID = 1L;
@@ -59,15 +63,15 @@ class PlayTable {
 				return false;              
 			};
 		};
-//Object[] in = { "id", "name", "image", "introduction", "length","status","ticketprice" };
 
-		tabModel.addColumn("ID");
-		tabModel.addColumn("名字");
-		tabModel.addColumn("image");
-		tabModel.addColumn("时长");
-		tabModel.addColumn("状态");
-		tabModel.addColumn("票价");
-		tabModel.addColumn("简介");
+
+		tabModel.addColumn("工号");
+		tabModel.addColumn("姓名");
+		tabModel.addColumn("身份");
+		tabModel.addColumn("账号");
+		tabModel.addColumn("电话");
+		tabModel.addColumn("住址");
+		tabModel.addColumn("邮箱");
 		
 		//初始化列明
 		jt=new JTable(tabModel);	
@@ -80,13 +84,13 @@ class PlayTable {
 		DefaultTableCellRenderer render = new DefaultTableCellRenderer();
 	       render.setHorizontalAlignment(SwingConstants.CENTER);
 	       
-	       jt.getColumn("ID").setCellRenderer(render);
-	       jt.getColumn("名字").setCellRenderer(render);
-	       jt.getColumn("image").setCellRenderer(render);
-	       jt.getColumn("时长").setCellRenderer(render);
-	       jt.getColumn("票价").setCellRenderer(render);
-	       jt.getColumn("状态").setCellRenderer(render);
-	       jt.getColumn("简介").setCellRenderer(render);
+	       jt.getColumn("工号").setCellRenderer(render);
+	       jt.getColumn("姓名").setCellRenderer(render);
+	       jt.getColumn("身份").setCellRenderer(render);
+	       jt.getColumn("账号").setCellRenderer(render);
+	       jt.getColumn("电话").setCellRenderer(render);
+	       jt.getColumn("住址").setCellRenderer(render);
+	       jt.getColumn("邮箱").setCellRenderer(render);
 	       jt.getTableHeader().setReorderingAllowed(false); 
 	       jt.getTableHeader().setResizingAllowed(false); 
 //	        table.getTableHeader().setReorderingAllowed(false);   //不可整列移动   
@@ -97,19 +101,16 @@ class PlayTable {
 	    
 	    //隐藏ID这一列
         TableColumn column = columnModel.getColumn(0);
-        column.setMinWidth(0);
-        column.setMaxWidth(0);
-        column.setWidth(0);
-//        column.setPreferredWidth(10);
+//        column.setMinWidth(0);
+//        column.setMaxWidth(0);
+//        column.setWidth(0);
+        column.setPreferredWidth(10);
         
         
 
         column = columnModel.getColumn(1);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(2);
-        column.setMinWidth(0);
-        column.setMaxWidth(0);
-        column.setWidth(0);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(3);
         column.setPreferredWidth(10);
@@ -118,7 +119,7 @@ class PlayTable {
         column = columnModel.getColumn(5);
         column.setPreferredWidth(10);
         column = columnModel.getColumn(6);
-        column.setPreferredWidth(300);
+        column.setPreferredWidth(10);
 //        column = columnModel.getColumn(7);
 //        column.setPreferredWidth(300);       
 
@@ -129,31 +130,18 @@ class PlayTable {
 	}
 //Object[] in = { "id", "name", "image", "length","status","ticketprice" "introduction"};
 
-	public Play getPlay() {
+	public Employee getManager() {
 		int rowSel=jt.getSelectedRow();
 		System.out.println(rowSel);
 		if(rowSel>=0){
-			Play stud = new Play();
-			stud.setId(Integer.parseInt(jt.getValueAt(rowSel, 0).toString()));
-			stud.setName(jt.getValueAt(rowSel, 1).toString());
-		
-			stud.setLength(Integer.parseInt(""+jt.getValueAt(rowSel, 3)));
-			
-			if((jt.getValueAt(rowSel, 4)+"").equals("待安排演出")){
-				stud.setStatus(0);
-			}else if((jt.getValueAt(rowSel, 4)+"").equals("已安排演出")){
-				stud.setStatus(1);
-			}else {
-				stud.setStatus(-1);
-			}
-			stud.setTicketPrice(Float.parseFloat(""+jt.getValueAt(rowSel, 5)));
-			if(jt.getValueAt(rowSel, 6)!=null){
-			stud.setIntroduction(jt.getValueAt(rowSel, 6).toString());
-
-			}
-			else{
-				stud.setIntroduction(" ");
-			}
+			Employee stud = new Employee();
+			stud.setEmp_id(Integer.parseInt(jt.getValueAt(rowSel, 0).toString()));
+			stud.setEmp_name(jt.getValueAt(rowSel, 1).toString());
+//			stud.setStatus(jt.getValueAt(rowSel, 2).toString());
+//			stud.setAccount(jt.getValueAt(rowSel, 3).toString());
+			stud.setEmp_tel_num(jt.getValueAt(rowSel, 4).toString());
+			stud.setEmp_addr(jt.getValueAt(rowSel, 5).toString());
+			stud.setEmp_email(jt.getValueAt(rowSel, 6).toString());
 			return stud;
 		}
 		else{
@@ -163,33 +151,28 @@ class PlayTable {
 	}
 	
 	// 创建JTable
-	public void showPlayList(List<Play> stuList) {
+	public void showManagerList(List<Employee> stuList) {
 		try {
 			DefaultTableModel tabModel = (DefaultTableModel) jt.getModel();
 			tabModel.setRowCount(0);
-//Object[] in = { "id", "name", "image", "length","status","ticketprice" "introduction"};
-
-			Iterator<Play> itr = stuList.iterator();
+//			  jt.getColumn("工号").setCellRenderer(render);
+//		       jt.getColumn("姓名").setCellRenderer(render);
+//		       jt.getColumn("身份").setCellRenderer(render);
+//		       jt.getColumn("账号").setCellRenderer(render);
+//		       jt.getColumn("电话").setCellRenderer(render);
+//		       jt.getColumn("住址").setCellRenderer(render);
+//		       jt.getColumn("邮箱").setCellRenderer(render);
+			Iterator<Employee> itr = stuList.iterator();
 			while (itr.hasNext()) {
-				Play stu = itr.next();
+				Employee stu = itr.next();
 				Object data[] = new Object[7];
-				data[0] = Integer.toString(stu.getId());
-				data[1] = stu.getName();
-				data[2] = stu.getImage();
-				data[3] = Integer.toString(stu.getLength());
-				
-//				data[4] = Integer.toString(stu.getStatus());
-				if(stu.getStatus()==0){
-					data[4]="待安排演出";
-				}else if(stu.getStatus()==1){
-					data[4]="已安排演出";
-				}else {
-					data[4]="已下线";
-				}
-				
-				
-				data[5] = Float.toString(stu.getTicketPrice());
-				data[6] = stu.getIntroduction();
+				data[0] = stu.getEmp_id();
+				data[1] = stu.getEmp_name();
+				data[2] =stu .getStatus();
+				data[3] =stu .getAccount();
+				data[4] =stu.getEmp_tel_num();
+				data[5] =stu.getEmp_addr();
+				data[6] =stu .getEmp_email();
 				tabModel.addRow(data);;
 			}
 			jt.invalidate();
@@ -200,9 +183,9 @@ class PlayTable {
 	}
 }
 
-public class PlayMgrUI extends MainUITmpl {
+public class ManagerManageUI extends MainUITmpl {
 	/**
-	 * author 剧目管理
+	 * author 经理用户管理
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel ca1 = null; // 界面提示
@@ -215,10 +198,10 @@ public class PlayMgrUI extends MainUITmpl {
 	// 查找，编辑和删除按钮
 	private JButton btnAdd, btnEdit, btnDel, btnQuery;
 	
-	PlayTable tms; //显示演出厅列表
+	ManagerTable tms; //显示经理用户列表
 
 
-	public PlayMgrUI() {
+	public ManagerManageUI() {
 		
 	}
 
@@ -227,7 +210,7 @@ public class PlayMgrUI extends MainUITmpl {
 	protected void initContent() {
 		Rectangle rect = contPan.getBounds();
 
-		ca1 = new JLabel("剧目管理", JLabel.CENTER);
+		ca1 = new JLabel("用户管理", JLabel.CENTER);
 		ca1.setBounds(0, 5, rect.width, 30);
 		ca1.setFont(new java.awt.Font("宋体", 1, 20));
 		ca1.setForeground(Color.blue);
@@ -237,23 +220,23 @@ public class PlayMgrUI extends MainUITmpl {
 		jsc.setBounds(0, 40, rect.width, rect.height - 100);
 		contPan.add(jsc);
 
-		hint = new JLabel("请输入剧目名称:", JLabel.RIGHT);
-		hint.setFont(new Font("",1,15));
-		hint.setBounds(60, rect.height - 50, 150, 30);
-		contPan.add(hint);
+//		hint = new JLabel("请输入用户名称:", JLabel.RIGHT);
+//		hint.setFont(new Font("",1,15));
+//		hint.setBounds(60, rect.height - 50, 150, 30);
+//		contPan.add(hint);
+//
+//		input = new JTextField();
+//		input.setBounds(220, rect.height - 50, 200, 30);
+//		contPan.add(input);
 
-		input = new JTextField();
-		input.setBounds(220, rect.height - 50, 200, 30);
-		contPan.add(input);
-
-		String [] inqueryType = {"按剧名查找","按时长查找","按票价查找"};
+		String [] inqueryType = {"所有用户","经理","系统管理者","售票员","未注册用户"};
 		inquery = new JComboBox(inqueryType);
-		inquery.setBounds(440, rect.height - 50, 130, 30);
+		inquery.setBounds(60, rect.height - 50, 130, 30);
 		contPan.add(inquery);
 
 		// 查找 ，删除和编辑的按钮，其中含有相关的事件处理！
 		btnQuery = new JButton("查找");
-		btnQuery.setBounds(600, rect.height - 50, 60, 30);
+		btnQuery.setBounds(220, rect.height - 50, 60, 30);
 		btnQuery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent Event) {
 				btnQueryClicked();
@@ -289,97 +272,121 @@ public class PlayMgrUI extends MainUITmpl {
 		contPan.add(btnDel);
 		contPan.add(ca1);
 		
-		tms = new PlayTable(jsc);
+		tms = new ManagerTable(jsc);
 		
 		showTable();
 	}
 
 	private void btnAddClicked() {
-
-		PlayAddUI addStuUI=null;
 		
-		addStuUI = new PlayAddUI();
-		addStuUI.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		addStuUI.setWindowName("添加剧目");
-		addStuUI.toFront();
-		addStuUI.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
-		addStuUI.setVisible(true);
-		if (addStuUI.getReturnStatus()) {
+		ManagerAddUI addMUI = null;
+		
+		addMUI = new ManagerAddUI();
+		addMUI.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		addMUI.setWindowName("添加用户");
+		addMUI.toFront();
+		addMUI.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
+		addMUI.setVisible(true);
+		if (addMUI.getReturnStatus()) {
 			showTable();
 		}
 	}
 
 	private void btnModClicked() {
-		Play stud = tms.getPlay();
-		if(null== stud){
-			JOptionPane.showMessageDialog(null, "请选择要修改的演出厅");
+		Employee emp = tms.getManager();
+		if(null== emp){
+			JOptionPane.showMessageDialog(null, "请选择要修改的用户");
 			return; 
-		}
+		} 
+		UserEditUI userEditUI  = new UserEditUI(emp);
+		userEditUI.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		userEditUI.setWindowName("修改剧目");
+		userEditUI.initData(emp);
+		userEditUI.toFront();
+		userEditUI.setModal(true);
+		userEditUI.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
+		userEditUI.setVisible(true);
 		
-		PlayEditUI modStuUI = new PlayEditUI(stud);
-		modStuUI.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		modStuUI.setWindowName("修改剧目");
-		modStuUI.initData(stud);
-		modStuUI.toFront();
-		modStuUI.setModal(true);
-		modStuUI.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
-		modStuUI.setVisible(true);
-
-		if (modStuUI.getReturnStatus()) {
+		if (userEditUI.getReturnStatus()) {
 			showTable();
 		}	
 	}
 
 	private void btnDelClicked() {
-		Play stud = tms.getPlay();
-		if(null== stud){
-			JOptionPane.showMessageDialog(null, "请选择要删除的剧目");
+		Employee emp = tms.getManager();
+		if(null== emp){
+			JOptionPane.showMessageDialog(null, "请选择要删除的用户");
 			return; 
-		}		
+		} 		
 		
 		int confirm = JOptionPane.showConfirmDialog(null, "确认删除所选？", "删除", JOptionPane.YES_NO_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
-			PlaySrv stuSrv = new PlaySrv();
-			stuSrv.delete(stud.getId());
+			EmployeeSrv stuSrv = new EmployeeSrv();
+			System.out.println(emp.getEmp_id());
+			stuSrv.delete(emp.getEmp_id());
 			showTable();
 		}
 	}
 
 	private void btnQueryClicked() {
-		if (!input.getText().equals("")) {
-			//请自行补充
-			if(inquery.getSelectedIndex()==0){//按剧名查
-//				Play p = new PlaySrv().FetchOneById(" play_name = '"+input.getText()+"'");
-				List<Play> stuList = new PlaySrv().Fetch(" play_name = '"+input.getText()+"'");
-				tms.showPlayList(stuList);
-			}
-			else if(inquery.getSelectedIndex()==1){//按时长查询
-				List<Play> stuList = new PlaySrv().Fetch(" play_length = "+input.getText());
-				tms.showPlayList(stuList);
-			}else {//按票价查询
-				List<Play> stuList = new PlaySrv().Fetch(" play_ticket_price = "+input.getText());
-				tms.showPlayList(stuList);
-			}
-			System.out.println(inquery.getSelectedItem());
-		} else {
-//			JOptionPane.showMessageDialog(null, "请输入检索条件");
-			showTable();
-		}
+		showTable();
+		
 	}
 
 	private void showTable() {
-		List<Play> stuList = new PlaySrv().FetchAll();
-		tms.showPlayList(stuList);
+String status = inquery.getSelectedItem().toString();
+		
+		if(status.equals("经理")){
+			List<Employee> empList = new EmployeeSrv().FetchAll();
+			List<Employee> empList2 = new LinkedList<Employee>();
+			for(Employee emp:empList){
+				if(emp.getStatus()!=null&&emp.getStatus().compareTo("经理")==0){
+					empList2.add(emp);
+				}
+			}
+			tms.showManagerList(empList2);
+		}else if(status.equals("系统管理者")){
+			List<Employee> empList = new EmployeeSrv().FetchAll();
+			List<Employee> empList2 = new LinkedList<Employee>();
+			for(Employee emp:empList){
+				if(emp.getStatus()!=null&&emp.getStatus().compareTo("系统管理者")==0){
+					empList2.add(emp);
+				}
+			}
+			tms.showManagerList(empList2);
+			
+		}else if(status.equals("售票员")){
+			List<Employee> empList = new EmployeeSrv().FetchAll();
+			List<Employee> empList2 = new LinkedList<Employee>();
+			for(Employee emp:empList){
+				if(emp.getStatus()!=null&&emp.getStatus().compareTo("售票员")==0){
+					empList2.add(emp);
+				}
+			}
+			tms.showManagerList(empList2);
+		}else if(status.equals("未注册用户")){
+			List<Employee> empList = new EmployeeSrv().FetchAll();
+			List<Employee> empList2 = new LinkedList<Employee>();
+			for(Employee emp:empList){
+				if(emp.getStatus()==null){
+					empList2.add(emp);
+				}
+			}
+			tms.showManagerList(empList2);
+		}else if(status.equals("所有用户")){
+			List<Employee> empList = new EmployeeSrv().FetchAll();
+			tms.showManagerList(empList);
+		}
 	}
 	
 
 	public static void main(String[] args) {
-		PlayMgrUI frmStuMgr = new PlayMgrUI();
+		ManagerManageUI frmStuMgr = new ManagerManageUI();
 		frmStuMgr.setVisible(true);
 	}
 	//To be override by the detailed business block interface 
 	protected void btnExitClicked(ActionEvent Event){
-		new Manager().setVisible(true);
+		new SystemMgUI().setVisible(true);
 		this.dispose();
 		
 	}	

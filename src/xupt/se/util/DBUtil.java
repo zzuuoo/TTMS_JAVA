@@ -10,7 +10,11 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import javax.swing.JOptionPane; 
-
+/**
+ * 数据库连接工具类
+ * @author SHEEO
+ *
+ */
 public class DBUtil {
 	private final String dbConnFile = "resource/database/jdbc.properties";
 	private Connection conn=null;

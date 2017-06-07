@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.studio;
-
+/**
+ * 演出厅添加界面
+ */
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

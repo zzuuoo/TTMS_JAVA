@@ -1,7 +1,9 @@
 
 package xupt.se.ttms.view.studio;
 
-
+/**
+ * 演出厅修改界面
+ */
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 

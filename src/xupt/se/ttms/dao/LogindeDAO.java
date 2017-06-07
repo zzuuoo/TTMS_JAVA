@@ -20,18 +20,21 @@ public class LogindeDAO implements iLogindeDAO{
 	
 	//注册   
 	//return 1-工号不存在 不能注册     2-该工号已经有账号  不能注册   3-账号与其他账号重复
-	public int LogindeDAO_register(Loginde log,int emp_id) {	
-		if(JudgeEmp_ID(emp_id)){	//判断工号  true-工号不存在不能注册 
+	public int LogindeDAO_register(Loginde log) {
+		if(JudgeEmp_ID(log.getEmp_id())){	//判断工号  true-工号不存在不能注册
 			return 1;
 		}
-		if(JudgeEmp_ID_inLoginde(emp_id)){	//判断该工号是否已经有账号
+		if(JudgeEmp_ID_inLoginde(log.getEmp_id())){	//判断该工号是否已经有账号
 			return 2;
 		}
 		if(JudgeAccount(log.getAccount())){		//判断账号是否重复
+			return 3;
+		}
+		else{
 			insert(log);
 			return 0;
 		}
-		return 3;
+		
 	}
 	
 	//登陆
@@ -81,8 +84,9 @@ public class LogindeDAO implements iLogindeDAO{
 		iemployeeDAO emp=DAOFactory.creatEmployeeDAO();
 		empList = emp.selectAll();
 		for(Employee em:empList){
-			if(em.getEmp_id()==emp_id);
+			if(em.getEmp_id()==emp_id){
 			return false;   //工号存在
+			}
 		}
 		return true;		//工号不存在
 	}
@@ -150,14 +154,16 @@ public class LogindeDAO implements iLogindeDAO{
 	//插入数据
 	public int insert(Loginde log) {
 		try {
-			String sql = "insert into Loginde(account,password,status)"
+			String sql = "insert into Loginde(account,password,status,emp_id)"
 					+ " values('"
 					+ log.getAccount()
 					+ "', '"
 					+ log.getPassword()
 					+ "', '" 
 					+ log.getStatus()
-					+ "' )";
+					+"',"
+					+log.getEmp_id()
+					+ " )";
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			System.out.println("数据库连接成功");
@@ -187,12 +193,8 @@ public class LogindeDAO implements iLogindeDAO{
 	int rtn=0;
 	try {
 		String sql = "update Loginde set " 
-				+ " account ='"
-				+ log.getAccount() + "', " 
 				+ " password = '"
-				+ newPassword + "', "
-				+ " status = '"
-				+ log.getStatus() +  "', \n";
+				+ newPassword + "' \n";
 
 		sql += " where account = '" + log.getAccount() + "'";
 		DBUtil db = new DBUtil();
@@ -223,11 +225,7 @@ public class LogindeDAO implements iLogindeDAO{
 		return rtn;		
 	}
 
-	@Override
-	public int LogindeDAO_register(Loginde log) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 	
 	
 	

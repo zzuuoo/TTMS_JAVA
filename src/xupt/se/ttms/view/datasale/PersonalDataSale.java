@@ -46,7 +46,11 @@ import xupt.se.ttms.view.login.Manager;
 import xupt.se.ttms.view.login.Seller;
 import xupt.se.ttms.view.login.SystemMgUI;
 import xupt.se.ttms.view.tmpl.*;
-
+/**
+ * 个人销售数据
+ * @author SHEEO
+ *
+ */
 class PersonDataSaleTable {
 	/**
 	 * 剧目表格绘制

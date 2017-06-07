@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.sellticket;
-
+/**
+ * 选票界面
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;

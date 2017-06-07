@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.schedule;
-
+/**
+ * 添加演出计划界面
+ */
 import javax.swing.JDialog;
 
 import java.awt.Color;

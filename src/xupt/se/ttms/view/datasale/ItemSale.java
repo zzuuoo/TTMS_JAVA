@@ -27,7 +27,11 @@ import xupt.se.ttms.model.Sale;
 import xupt.se.ttms.model.SaleItem;
 import xupt.se.ttms.service.SaleItemSrv;
 import xupt.se.ttms.view.tmpl.*;
-
+/**
+ * 个人销售数据的单个详细数据
+ * @author SHEEO
+ *
+ */
 class ItemSaleTable {
 	/**
 	 * 表格绘制

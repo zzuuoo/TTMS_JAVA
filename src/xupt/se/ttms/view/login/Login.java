@@ -232,8 +232,7 @@ public class Login extends JFrame implements ActionListener{
 				}
 				break;
 			case "注册":
-
-				account.setText(who+e.getActionCommand());
+				Register reg = new Register();
 				break;
 			default:
 				break;

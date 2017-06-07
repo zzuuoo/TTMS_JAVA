@@ -162,9 +162,18 @@ go
 /*==============================================================*/
 /* Table: employee                                              */
 /*==============================================================*/
+/*
 create table employee (
    emp_id               int                  identity,
    emp_no               char(20)             not null,
+   emp_name             varchar(100)         not null,
+   emp_tel_num          char(20)             null,
+   emp_addr             varchar(200)         null,
+   emp_email            varchar(100)         null,
+   constraint PK_EMPLOYEE primary key nonclustered (emp_id)
+)*/
+create table employee (
+   emp_id               int                  identity,
    emp_name             varchar(100)         not null,
    emp_tel_num          char(20)             null,
    emp_addr             varchar(200)         null,

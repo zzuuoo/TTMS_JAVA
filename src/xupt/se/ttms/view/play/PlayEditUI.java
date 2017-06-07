@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.play;
-
+/**
+ * 修改剧目界面
+ */
 import java.util.List;
 
 import javax.swing.JOptionPane;

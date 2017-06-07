@@ -8,6 +8,8 @@ public class Employee implements Serializable {
 	private String emp_tel_num;
 	private String emp_addr;
 	private String emp_email;
+	private String account;
+	private String status;
 	
 	public Employee() {
 		// TODO Auto-generated constructor stub
@@ -42,6 +44,14 @@ public class Employee implements Serializable {
 		return emp_email;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+	
+	public String getAccount() {
+		return account;
+	}
+	
 	public void setEmp_id(int emp_id) {
 		this.emp_id = emp_id;
 	}
@@ -60,5 +70,13 @@ public class Employee implements Serializable {
 	
 	public void setEmp_email(String emp_email) {
 		this.emp_email = emp_email;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public void setAccount(String account) {
+		this.account = account;
 	}
 }

@@ -1,5 +1,7 @@
 package xupt.se.ttms.view.play;
-
+/**
+ * 添加剧目界面
+ */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
